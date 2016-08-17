@@ -1,0 +1,43 @@
+package com.bankofshanghai.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bankofshanghai.mapper.BankRuleMapper;
+import com.bankofshanghai.pojo.BankRule;
+import com.bankofshanghai.pojo.BankRuleExample;
+import com.bankofshanghai.pojo.BankRuleExample.Criteria;
+import com.bankofshanghai.service.RuleService;
+
+@Service
+public class RuleServiceImpl implements RuleService {
+
+	@Autowired
+	private BankRuleMapper ruleMapper;
+	
+	@Override
+	public List<BankRule> getRuleList() {
+		BankRuleExample example = new BankRuleExample();
+		Criteria criteria =  example.createCriteria();
+		criteria.andIdIsNotNull();
+		List<BankRule> list = ruleMapper.selectByExample(example);
+		return list;
+	}
+
+	@Override
+	public BankRule getRuleById(Long id) {
+		BankRule rule = ruleMapper.selectByPrimaryKey(id);
+		return rule;
+	}
+
+	@Override
+	public boolean updateRuleDesc(BankRule rule) {
+		rule.setFrequency((long)0);
+		if(ruleMapper.updateByPrimaryKey(rule)>0)
+			return true;
+		return false;
+	}
+
+}

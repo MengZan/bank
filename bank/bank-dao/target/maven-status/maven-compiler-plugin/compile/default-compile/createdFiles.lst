@@ -1,0 +1,4 @@
+com\bankofshanghai\mapper\BankDataMapper.class
+com\bankofshanghai\mapper\BankUserMapper.class
+com\bankofshanghai\mapper\AdminUserMapper.class
+com\bankofshanghai\mapper\BankRuleMapper.class
