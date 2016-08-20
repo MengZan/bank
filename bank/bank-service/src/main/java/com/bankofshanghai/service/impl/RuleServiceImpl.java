@@ -33,9 +33,24 @@ public class RuleServiceImpl implements RuleService {
 	}
 
 	@Override
-	public boolean updateRuleDesc(BankRule rule) {
-		rule.setFrequency((long)0);
-		if(ruleMapper.updateByPrimaryKey(rule)>0)
+	public boolean updateRule(BankRule rule) {
+//		rule.setFrequency((long)0);
+		if(ruleMapper.updateByPrimaryKeySelective(rule)>0)
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean addRule(BankRule rule) {
+//		rule.setFrequency((long)0);
+		if(ruleMapper.insertSelective(rule)>0)
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean deleteRule(Long id) {
+		if(ruleMapper.deleteByPrimaryKey(id)>0)
 			return true;
 		return false;
 	}

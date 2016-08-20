@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,15 @@
 </head>
 <body>
 添加/修改规则
-<form action="${pageContext.request.contextPath }/ruleEdit.action" method="post">
+<c:choose>
+	<c:when test="${empty rule }">
+		<form action="${pageContext.request.contextPath }/addRule.action" method="post">
+	</c:when>
+	<c:otherwise>
+		<form action="${pageContext.request.contextPath }/editRule.action" method="post">
+	</c:otherwise>
+</c:choose>
+
 <input type="hidden" name="id"  value="${rule.id}"/><br/>
 规则名称：<input type="text" name="rulename"  value="${rule.rulename}"/><br/>
 业务类型：<input type="text" name="type"  value="${rule.type }"/><br/>

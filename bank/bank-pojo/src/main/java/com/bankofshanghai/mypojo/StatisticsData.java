@@ -1,9 +1,5 @@
 package com.bankofshanghai.mypojo;
 
-import java.util.List;
-
-import com.bankofshanghai.pojo.BankData;
-
 /**
  * 统计量
  * @author DMM

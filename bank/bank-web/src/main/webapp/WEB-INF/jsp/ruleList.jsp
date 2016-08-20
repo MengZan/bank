@@ -9,7 +9,7 @@
 </head>
 <body>
 规则列表：
-<a href="#">添加规则</a>
+<a href="${pageContext.request.contextPath }/rule">添加规则</a>
 <table width="60%" border=2>
 <tr>
 	<td>规则名称</td>
@@ -24,7 +24,9 @@
 	<td>${rule.ruledesc }</td>
 	<td>${rule.type }</td>
 	<td>${rule.safeLevel }</td>
-	<td><a href="${pageContext.request.contextPath }/rule/${rule.id}">修改</a></td>
+	<td><a href="${pageContext.request.contextPath }/rule/${rule.id}">修改</a>
+			<a href="${pageContext.request.contextPath }/deleteRule/${rule.id }">删除</a>
+	</td>
 </tr>
 </c:forEach>
 </table>

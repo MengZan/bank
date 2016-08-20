@@ -10,5 +10,9 @@ public interface RuleService {
 	
 	BankRule getRuleById(Long id);
 	
-	boolean updateRuleDesc(BankRule rule);
+	boolean updateRule(BankRule rule);
+	
+	boolean addRule(BankRule rule);
+	
+	boolean deleteRule(Long id);
 }
