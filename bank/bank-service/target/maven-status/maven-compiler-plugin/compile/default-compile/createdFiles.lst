@@ -1,9 +1,0 @@
-com\bankofshanghai\service\impl\RuleServiceImpl.class
-com\bankofshanghai\service\CheckService.class
-com\bankofshanghai\service\UserService.class
-com\bankofshanghai\service\impl\DataServiceImpl.class
-com\bankofshanghai\service\RuleService.class
-com\bankofshanghai\drools\CheckDrools.class
-com\bankofshanghai\service\impl\UserServiceImpl.class
-com\bankofshanghai\service\DataService.class
-com\bankofshanghai\service\impl\CheckServiceImpl.class

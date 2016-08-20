@@ -1,19 +1,35 @@
 package com.bankofshanghai.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bankofshanghai.pojo.BankData;
+import com.bankofshanghai.pojo.BankUser;
+import com.bankofshanghai.service.DataService;
 import com.bankofshanghai.service.UserService;
+import com.bankofshanghai.service.UsermanService;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DataService dataService;
+	
+	@Autowired
+	private UsermanService usermanService;
 	
 //	@RequestMapping("/user/{userId}")
 //	@ResponseBody
@@ -49,6 +65,82 @@ public class UserController {
 	public String logout(HttpSession session){
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/checkusertype")
+	public String checkusertype(HttpServletRequest request,HttpSession session,Long userid)
+			throws Exception{
+		BankUser user = usermanService.getUserByID(userid);
+		BankData data = dataService.getDataByID(userid);
+		Integer usertype=user.getUsertype();
+		if(usertype==0)//黑名单
+		{
+			data.setSafeLevel(99);
+		}
+		else{
+	    
+		if(usertype==1)//白名单
+		{
+			data.setSafeLevel(0);
+			
+		}
+		
+		else // 灰名单，高风险ip、手机号等
+		{
+			
+		}
+			
+		}
+		dataService.updateDataSafe(data);
+		return "";
+	}
+
+	
+	@RequestMapping("/usermanage")
+	public String usermanage(){
+		return "usermanage";
+	}
+	
+	@RequestMapping("/usershow")
+	public String usershow(HttpServletRequest request,HttpSession session,
+			@RequestParam(required = false, defaultValue = "999")Long userid,
+			@RequestParam(required = false, defaultValue = "7")String usertype,
+			@RequestParam(required = false, defaultValue = "10") int rows,
+			@RequestParam(required = false, defaultValue = "1") int pageNos)
+	throws Exception{
+		int pageNo=pageNos;
+		int usertype_t=Integer.parseInt(usertype);
+		if(userid==999) userid=null;
+		List<BankUser> list=usermanService.queryByPage(pageNo, rows, userid, usertype_t);
+		
+		request.setAttribute("listss", list);
+		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(list);
+		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
+		request.setAttribute("pageNos", pageNo); //页号
+		
+		request.setAttribute("userid_t", userid);
+		request.setAttribute("selectusertype", usertype_t);
+		
+		return "usermanage";
+	}
+
+	
+	@RequestMapping("/userupdate/{id}")
+	public String userupdate(HttpServletRequest request,HttpSession session,@PathVariable("id") Long id, Model model){
+		
+		BankUser user=usermanService.getUserByID(id);
+		model.addAttribute("user", user);
+		return "userupdate";
+	}
+	
+	@RequestMapping("/usertypeupdate")
+	public String usertypeupdate(HttpServletRequest request,HttpSession session,BankUser user){
+		
+		Long userid = user.getId();
+		String usertype_t = request.getParameter("usertype");
+		int usertype = Integer.parseInt(usertype_t);
+		usermanService.UsertypeUpdata(userid, usertype);
+		return "usermanage";
 	}
 	
 }

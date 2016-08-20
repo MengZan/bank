@@ -1,7 +1,8 @@
 package com.bankofshanghai.drools;  
    
 import com.bankofshanghai.pojo.BankData;  
-import com.bankofshanghai.mypojo.StatisticsData;  
+import com.bankofshanghai.mypojo.StatisticsData; 
+import com.bankofshanghai.service.DataService;
    
 rule "999"  
 	salience 999
@@ -27,4 +28,12 @@ rule "2"
         $sData : StatisticsData(dataNumbersFromTime>=3)
     then  
         $data.setSafeLevel(2);  
+end 
+
+rule "3"  
+	salience 
+    when
+        $data : BankData(money>=10000)
+    then  
+        $data.setSafeLevel(1);  
 end  

@@ -18,7 +18,7 @@
 		你好，${username }&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="#" >数据采集</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="#" >数据展示</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a href="#" >名单管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath }/usermanage" >名单管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath }/rulelist" >规则管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath }/checkdata" >欺诈检测</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath }/logout.action" >退出</a>

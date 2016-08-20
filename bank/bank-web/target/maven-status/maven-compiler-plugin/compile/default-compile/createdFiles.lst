@@ -1,7 +1,0 @@
-com\bankofshanghai\controller\UserController.class
-com\bankofshanghai\controller\CheckController.class
-com\bankofshanghai\controller\IndexController.class
-com\bankofshanghai\utils\JsonUtils.class
-com\bankofshanghai\interceptor\LoginInterceptor.class
-com\bankofshanghai\converter\CustomDateConverter.class
-com\bankofshanghai\controller\RuleController.class
