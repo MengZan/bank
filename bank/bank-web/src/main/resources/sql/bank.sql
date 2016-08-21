@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2016-08-17 19:30:53
+Date: 2016-08-21 15:52:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,9 +51,10 @@ CREATE TABLE `bank_data` (
 -- ----------------------------
 -- Records of bank_data
 -- ----------------------------
-INSERT INTO `bank_data` VALUES ('1', '1', '2', '100.00', '2016-08-17 16:22:32', '上海', '南京', '手机', null);
-INSERT INTO `bank_data` VALUES ('2', '1', '2', '10.00', '2016-08-17 16:23:05', '上海', '上海', '手机', null);
-INSERT INTO `bank_data` VALUES ('3', '1', '2', '20.00', '2016-08-17 16:24:00', '上海', '上海', '手机', null);
+INSERT INTO `bank_data` VALUES ('1', '1', '2', '100.00', '2016-08-17 16:22:32', '上海', '南京', '手机', '2');
+INSERT INTO `bank_data` VALUES ('2', '1', '2', '10.00', '2016-08-17 16:23:05', '上海', '上海', '手机', '2');
+INSERT INTO `bank_data` VALUES ('3', '1', '2', '20.00', '2016-08-17 16:24:00', '上海', '上海', '手机', '2');
+INSERT INTO `bank_data` VALUES ('4', '1', '3', '1000.00', '2016-08-21 13:23:37', '上海', '上海', '取款机', '0');
 
 -- ----------------------------
 -- Table structure for bank_rule
@@ -67,13 +68,15 @@ CREATE TABLE `bank_rule` (
   `type` varchar(50) DEFAULT NULL,
   `safe_level` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bank_rule
 -- ----------------------------
 INSERT INTO `bank_rule` VALUES ('1', '短时间内频繁交易', '{\"time\":\"30min\",\"deals\":3,\"isCommonFromPlace\":null}', '0', '网银', '2');
-INSERT INTO `bank_rule` VALUES ('2', '转出地址可疑', '{\"time\":\"\",\"deals\":null,\"isCommonFromPlace\":true}', '0', '所有', '3');
+INSERT INTO `bank_rule` VALUES ('2', '转出地址可疑', '{\"time\":null,\"deals\":null,\"isCommonFromPlace\":true,\"moneyOfDay\":null,\"toUsersOfDay\":null}', '0', '转账', '3');
+INSERT INTO `bank_rule` VALUES ('5', '日转账金额超过上限', '{\"time\":null,\"deals\":null,\"isCommonFromPlace\":null,\"moneyOfDay\":10000.0,\"toUsersOfDay\":null}', '0', '转账', '1');
+INSERT INTO `bank_rule` VALUES ('7', '当日同一账户分散转出多个不同账户', '{\"time\":\"\",\"deals\":null,\"isCommonFromPlace\":null,\"moneyOfDay\":null,\"toUsersOfDay\":10}', '0', '转账', '4');
 
 -- ----------------------------
 -- Table structure for bank_user
@@ -85,10 +88,12 @@ CREATE TABLE `bank_user` (
   `password` varchar(32) NOT NULL,
   `usertype` int(12) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bank_user
 -- ----------------------------
 INSERT INTO `bank_user` VALUES ('1', '张三', '480', '2');
 INSERT INTO `bank_user` VALUES ('2', '李四', '480', '2');
+INSERT INTO `bank_user` VALUES ('3', '王五', '480', '1');
+INSERT INTO `bank_user` VALUES ('4', '赵六', 'zhaoliu', '3');
