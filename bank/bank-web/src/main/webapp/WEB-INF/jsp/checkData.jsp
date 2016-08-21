@@ -25,10 +25,10 @@ table {border-collapse: collapse;}
 <tr><td>序号</td><td>发起用户</td><td>目标用户</td><td>金钱</td><td>日期</td><td>发起地</td><td>目的地</td><td>工具</td><td>风险等级</td></tr>
 </table>
 <table align="center">
-<c:forEach items="${listss}" var="data">
+<c:forEach items="${listss }" var="data">
 <tr>
 <td class="hidden-480">${data.getId()}</td>
-<td class="hidden-480"><a href="${pageContext.request.contextPath }/datashowbyfromuser/${data.fromuser}" >${data.getFromuser() }</a></td>
+<td class="hidden-480"><a href="${pageContext.request.contextPath }/datashowbyfromuser/${data.fromuser }" >${data.getFromuser() }</a></td>
 <td class="hidden-480">${data.getTouser()}</td>
 <td class="hidden-480">${data.getMoney()}</td>
 <td class="hidden-480">${data.getDatetime()}</td>
@@ -49,7 +49,7 @@ table {border-collapse: collapse;}
 <a href="${pageContext.request.contextPath }/datashow_fenye.action?pageNos=${recordCount }">末页</a>
 </c:if>
 
-<h4 align="center">共${recordCount}页  
+<h4 align="center">共${recordCount }页  
 <input type="text" value="${pageNos}" name="pageNos" size="1" onkeyup="value=value.replace(/[^\d]/g,'')">页
 <input type="submit" value="到达">
 </h4>

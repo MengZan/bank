@@ -87,5 +87,7 @@ ${selectusertype}
 
 </form>
 
+<a href="/">返回首页</a>
+
 </body>
 </html>

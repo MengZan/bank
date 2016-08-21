@@ -36,10 +36,10 @@ public class RuleController {
 	 * @return
 	 */
 	@RequestMapping("rule")
-	public String rule(){
+	public String rule() {
 		return "rule";
 	}
-	
+
 	/**
 	 * 转到修改规则
 	 * @param id
@@ -50,6 +50,9 @@ public class RuleController {
 	public String getRuleById(@PathVariable("id") Long id, Model model) {
 		BankRule rule = ruleService.getRuleById(id);
 		model.addAttribute("rule", rule);
+		//由json得到RuleFactor对象
+		RuleFactor ruleFactor = JsonUtils.jsonToPojo(rule.getRuledesc(), RuleFactor.class);
+		model.addAttribute("ruleFactor", ruleFactor);
 		return "rule";
 	}
 
@@ -66,7 +69,7 @@ public class RuleController {
 			return "redirect:/rulelist";
 		return "error";
 	}
-	
+
 	/**
 	 * 添加规则
 	 * @param rule
@@ -74,12 +77,12 @@ public class RuleController {
 	 * @return
 	 */
 	@RequestMapping("/addRule")
-	public String addRule(BankRule rule, RuleFactor factor){
+	public String addRule(BankRule rule, RuleFactor factor) {
 		rule.setRuledesc(JsonUtils.objectToJson(factor));
 		ruleService.addRule(rule);
 		return "redirect:/rulelist";
 	}
-	
+
 	/**
 	 * 删除规则
 	 * @param id

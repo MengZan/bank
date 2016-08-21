@@ -13,7 +13,7 @@
 <table width="60%" border=2>
 <tr>
 	<td>规则名称</td>
-	<td>规则描述</td>
+	<!-- <td>规则参数</td>  -->
 	<td>业务类型</td>
 	<td>风险等级</td>
 	<td>操作</td>
@@ -21,11 +21,11 @@
 <c:forEach items="${rules }" var="rule">
 <tr>
 	<td>${rule.rulename }</td>
-	<td>${rule.ruledesc }</td>
+	<!-- <td>${rule.ruledesc }</td> -->
 	<td>${rule.type }</td>
 	<td>${rule.safeLevel }</td>
 	<td><a href="${pageContext.request.contextPath }/rule/${rule.id}">修改</a>
-			<a href="${pageContext.request.contextPath }/deleteRule/${rule.id }">删除</a>
+			<a href="${pageContext.request.contextPath }/deleteRule/${rule.id }" onclick="if(confirm('确定删除?')==false)return false;">删除</a>
 	</td>
 </tr>
 </c:forEach>

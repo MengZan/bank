@@ -11,6 +11,26 @@ public class RuleFactor {
 	private Integer deals;
 	
 	private Boolean isCommonFromPlace;
+	
+	private Double moneyOfDay;
+	
+	private Integer toUsersOfDay;
+
+	public Integer getToUsersOfDay() {
+		return toUsersOfDay;
+	}
+
+	public void setToUsersOfDay(Integer toUsersOfDay) {
+		this.toUsersOfDay = toUsersOfDay;
+	}
+
+	public Double getMoneyOfDay() {
+		return moneyOfDay;
+	}
+
+	public void setMoneyOfDay(Double moneyOfDay) {
+		this.moneyOfDay = moneyOfDay;
+	}
 
 	public String getTime() {
 		return time;
