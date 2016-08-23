@@ -8,6 +8,8 @@ public interface RuleService {
 
 	List<BankRule> getRuleList();
 	
+	List<BankRule> queryByPage(String type, Integer pageNo, Integer pageSize);
+	
 	BankRule getRuleById(Long id);
 	
 	boolean updateRule(BankRule rule);

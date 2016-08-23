@@ -6,9 +6,9 @@ import java.util.Date;
 public class BankData {
     private Long id;
 
-    private Integer fromuser;
+    private Long fromuser;
 
-    private Integer touser;
+    private Long touser;
 
     private BigDecimal money;
 
@@ -21,6 +21,7 @@ public class BankData {
     private String tool;
 
     private Integer safeLevel;
+    
 
     public Long getId() {
         return id;
@@ -30,19 +31,19 @@ public class BankData {
         this.id = id;
     }
 
-    public Integer getFromuser() {
+    public Long getFromuser() {
         return fromuser;
     }
 
-    public void setFromuser(Integer fromuser) {
+    public void setFromuser(Long fromuser) {
         this.fromuser = fromuser;
     }
 
-    public Integer getTouser() {
+    public Long getTouser() {
         return touser;
     }
 
-    public void setTouser(Integer touser) {
+    public void setTouser(Long touser) {
         this.touser = touser;
     }
 
@@ -93,4 +94,5 @@ public class BankData {
     public void setSafeLevel(Integer safeLevel) {
         this.safeLevel = safeLevel;
     }
+    
 }

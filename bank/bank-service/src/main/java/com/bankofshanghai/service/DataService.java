@@ -13,5 +13,5 @@ public interface DataService {
 	
 	int updateDataSafe(BankData data);
 
-	List<BankData> queryByPage(Integer fromuser, Integer touser, String tool, Integer pageNo, Integer pageSize);
+	List<BankData> queryByPage(Long fromuser, Long touser, String tool, Integer pageNo, Integer pageSize);
 }

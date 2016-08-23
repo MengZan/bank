@@ -34,13 +34,13 @@ public class DataController {
 	
 	@RequestMapping("/datashowbyfromuser/{fromuser}")
 	public String datashowbyfromuser(HttpServletRequest request,HttpSession session,
-			@PathVariable("fromuser") Integer fromuser,
+			@PathVariable("fromuser") Long fromuser,
 			@RequestParam(required = false, defaultValue = "10") int rows,
 			@RequestParam(required = false, defaultValue = "1") int pageNos)
 	
 			throws Exception{
 		int pageNo=pageNos;
-		Integer touser=null;
+		Long touser=null;
 		String tool=null;
 		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNo, rows);
 		
@@ -50,18 +50,19 @@ public class DataController {
 		request.setAttribute("pageNos", pageNo); //页号
 		
 		
+		
 		return "checkData";
 	}
 	
 	@RequestMapping("/datashowbytouser")
 	public String datashowbytouser(HttpServletRequest request,HttpSession session,
-			@RequestParam(required = false, defaultValue = "1")Integer touser,
+			@RequestParam(required = false, defaultValue = "1")Long touser,
 			@RequestParam(required = false, defaultValue = "10") int rows,
 			@RequestParam(required = false, defaultValue = "1") int pageNos)
 	
 			throws Exception{
 		int pageNo=pageNos;
-		Integer fromuser=null;
+		Long fromuser=null;
 		String tool=null;
 		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNo, rows);
 		
@@ -79,8 +80,8 @@ public class DataController {
 			@RequestParam(required = false, defaultValue = "1") int pageNos)
 					throws Exception{
 		int pageNo=pageNos;
-		Integer fromuser=null;
-		Integer touser=null;
+		Long fromuser=null;
+		Long touser=null;
 		String tool=null;
 		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNo, rows);
 		request.setAttribute("listss", list);

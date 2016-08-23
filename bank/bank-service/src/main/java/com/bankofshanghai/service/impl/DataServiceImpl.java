@@ -41,7 +41,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<BankData> queryByPage(Integer fromuser, Integer touser, String tool, Integer pageNo, Integer pageSize) {
+	public List<BankData> queryByPage(Long fromuser, Long touser, String tool, Integer pageNo, Integer pageSize) {
 		pageNo = pageNo == null ? 1 : pageNo;
 		pageSize = pageSize == null ? 10 : pageSize;
 
@@ -108,7 +108,7 @@ public class DataServiceImpl implements DataService {
 	 * @return
 	 */
 	private int getToUsersOfDay(List<BankData> list, BankData data) {
-		Set<Integer> toUserSet = new HashSet<>();
+		Set<Long> toUserSet = new HashSet<>();
 		for (BankData bankData : list) {
 			if (data.getDatetime().getYear() == bankData.getDatetime().getYear()
 					&& data.getDatetime().getMonth() == bankData.getDatetime().getMonth()
@@ -136,7 +136,7 @@ public class DataServiceImpl implements DataService {
 				count += bankData.getMoney().doubleValue();
 		}
 		// 加上当次转账金额
-		count += data.getMoney().doubleValue();
+		//count += data.getMoney().doubleValue();
 		return count;
 	}
 
@@ -192,7 +192,7 @@ public class DataServiceImpl implements DataService {
 		// }
 		// }
 		// System.out.println("字符串 " + max_str );
-		return "上海";
+		return "中国上海上海";
 	}
 
 }

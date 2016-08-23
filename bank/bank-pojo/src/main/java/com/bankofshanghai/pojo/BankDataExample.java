@@ -176,52 +176,52 @@ public class BankDataExample {
             return (Criteria) this;
         }
 
-        public Criteria andFromuserEqualTo(Integer value) {
+        public Criteria andFromuserEqualTo(Long value) {
             addCriterion("fromuser =", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserNotEqualTo(Integer value) {
+        public Criteria andFromuserNotEqualTo(Long value) {
             addCriterion("fromuser <>", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserGreaterThan(Integer value) {
+        public Criteria andFromuserGreaterThan(Long value) {
             addCriterion("fromuser >", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserGreaterThanOrEqualTo(Integer value) {
+        public Criteria andFromuserGreaterThanOrEqualTo(Long value) {
             addCriterion("fromuser >=", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserLessThan(Integer value) {
+        public Criteria andFromuserLessThan(Long value) {
             addCriterion("fromuser <", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserLessThanOrEqualTo(Integer value) {
+        public Criteria andFromuserLessThanOrEqualTo(Long value) {
             addCriterion("fromuser <=", value, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserIn(List<Integer> values) {
+        public Criteria andFromuserIn(List<Long> values) {
             addCriterion("fromuser in", values, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserNotIn(List<Integer> values) {
+        public Criteria andFromuserNotIn(List<Long> values) {
             addCriterion("fromuser not in", values, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserBetween(Integer value1, Integer value2) {
+        public Criteria andFromuserBetween(Long value1, Long value2) {
             addCriterion("fromuser between", value1, value2, "fromuser");
             return (Criteria) this;
         }
 
-        public Criteria andFromuserNotBetween(Integer value1, Integer value2) {
+        public Criteria andFromuserNotBetween(Long value1, Long value2) {
             addCriterion("fromuser not between", value1, value2, "fromuser");
             return (Criteria) this;
         }
@@ -236,52 +236,52 @@ public class BankDataExample {
             return (Criteria) this;
         }
 
-        public Criteria andTouserEqualTo(Integer value) {
+        public Criteria andTouserEqualTo(Long value) {
             addCriterion("touser =", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserNotEqualTo(Integer value) {
+        public Criteria andTouserNotEqualTo(Long value) {
             addCriterion("touser <>", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserGreaterThan(Integer value) {
+        public Criteria andTouserGreaterThan(Long value) {
             addCriterion("touser >", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTouserGreaterThanOrEqualTo(Long value) {
             addCriterion("touser >=", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserLessThan(Integer value) {
+        public Criteria andTouserLessThan(Long value) {
             addCriterion("touser <", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserLessThanOrEqualTo(Integer value) {
+        public Criteria andTouserLessThanOrEqualTo(Long value) {
             addCriterion("touser <=", value, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserIn(List<Integer> values) {
+        public Criteria andTouserIn(List<Long> values) {
             addCriterion("touser in", values, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserNotIn(List<Integer> values) {
+        public Criteria andTouserNotIn(List<Long> values) {
             addCriterion("touser not in", values, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserBetween(Integer value1, Integer value2) {
+        public Criteria andTouserBetween(Long value1, Long value2) {
             addCriterion("touser between", value1, value2, "touser");
             return (Criteria) this;
         }
 
-        public Criteria andTouserNotBetween(Integer value1, Integer value2) {
+        public Criteria andTouserNotBetween(Long value1, Long value2) {
             addCriterion("touser not between", value1, value2, "touser");
             return (Criteria) this;
         }

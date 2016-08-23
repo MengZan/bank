@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
 import com.bankofshanghai.service.DataService;
@@ -30,13 +32,6 @@ public class UserController {
 	
 	@Autowired
 	private UsermanService usermanService;
-	
-//	@RequestMapping("/user/{userId}")
-//	@ResponseBody
-//	public BankUser getUserById(@PathVariable Long userId) {
-//		BankUser user = userService.getUserByID(userId);
-//		return user;
-//	}
 	
 	@RequestMapping("/login")
 	public String login(HttpSession session, Model model, String username, String password)
@@ -97,7 +92,21 @@ public class UserController {
 
 	
 	@RequestMapping("/usermanage")
-	public String usermanage(){
+	public String usermanage(HttpServletRequest request,HttpSession session,
+			@RequestParam(required = false, defaultValue = "10") int rows,
+			@RequestParam(required = false, defaultValue = "1") int pageNos){
+		int pageNo=pageNos;
+		int usertype_t=7;
+		Long userid=null;
+		List<BankUser> list=usermanService.queryByPage(pageNo, rows, userid, usertype_t);
+		
+		request.setAttribute("listss", list);
+		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(list);
+		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
+		request.setAttribute("pageNos", pageNo); //页号
+		
+		request.setAttribute("userid_t", userid);
+		request.setAttribute("selectusertype", usertype_t);
 		return "usermanage";
 	}
 	
@@ -109,7 +118,8 @@ public class UserController {
 			@RequestParam(required = false, defaultValue = "1") int pageNos)
 	throws Exception{
 		int pageNo=pageNos;
-		int usertype_t=Integer.parseInt(usertype);
+		Integer usertype_t=Integer.parseInt(usertype);
+		
 		if(userid==999) userid=null;
 		List<BankUser> list=usermanService.queryByPage(pageNo, rows, userid, usertype_t);
 		

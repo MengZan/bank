@@ -59,25 +59,33 @@ table {border-collapse: collapse;}
 
 </form>
 
-<form action="${pageContext.request.contextPath }/check_test.action" method="post">
+<form action="${pageContext.request.contextPath }/check_test.action?pageNos=${pageNos}" method="post">
 
 <input type="submit" value="检测">
 
 </form>
 
-检测数据：
-<form action="${pageContext.request.contextPath }/check.action" method="post">
-转出用户：<input type="text" name="fromuser"  value="1"/><br/>
-转入用户：<input type="text" name="touser"  value="2"/><br/>
-转账金额：<input type="text" name="money"  value="100.00"/><br/>
-转账时间：<input type="text" name="datetime"  value="2016-8-17 16:52:00"/><br/>
-转出地址：<input type="text" name="fromplace"  value="上海"/><br/>
-转入地址：<input type="text" name="toplace"  value="上海"/><br/>
-转账方式：<input type="text" name="tool"  value="手机"/><br/>
-<input type="submit" value="检测"/>
+<form action="${pageContext.request.contextPath }/check_all.action" method="post">
+
+<input type="submit" value="检测全部">
+
 </form>
-风险等级：${data.safeLevel } ${message }<br/>
-运行时间：${time }<br/><br/>
+
+${message}
+${time }
+<table align="center">
+<tr><td>总交易数</td><td>黑名单交易数</td><td>白名单交易数</td><td>欺诈交易数</td></tr>
+</table>
+
+<table align="center">
+<tr>
+<td class="hidden-480">${count_n} </td>
+<td class="hidden-480">${count_black} </td>
+<td class="hidden-480">${count_white} </td>
+<td class="hidden-480">${count} </td>
+</tr>
+</table>
+
 <a href="/">返回首页</a>
 </body>
 </html>

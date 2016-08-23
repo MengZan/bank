@@ -17,7 +17,7 @@ rule "1"
         $data : BankData()
         $sData : StatisticsData(toUsersOfDay>=10)
     then  
-        $data.setSafeLevel(4);  
+        $data.setSafeLevel(4); 
 end  
    
 rule "2"  
@@ -33,7 +33,7 @@ rule "3"
 	salience 3
     when
         $data : BankData()
-        $sData : StatisticsData(dataNumbersWithinTime>=3)
+        $sData : StatisticsData(dataNumbersWithinTime>=5)
     then  
         $data.setSafeLevel(2);  
 end 
@@ -42,8 +42,8 @@ rule "4"
 	salience 4
     when
         $data : BankData()
-        $sData : StatisticsData(moneyOfDay>=10000.00)
+        $sData : StatisticsData(moneyOfDay>=20000.00)
     then  
-        $data.setSafeLevel(1);  
+        $data.setSafeLevel(1); 
 end  
 

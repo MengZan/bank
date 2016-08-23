@@ -10,6 +10,7 @@ import com.bankofshanghai.pojo.BankRule;
 import com.bankofshanghai.pojo.BankRuleExample;
 import com.bankofshanghai.pojo.BankRuleExample.Criteria;
 import com.bankofshanghai.service.RuleService;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class RuleServiceImpl implements RuleService {
@@ -53,6 +54,23 @@ public class RuleServiceImpl implements RuleService {
 		if(ruleMapper.deleteByPrimaryKey(id)>0)
 			return true;
 		return false;
+	}
+
+	@Override
+	public List<BankRule> queryByPage(String type, Integer pageNo, Integer pageSize) {
+		pageNo = pageNo == null ? 1 : pageNo;
+		pageSize = pageSize == null ? 10 : pageSize;
+
+		BankRuleExample example = new BankRuleExample();
+		Criteria criteria = example.createCriteria();
+
+		if (type != null) {
+			criteria.andTypeEqualTo(type);
+		}
+		PageHelper.startPage(pageNo, pageSize);
+		List<BankRule> list = ruleMapper.selectByExample(example);
+
+		return list;
 	}
 
 }

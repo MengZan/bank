@@ -10,8 +10,6 @@ import com.bankofshanghai.service.impl.DataServiceImpl;
 import com.bankofshanghai.pojo.BankData;
 
 public class CheckDrools {
-
-	
 	
 	public static int check(BankData data, StatisticsData sData) {
 		try {

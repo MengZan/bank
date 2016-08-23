@@ -20,10 +20,7 @@ table {border-collapse: collapse;}
 
 
  <form action="${pageContext.request.contextPath }/usershow.action" method="post">
- 
-${userid_t}
-${selectusertype}
- 
+
 <h2 align="center">用户信息</h2>
 <table align="center">
 <tr><td>用户id</td><td>用户名</td><td>用户密码</td><td>用户类型</td><td>操作</td></tr>
@@ -36,12 +33,12 @@ ${selectusertype}
 <td class="hidden-480">${user.getPassword()}</td>
 <td class="hidden-480">
 <c:choose>
-<c:when test="${user.getUsertype() == 1}">黑名单</c:when>
-<c:when test="${user.getUsertype() == 2}">白名单</c:when>
-<c:when test="${user.getUsertype() == 3}">灰名单</c:when>
-<c:when test="${user.getUsertype() == 4}">高风险手机号</c:when>
-<c:when test="${user.getUsertype() == 5}">高风险ip</c:when>
-<c:when test="${user.getUsertype() == 6}">高风险账户</c:when>
+<c:when test="${user.getUsertype() == 0}">黑名单</c:when>
+<c:when test="${user.getUsertype() == 1}">白名单</c:when>
+<c:when test="${user.getUsertype() == 2}">灰名单</c:when>
+<c:when test="${user.getUsertype() == 3}">高风险手机号</c:when>
+<c:when test="${user.getUsertype() == 4}">高风险ip</c:when>
+<c:when test="${user.getUsertype() == 5}">高风险账户</c:when>
 </c:choose>
 </td>
 <td class="hidden-480"><a href="${pageContext.request.contextPath }/userupdate/${user.id}">修改</a></td>
@@ -72,18 +69,18 @@ ${selectusertype}
 
 
 用户类型:<select id="usertype" name="usertype" >
-<option value = "1"  <c:if test='${selectusertype==1}'>selected="selected"</c:if>>黑名单</option>
-<option value = "2"  <c:if test='${selectusertype==2}'>selected="selected"</c:if>>白名单</option>
-<option value = "3"  <c:if test='${selectusertype==3}'>selected="selected"</c:if>>灰名单</option>
-<option value = "4"  <c:if test='${selectusertype==4}'>selected="selected"</c:if>>高风险手机号</option>
-<option value = "5"  <c:if test='${selectusertype==5}'>selected="selected"</c:if>>高风险ip</option>
-<option value = "6"  <c:if test='${selectusertype==6}'>selected="selected"</c:if>>高风险账户</option>
-<option value = "7"  <c:if test='${selectusertype==6}'>selected="selected"</c:if>>全部</option>
+<option value = "0"  <c:if test='${selectusertype==0}'>selected="selected"</c:if>>黑名单</option>
+<option value = "1"  <c:if test='${selectusertype==1}'>selected="selected"</c:if>>白名单</option>
+<option value = "2"  <c:if test='${selectusertype==2}'>selected="selected"</c:if>>灰名单</option>
+<option value = "3"  <c:if test='${selectusertype==3}'>selected="selected"</c:if>>高风险手机号</option>
+<option value = "4"  <c:if test='${selectusertype==4}'>selected="selected"</c:if>>高风险ip</option>
+<option value = "5"  <c:if test='${selectusertype==5}'>selected="selected"</c:if>>高风险账户</option>
+<option value = "7"  <c:if test='${selectusertype==7}'>selected="selected"</c:if>>全部</option>
 </select>
 
 <br/>
 
-<input type="submit" value="展示">
+<input type="submit" value="搜索">
 
 </form>
 
