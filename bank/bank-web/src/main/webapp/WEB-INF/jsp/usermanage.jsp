@@ -20,7 +20,10 @@ table {border-collapse: collapse;}
 
 
  <form action="${pageContext.request.contextPath }/usershow.action" method="post">
-
+ 
+ <input type="hidden" name="userid_t"  value="${userid_t}"/>
+ <input type="hidden" name="selectusertype"  value="${selectusertype}"/>
+ 
 <h2 align="center">用户信息</h2>
 <table align="center">
 <tr><td>用户id</td><td>用户名</td><td>用户密码</td><td>用户类型</td><td>操作</td></tr>

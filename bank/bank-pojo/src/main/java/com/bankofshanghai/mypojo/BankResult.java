@@ -2,9 +2,7 @@ package com.bankofshanghai.mypojo;
 
 public class BankResult {
 
-    /**
-     * 0: 1: 2:
-     */
+    // 响应业务状态
     private Integer status;
 
     // 响应消息

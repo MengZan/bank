@@ -17,7 +17,7 @@
 	<c:otherwise>
 		你好，${username }&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="#" >数据采集</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a href="#" >统计分析</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath }/analysis" >统计分析</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath }/usermanage" >名单管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath }/rulelist" >规则管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="#" >模型管理</a>&nbsp;&nbsp;|&nbsp;&nbsp;

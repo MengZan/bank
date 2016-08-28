@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bankofshanghai.mapper.BankDataMapper;
+import com.bankofshanghai.mapper.DataTriMapper;
 import com.bankofshanghai.mypojo.StatisticsData;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankDataExample;
 import com.bankofshanghai.pojo.BankUser;
+import com.bankofshanghai.pojo.DataTri;
+import com.bankofshanghai.pojo.DataTriExample;
 import com.bankofshanghai.pojo.BankDataExample.Criteria;
 import com.bankofshanghai.service.DataService;
 import com.github.pagehelper.PageHelper;
@@ -26,6 +29,9 @@ public class DataServiceImpl implements DataService {
 
 	@Autowired
 	private BankDataMapper dataMapper;
+	
+	@Autowired
+	private DataTriMapper datatriMapper;
 
 	@Override
 	public BankData getDataByID(Long id) {
@@ -62,6 +68,32 @@ public class DataServiceImpl implements DataService {
 		PageHelper.startPage(pageNo, pageSize);
 		List<BankData> list = dataMapper.selectByExample(example);
 
+		return list;
+	}
+	
+	@Override
+	public List<DataTri> selectDataTri(Long id,Integer tri1,Integer tri2,Integer tri3,Integer tri4,Integer tri5,
+			Integer tri6,Integer tri7,Integer tri8,Integer tri9,Integer tri10,Integer tri11,Integer tri12)
+	{
+		DataTriExample example = new DataTriExample();
+		DataTriExample.Criteria criteria =example.createCriteria();
+		
+		if(id!=null) criteria.andIdEqualTo(id);
+		if(tri1!=null) criteria.andTri1EqualTo(tri1);
+		if(tri2!=null) criteria.andTri2EqualTo(tri2);
+		if(tri3!=null) criteria.andTri3EqualTo(tri3);
+		if(tri4!=null) criteria.andTri4EqualTo(tri4);
+		if(tri5!=null) criteria.andTri5EqualTo(tri5);
+		if(tri6!=null) criteria.andTri6EqualTo(tri6);
+		if(tri7!=null) criteria.andTri7EqualTo(tri7);
+		if(tri8!=null) criteria.andTri8EqualTo(tri8);
+		if(tri9!=null) criteria.andTri9EqualTo(tri9);
+		if(tri10!=null) criteria.andTri10EqualTo(tri10);
+		if(tri11!=null) criteria.andTri11EqualTo(tri11);
+		if(tri12!=null) criteria.andTri12EqualTo(tri12);
+		
+		List<DataTri> list = datatriMapper.selectByExample(example);
+		
 		return list;
 	}
 

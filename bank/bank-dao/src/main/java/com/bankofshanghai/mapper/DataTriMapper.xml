@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bankofshanghai.mapper.DataTriMapper" >
+  <resultMap id="BaseResultMap" type="com.bankofshanghai.pojo.DataTri" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tri_1" property="tri1" jdbcType="INTEGER" />
+    <result column="tri_2" property="tri2" jdbcType="INTEGER" />
+    <result column="tri_3" property="tri3" jdbcType="INTEGER" />
+    <result column="tri_4" property="tri4" jdbcType="INTEGER" />
+    <result column="tri_5" property="tri5" jdbcType="INTEGER" />
+    <result column="tri_6" property="tri6" jdbcType="INTEGER" />
+    <result column="tri_7" property="tri7" jdbcType="INTEGER" />
+    <result column="tri_8" property="tri8" jdbcType="INTEGER" />
+    <result column="tri_9" property="tri9" jdbcType="INTEGER" />
+    <result column="tri_10" property="tri10" jdbcType="INTEGER" />
+    <result column="tri_11" property="tri11" jdbcType="INTEGER" />
+    <result column="tri_12" property="tri12" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tri_1, tri_2, tri_3, tri_4, tri_5, tri_6, tri_7, tri_8, tri_9, tri_10, tri_11, 
+    tri_12
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bankofshanghai.pojo.DataTriExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from data_tri
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from data_tri
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from data_tri
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bankofshanghai.pojo.DataTriExample" >
+    delete from data_tri
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bankofshanghai.pojo.DataTri" >
+    insert into data_tri (id, tri_1, tri_2, 
+      tri_3, tri_4, tri_5, tri_6, 
+      tri_7, tri_8, tri_9, tri_10, 
+      tri_11, tri_12)
+    values (#{id,jdbcType=BIGINT}, #{tri1,jdbcType=INTEGER}, #{tri2,jdbcType=INTEGER}, 
+      #{tri3,jdbcType=INTEGER}, #{tri4,jdbcType=INTEGER}, #{tri5,jdbcType=INTEGER}, #{tri6,jdbcType=INTEGER}, 
+      #{tri7,jdbcType=INTEGER}, #{tri8,jdbcType=INTEGER}, #{tri9,jdbcType=INTEGER}, #{tri10,jdbcType=INTEGER}, 
+      #{tri11,jdbcType=INTEGER}, #{tri12,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bankofshanghai.pojo.DataTri" >
+    insert into data_tri
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tri1 != null" >
+        tri_1,
+      </if>
+      <if test="tri2 != null" >
+        tri_2,
+      </if>
+      <if test="tri3 != null" >
+        tri_3,
+      </if>
+      <if test="tri4 != null" >
+        tri_4,
+      </if>
+      <if test="tri5 != null" >
+        tri_5,
+      </if>
+      <if test="tri6 != null" >
+        tri_6,
+      </if>
+      <if test="tri7 != null" >
+        tri_7,
+      </if>
+      <if test="tri8 != null" >
+        tri_8,
+      </if>
+      <if test="tri9 != null" >
+        tri_9,
+      </if>
+      <if test="tri10 != null" >
+        tri_10,
+      </if>
+      <if test="tri11 != null" >
+        tri_11,
+      </if>
+      <if test="tri12 != null" >
+        tri_12,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tri1 != null" >
+        #{tri1,jdbcType=INTEGER},
+      </if>
+      <if test="tri2 != null" >
+        #{tri2,jdbcType=INTEGER},
+      </if>
+      <if test="tri3 != null" >
+        #{tri3,jdbcType=INTEGER},
+      </if>
+      <if test="tri4 != null" >
+        #{tri4,jdbcType=INTEGER},
+      </if>
+      <if test="tri5 != null" >
+        #{tri5,jdbcType=INTEGER},
+      </if>
+      <if test="tri6 != null" >
+        #{tri6,jdbcType=INTEGER},
+      </if>
+      <if test="tri7 != null" >
+        #{tri7,jdbcType=INTEGER},
+      </if>
+      <if test="tri8 != null" >
+        #{tri8,jdbcType=INTEGER},
+      </if>
+      <if test="tri9 != null" >
+        #{tri9,jdbcType=INTEGER},
+      </if>
+      <if test="tri10 != null" >
+        #{tri10,jdbcType=INTEGER},
+      </if>
+      <if test="tri11 != null" >
+        #{tri11,jdbcType=INTEGER},
+      </if>
+      <if test="tri12 != null" >
+        #{tri12,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bankofshanghai.pojo.DataTriExample" resultType="java.lang.Integer" >
+    select count(*) from data_tri
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update data_tri
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.tri1 != null" >
+        tri_1 = #{record.tri1,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri2 != null" >
+        tri_2 = #{record.tri2,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri3 != null" >
+        tri_3 = #{record.tri3,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri4 != null" >
+        tri_4 = #{record.tri4,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri5 != null" >
+        tri_5 = #{record.tri5,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri6 != null" >
+        tri_6 = #{record.tri6,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri7 != null" >
+        tri_7 = #{record.tri7,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri8 != null" >
+        tri_8 = #{record.tri8,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri9 != null" >
+        tri_9 = #{record.tri9,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri10 != null" >
+        tri_10 = #{record.tri10,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri11 != null" >
+        tri_11 = #{record.tri11,jdbcType=INTEGER},
+      </if>
+      <if test="record.tri12 != null" >
+        tri_12 = #{record.tri12,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update data_tri
+    set id = #{record.id,jdbcType=BIGINT},
+      tri_1 = #{record.tri1,jdbcType=INTEGER},
+      tri_2 = #{record.tri2,jdbcType=INTEGER},
+      tri_3 = #{record.tri3,jdbcType=INTEGER},
+      tri_4 = #{record.tri4,jdbcType=INTEGER},
+      tri_5 = #{record.tri5,jdbcType=INTEGER},
+      tri_6 = #{record.tri6,jdbcType=INTEGER},
+      tri_7 = #{record.tri7,jdbcType=INTEGER},
+      tri_8 = #{record.tri8,jdbcType=INTEGER},
+      tri_9 = #{record.tri9,jdbcType=INTEGER},
+      tri_10 = #{record.tri10,jdbcType=INTEGER},
+      tri_11 = #{record.tri11,jdbcType=INTEGER},
+      tri_12 = #{record.tri12,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bankofshanghai.pojo.DataTri" >
+    update data_tri
+    <set >
+      <if test="tri1 != null" >
+        tri_1 = #{tri1,jdbcType=INTEGER},
+      </if>
+      <if test="tri2 != null" >
+        tri_2 = #{tri2,jdbcType=INTEGER},
+      </if>
+      <if test="tri3 != null" >
+        tri_3 = #{tri3,jdbcType=INTEGER},
+      </if>
+      <if test="tri4 != null" >
+        tri_4 = #{tri4,jdbcType=INTEGER},
+      </if>
+      <if test="tri5 != null" >
+        tri_5 = #{tri5,jdbcType=INTEGER},
+      </if>
+      <if test="tri6 != null" >
+        tri_6 = #{tri6,jdbcType=INTEGER},
+      </if>
+      <if test="tri7 != null" >
+        tri_7 = #{tri7,jdbcType=INTEGER},
+      </if>
+      <if test="tri8 != null" >
+        tri_8 = #{tri8,jdbcType=INTEGER},
+      </if>
+      <if test="tri9 != null" >
+        tri_9 = #{tri9,jdbcType=INTEGER},
+      </if>
+      <if test="tri10 != null" >
+        tri_10 = #{tri10,jdbcType=INTEGER},
+      </if>
+      <if test="tri11 != null" >
+        tri_11 = #{tri11,jdbcType=INTEGER},
+      </if>
+      <if test="tri12 != null" >
+        tri_12 = #{tri12,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bankofshanghai.pojo.DataTri" >
+    update data_tri
+    set tri_1 = #{tri1,jdbcType=INTEGER},
+      tri_2 = #{tri2,jdbcType=INTEGER},
+      tri_3 = #{tri3,jdbcType=INTEGER},
+      tri_4 = #{tri4,jdbcType=INTEGER},
+      tri_5 = #{tri5,jdbcType=INTEGER},
+      tri_6 = #{tri6,jdbcType=INTEGER},
+      tri_7 = #{tri7,jdbcType=INTEGER},
+      tri_8 = #{tri8,jdbcType=INTEGER},
+      tri_9 = #{tri9,jdbcType=INTEGER},
+      tri_10 = #{tri10,jdbcType=INTEGER},
+      tri_11 = #{tri11,jdbcType=INTEGER},
+      tri_12 = #{tri12,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

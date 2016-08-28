@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
+import com.bankofshanghai.pojo.DataTri;
 import com.bankofshanghai.service.CheckService;
 import com.bankofshanghai.service.DataService;
+import com.bankofshanghai.service.StatisticsService;
 import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
@@ -27,6 +29,8 @@ public class CheckController {
 	@Autowired
 	private UsermanService usermanService;
 	
+	@Autowired
+	private StatisticsService statisticsService;
 	
 	@RequestMapping("/checkdata")
 	public String checkData(HttpServletRequest request,@RequestParam(required = false, defaultValue = "10") int rows,
@@ -174,6 +178,29 @@ public class CheckController {
 		model.addAttribute("count",count);
 		
 		list=dataService.queryByPage(fromuser, touser, tool, pageNos, rows);
+		
+		Long id=null;Integer tri1=null;Integer tri2=null;Integer tri3=null;Integer tri4=null;Integer tri5=null;
+		Integer tri6=null;Integer tri7=null;Integer tri8=null;Integer tri9=null;Integer tri10=null;Integer tri11=null;
+		Integer tri12=null;
+		
+		List<DataTri> list_tri = dataService.selectDataTri(id, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10, tri11, tri12);
+		int[] count_datatri = new int[13];
+		count_datatri = statisticsService.count_datatri(list_tri);
+		
+		request.setAttribute("datatri1", count_datatri[1]);       //每条规则触发的数量
+		request.setAttribute("datatri2", count_datatri[2]);
+		request.setAttribute("datatri3", count_datatri[3]);
+		request.setAttribute("datatri4", count_datatri[4]);
+		request.setAttribute("datatri5", count_datatri[5]);
+		request.setAttribute("datatri6", count_datatri[6]);
+		request.setAttribute("datatri7", count_datatri[7]);
+		request.setAttribute("datatri8", count_datatri[8]);
+		request.setAttribute("datatri9", count_datatri[9]);
+		request.setAttribute("datatri10", count_datatri[10]);
+		request.setAttribute("datatri11", count_datatri[11]);
+		request.setAttribute("datatri12", count_datatri[12]);
+		
+		
 		request.setAttribute("listss", list);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(list);
 		request.setAttribute("recordCount", pageInfo.getPages()); //总页数

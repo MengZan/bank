@@ -1,7 +1,9 @@
 package com.bankofshanghai.pojo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BankData {
     private Long id;
