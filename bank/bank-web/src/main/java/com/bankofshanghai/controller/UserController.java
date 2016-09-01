@@ -38,41 +38,36 @@ public class UserController {
 	@Autowired
 	private StatisticsService statisticsService;
 	
-//	@RequestMapping("/user/1000")
-//	@ResponseBody
-//	public BankResult getUserById(@PathVariable Long userId) {
-//		BankUser user = new BankUser();
-//		user=usermanService.getUserByID((long) 1 );
-//		return BankResult.ok(user);
-//	}
-	
 	@RequestMapping("/login")
-	public String login(HttpSession session, Model model, String username, String password)
+	@ResponseBody
+	public BankResult login(HttpSession session, Model model, String username, String password)
 			throws Exception {
 		// 调用service进行用户身份验证
 		if(userService.login(username, password)==0){
 			// 登陆成功，在session中保存用户身份信息
 			session.setAttribute("username", username);
 			// 重定向到商品列表页面
-			return "redirect:/";
+			return BankResult.ok(username);
 		}
+		String msg = "";
 		// 用户名不存在
 		if(userService.login(username, password)==1){
-			model.addAttribute("message","用户名不存在");
+			msg = "用户名不存在";
+			
 		}
 		// 密码错误
 		if(userService.login(username, password)==2){
-			model.addAttribute("message","密码错误");
+			msg = "密码错误";
 		}
-		model.addAttribute("username",username);
-		return "login";
+		return BankResult.build(0, msg,username);
 	}
 	
 	// 登出
 	@RequestMapping("/logout")
-	public String logout(HttpSession session){
+	@ResponseBody
+	public BankResult logout(HttpSession session){
 		session.invalidate();
-		return "redirect:/";
+		return BankResult.ok();
 	}
 	
 	@RequestMapping("/checkusertype")
