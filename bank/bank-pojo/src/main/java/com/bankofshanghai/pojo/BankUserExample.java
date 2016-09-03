@@ -1,6 +1,7 @@
 package com.bankofshanghai.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BankUserExample {
@@ -361,6 +362,66 @@ public class BankUserExample {
 
         public Criteria andUsertypeNotBetween(Integer value1, Integer value2) {
             addCriterion("usertype not between", value1, value2, "usertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeIsNull() {
+            addCriterion("datetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeIsNotNull() {
+            addCriterion("datetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeEqualTo(Date value) {
+            addCriterion("datetime =", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeNotEqualTo(Date value) {
+            addCriterion("datetime <>", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeGreaterThan(Date value) {
+            addCriterion("datetime >", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("datetime >=", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeLessThan(Date value) {
+            addCriterion("datetime <", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("datetime <=", value, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeIn(List<Date> values) {
+            addCriterion("datetime in", values, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeNotIn(List<Date> values) {
+            addCriterion("datetime not in", values, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeBetween(Date value1, Date value2) {
+            addCriterion("datetime between", value1, value2, "datetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("datetime not between", value1, value2, "datetime");
             return (Criteria) this;
         }
     }

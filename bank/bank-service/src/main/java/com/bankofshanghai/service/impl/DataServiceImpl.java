@@ -47,13 +47,76 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<BankData> queryByPage(Long fromuser, Long touser, String tool, Integer pageNo, Integer pageSize) {
+	public List<BankData> queryByPage(Long fromuser, Long touser, Integer moneyint,String fromplace, String tool,Integer safety,Date date_s,Date date_e, Integer safe_action,Integer pageNo, Integer pageSize) {
 		pageNo = pageNo == null ? 1 : pageNo;
 		pageSize = pageSize == null ? 10 : pageSize;
 
 		BankDataExample example = new BankDataExample();
 		Criteria criteria = example.createCriteria();
+		
+		
 
+		if (fromuser != null) {
+			criteria.andFromuserEqualTo(fromuser);
+		}
+
+		if (touser != null) {
+			criteria.andTouserEqualTo(touser);
+		}
+		
+		if(fromplace!=null){
+			criteria.andFromplaceEqualTo(fromplace);
+		}
+		
+		if(moneyint==1){
+			criteria.andMoneyBetween(new BigDecimal(0), new BigDecimal(5000));
+		}
+		
+		if(moneyint==2){
+			criteria.andMoneyBetween(new BigDecimal(5000), new BigDecimal(10000));
+		}
+		
+		if(moneyint==3){
+			criteria.andMoneyBetween(new BigDecimal(10000), new BigDecimal(20000));
+		}
+		
+		if(moneyint==4){
+			criteria.andMoneyBetween(new BigDecimal(20000), new BigDecimal(50000));
+		}
+		
+		if(moneyint==5){
+			criteria.andMoneyGreaterThanOrEqualTo(new BigDecimal(50000));
+		}
+
+		if (tool != null) {
+			criteria.andToolEqualTo(tool);
+		}
+		
+		if (safety != null && safe_action!=null) {
+			if(safe_action==1)criteria.andSafeLevelLessThan(safety);
+			if(safe_action==2)criteria.andSafeLevelLessThanOrEqualTo(safety);
+			if(safe_action==3)criteria.andSafeLevelEqualTo(safety);
+			if(safe_action==4)criteria.andSafeLevelGreaterThanOrEqualTo(safety);
+			if(safe_action==5)criteria.andSafeLevelGreaterThanOrEqualTo(safety);
+			if(safe_action==6)criteria.andSafeLevelNotEqualTo(safety);
+		}
+		
+		if(date_s!=null &&date_e!=null){
+			criteria.andDatetimeBetween(date_s, date_e);
+		}
+		
+		PageHelper.startPage(pageNo, pageSize);
+		List<BankData> list = dataMapper.selectByExample(example);
+
+		return list;
+	}
+	
+	@Override
+	public List<BankData> select_data(Long fromuser, Long touser, String tool){
+		
+		BankDataExample example = new BankDataExample();
+		Criteria criteria = example.createCriteria();
+		
 		if (fromuser != null) {
 			criteria.andFromuserEqualTo(fromuser);
 		}
@@ -65,10 +128,12 @@ public class DataServiceImpl implements DataService {
 		if (tool != null) {
 			criteria.andToolEqualTo(tool);
 		}
-		PageHelper.startPage(pageNo, pageSize);
+		
+
 		List<BankData> list = dataMapper.selectByExample(example);
 
 		return list;
+		
 	}
 	
 	@Override

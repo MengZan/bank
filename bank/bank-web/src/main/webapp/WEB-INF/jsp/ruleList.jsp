@@ -22,7 +22,7 @@
 <tr>
 	<td>${rule.rulename }</td>
 	<!-- <td>${rule.ruledesc }</td> -->
-	<td><a href="${pageContext.request.contextPath }/rulelist?type=${rule.type }">${rule.type }</a></td>
+	<td>${rule.type }</td>
 	<td>${rule.safeLevel }</td>
 	<td><a href="${pageContext.request.contextPath }/rule/${rule.id}">修改</a>
 			<a href="${pageContext.request.contextPath }/deleteRule/${rule.id }" onclick="if(confirm('确定删除?')==false)return false;">删除</a>
@@ -30,24 +30,6 @@
 </tr>
 </c:forEach>
 </table>
-
-<c:if test="${pageNos>1 }">
-<a href="${pageContext.request.contextPath }/rulelist?pageNos=1" >首页</a>
-<a href="${pageContext.request.contextPath }/rulelist?pageNos=${pageNos-1 }">上一页</a>
-</c:if>
-<c:if test="${pageNos <recordCount }">
-<a href="${pageContext.request.contextPath }/rulelist?pageNos=${pageNos+1 }">下一页</a>
-<a href="${pageContext.request.contextPath }/rulelist?pageNos=${recordCount }">末页</a>
-</c:if>
-
-<form action="${pageContext.request.contextPath }/rulelist">
-<h4>
-第<input type="text" value="${pageNos }" name="pageNos" size="1" onkeyup="value=value.replace(/[^\d]/g,'')">页
-/共${recordCount }页  
-<input type="submit" value="到达">
-</h4>
-</form>
-
 <br/><a href="/">返回首页</a>
 </body>
 </html>

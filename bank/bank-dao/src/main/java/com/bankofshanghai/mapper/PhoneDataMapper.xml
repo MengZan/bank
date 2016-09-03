@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="phone_number" property="phoneNumber" jdbcType="INTEGER" />
     <result column="safety" property="safety" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, phone_number, safety
+    id, phone_number, safety, datetime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bankofshanghai.pojo.PhoneDataExample" >
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.bankofshanghai.pojo.PhoneData" >
-    insert into phone_data (id, phone_number, safety
-      )
-    values (#{id,jdbcType=BIGINT}, #{phoneNumber,jdbcType=INTEGER}, #{safety,jdbcType=INTEGER}
-      )
+    insert into phone_data (id, phone_number, safety, 
+      datetime)
+    values (#{id,jdbcType=BIGINT}, #{phoneNumber,jdbcType=INTEGER}, #{safety,jdbcType=INTEGER}, 
+      #{datetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bankofshanghai.pojo.PhoneData" >
     insert into phone_data
@@ -115,6 +116,9 @@
       <if test="safety != null" >
         safety,
       </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -125,6 +129,9 @@
       </if>
       <if test="safety != null" >
         #{safety,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="record.safety != null" >
         safety = #{record.safety,jdbcType=INTEGER},
       </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +165,8 @@
     update phone_data
     set id = #{record.id,jdbcType=BIGINT},
       phone_number = #{record.phoneNumber,jdbcType=INTEGER},
-      safety = #{record.safety,jdbcType=INTEGER}
+      safety = #{record.safety,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -169,13 +180,17 @@
       <if test="safety != null" >
         safety = #{safety,jdbcType=INTEGER},
       </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bankofshanghai.pojo.PhoneData" >
     update phone_data
     set phone_number = #{phoneNumber,jdbcType=INTEGER},
-      safety = #{safety,jdbcType=INTEGER}
+      safety = #{safety,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -1,5 +1,9 @@
 package com.bankofshanghai.pojo;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BankUser {
     private Long id;
 
@@ -8,6 +12,8 @@ public class BankUser {
     private String password;
 
     private Integer usertype;
+
+    private Date datetime;
 
     public Long getId() {
         return id;
@@ -39,5 +45,14 @@ public class BankUser {
 
     public void setUsertype(Integer usertype) {
         this.usertype = usertype;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 }

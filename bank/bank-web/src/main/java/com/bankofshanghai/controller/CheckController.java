@@ -1,5 +1,6 @@
 package com.bankofshanghai.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,12 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
 import com.bankofshanghai.pojo.DataTri;
+import com.bankofshanghai.pojo.IpAddress;
 import com.bankofshanghai.service.CheckService;
 import com.bankofshanghai.service.DataService;
 import com.bankofshanghai.service.StatisticsService;
@@ -32,55 +39,76 @@ public class CheckController {
 	@Autowired
 	private StatisticsService statisticsService;
 	
-	@RequestMapping("/checkdata")
-	public String checkData(HttpServletRequest request,@RequestParam(required = false, defaultValue = "10") int rows,
+	//显示data
+	@RequestMapping(value="/checkdata",method=RequestMethod.GET)
+	@ResponseBody
+	public BankResult checkData(HttpServletRequest request,@RequestParam(required = false, defaultValue = "10") int rows,
 			@RequestParam(required = false, defaultValue = "1") int pageNos) 
 					throws Exception{
 		int pageNo=pageNos;
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
-		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNo, rows);
-		request.setAttribute("listss", list);
-		PageInfo<BankData> pageInfo = new PageInfo<BankData>(list);
+		Integer moneyint=0;
+		String fromplace=null;
+		Integer safety=null;
+		Date date_s=null;
+		Date date_e=null;
+		Integer safe_action=0;
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		request.setAttribute("listss", datalist);
+		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
 		request.setAttribute("pageNos", pageNo); //页号
-		return "checkData";
+		
+		MyPageList<BankData> list = new MyPageList<>();
+		list.setList(datalist);
+		list.setPageCount(pageInfo.getPages());
+		list.setPageNos(pageNos);
+		
+		return BankResult.ok(list);
 	}
 
-	@RequestMapping("/check")
-	public String check(BankData data, Model model) {
+	@RequestMapping(value="/check/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public BankResult check(@PathVariable(value="id") Long id, Model model) {
 		//开始
 		long startTime=System.currentTimeMillis();
 		//获得检测结果
+		BankData data = dataService.getDataByID(id);
 		int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 		if (result == -1)  //检测失败
-			model.addAttribute("message","检测失败");
+			//model.addAttribute("message","检测失败");
+			return BankResult.build(0, "检测失败");
 		else  //成功
 			data.setSafeLevel(result);
 		//结束
 		long endTime=System.currentTimeMillis()-startTime;
 		model.addAttribute("time", endTime+"毫秒");
 		model.addAttribute("data", data);
-		return "checkData";
+		return BankResult.ok(data);
 	}
 	
-	@RequestMapping("/check_all")
-	public String check_all(HttpServletRequest request, Model model,
-			@RequestParam(required = false, defaultValue = "10") int rows,
+	@RequestMapping(value="/check_all",method=RequestMethod.POST)
+	@ResponseBody
+	public BankResult check_all(HttpServletRequest request, Model model,@RequestParam(required = false, defaultValue = "10") int rows,
 			@RequestParam(required = false, defaultValue = "1") int pageNos){
-		rows = 999;
 		long startTime=System.currentTimeMillis();
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
+		Integer moneyint=0;
+		String fromplace=null;
+		Integer safety=null;
+		Date date_s=null;
+		Date date_e=null;
 		int count=0;
-		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNos, rows);
-		int n = list.size();
+		List<BankData> list_t=dataService.select_data(fromuser, touser, tool);
+		int n = list_t.size();
 		model.addAttribute("count_n",n);
 		for(int i=0;i<n;i++){
-			BankData data= list.get(i);
-			/*Long userid = (long) data.getFromuser();
+			BankData data= list_t.get(i);
+			Long userid = (long) data.getFromuser();
 			BankUser user = usermanService.getUserByID(userid);
 			Integer usertype=user.getUsertype();
 			if(usertype==0)//黑名单
@@ -97,51 +125,62 @@ public class CheckController {
 				}
 				
 				else // 灰名单，高风险ip、手机号等
-				{*/
+				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						model.addAttribute("message","检测失败");
+						return BankResult.build(0, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
 						count++;
 					}
-					model.addAttribute("data", data);
-				//}
+				}
 					
-			//}
+			}
 			
 		}
 		long endTime=System.currentTimeMillis()-startTime;
 		model.addAttribute("time", endTime+"毫秒");
 		model.addAttribute("count",count);
-		return "checkData";
+		Integer safe_action=0;
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNos, rows);
+		
+		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
+		
+		MyPageList<BankData> list = new MyPageList<>();
+		list.setList(datalist);
+		list.setPageCount(pageInfo.getPages());
+		list.setPageNos(pageNos);
+		
+		return BankResult.ok(list);
 	}
 	
-	@RequestMapping("/check_test")
-	public String check_test(HttpServletRequest request, Model model,
+	@RequestMapping(value="/check_imm",method=RequestMethod.POST)
+	@ResponseBody
+	public BankResult check_test(HttpServletRequest request, Model model,
 			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos,
-			@RequestParam(required = false, defaultValue = "0") int count,
-			@RequestParam(required = false, defaultValue = "0") int count_n) {
+			@RequestParam(required = false, defaultValue = "1") int pageNos) {
 		
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
-		List<BankData> list=dataService.queryByPage(fromuser, touser, tool, pageNos, rows);
+		Integer moneyint=0;
+		String fromplace=null;
+		Integer safety=null;
+		Date date_s=null;
+		Date date_e=null;
+		Integer safe_action=0;
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNos, rows);
 		
-		int count_black=0;
-		int count_white=0;
-		int n = list.size();
+		int n = datalist.size();
 		for(int i=0;i<n;i++){
-			BankData data= list.get(i);
-			/*Long userid = (long) data.getFromuser();
+			BankData data= datalist.get(i);
+			Long userid = (long) data.getFromuser();
 			BankUser user = usermanService.getUserByID(userid);
 			Integer usertype=user.getUsertype();
 			if(usertype==0)//黑名单
 			{
 				data.setSafeLevel(99);
 				dataService.updateDataSafe(data);
-				count_black++;
 			}
 			else{
 			    
@@ -149,63 +188,36 @@ public class CheckController {
 				{
 					data.setSafeLevel(0);
 					dataService.updateDataSafe(data);
-					count_white++;
 				}
 				
 				else // 灰名单，高风险ip、手机号等
-				{*/
+				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						model.addAttribute("message","检测失败");
+						return BankResult.build(0, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
-						count++;
 					}
-					model.addAttribute("data", data);
-					count_n++;
-				//}
+				}
 					
-			//}
+			}
 			
 		}
-		System.out.println("交易总数为："+n);
-		model.addAttribute("count_n",count_n);
-		System.out.println("黑名单交易数:"+count_black);
-		model.addAttribute("count_black",count_black);
-		System.out.println("白名单交易数:"+count_white);
-		model.addAttribute("count_white",count_white);
-		System.out.println("欺诈交易数为:"+count);
-		model.addAttribute("count",count);
 		
-		list=dataService.queryByPage(fromuser, touser, tool, pageNos, rows);
-		
-		Long id=null;Integer tri1=null;Integer tri2=null;Integer tri3=null;Integer tri4=null;Integer tri5=null;
-		Integer tri6=null;Integer tri7=null;Integer tri8=null;Integer tri9=null;Integer tri10=null;Integer tri11=null;
-		Integer tri12=null;
-		
-		List<DataTri> list_tri = dataService.selectDataTri(id, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10, tri11, tri12);
-		int[] count_datatri = new int[13];
-		count_datatri = statisticsService.count_datatri(list_tri);
-		
-		request.setAttribute("datatri1", count_datatri[1]);       //每条规则触发的数量
-		request.setAttribute("datatri2", count_datatri[2]);
-		request.setAttribute("datatri3", count_datatri[3]);
-		request.setAttribute("datatri4", count_datatri[4]);
-		request.setAttribute("datatri5", count_datatri[5]);
-		request.setAttribute("datatri6", count_datatri[6]);
-		request.setAttribute("datatri7", count_datatri[7]);
-		request.setAttribute("datatri8", count_datatri[8]);
-		request.setAttribute("datatri9", count_datatri[9]);
-		request.setAttribute("datatri10", count_datatri[10]);
-		request.setAttribute("datatri11", count_datatri[11]);
-		request.setAttribute("datatri12", count_datatri[12]);
+		datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e,safe_action, pageNos, rows);
 		
 		
-		request.setAttribute("listss", list);
-		PageInfo<BankData> pageInfo = new PageInfo<BankData>(list);
+		request.setAttribute("listss", datalist);
+		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
 		request.setAttribute("pageNos", pageNos); //页号
 		
-		return "checkData";
+		
+		MyPageList<BankData> list = new MyPageList<>();
+		list.setList(datalist);
+		list.setPageCount(pageInfo.getPages());
+		list.setPageNos(pageNos);
+		
+		return BankResult.ok(list);
 	}
 }

@@ -1,5 +1,6 @@
 package com.bankofshanghai.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe){
+	public List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2){
 		
 	    pageNo = pageNo == null?1:pageNo;
 	    pageSize = pageSize == null?10:pageSize;
@@ -45,6 +46,8 @@ public class ListServiceImpl implements ListService {
 	    if(ipdata!=null) criteria.andIpEqualTo(ipdata);
 	    
 	    if(ipsafe!=null) criteria.andSafetyEqualTo(ipsafe);
+	    
+	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<IpAddress> list = ipmapper.selectByExample(example);
 	    
@@ -53,7 +56,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe){
+	public List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2){
 		IpAddressExample example = new IpAddressExample();
 	    Criteria criteria = example.createCriteria();
 		
@@ -63,6 +66,9 @@ public class ListServiceImpl implements ListService {
 	    
 	    if(ipsafe!=null) criteria.andSafetyEqualTo(ipsafe);
 	    
+
+	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
+	    
         List<IpAddress> list = ipmapper.selectByExample(example);
 	    
 	    return list;
@@ -71,22 +77,28 @@ public class ListServiceImpl implements ListService {
 	@Override
 	public int updateIp(IpAddress ipdata){
 		
-		ipmapper.updateByPrimaryKeySelective(ipdata);
-		return 1;
+		if(ipmapper.updateByPrimaryKeySelective(ipdata)>0)
+		    return 1;
+		
+		return 0;
 	}
 	
 	@Override
 	public int addIp(IpAddress ipdata){
 		
-		ipmapper.insertSelective(ipdata);
+		if(ipmapper.insertSelective(ipdata)>0)
 		return 1;
+		
+		return 0;
 	}
 	
 	@Override
 	public int deleteIp(IpAddress ipdata){
 		
-		ipmapper.deleteByPrimaryKey(ipdata.getId());
+		if(ipmapper.deleteByPrimaryKey(ipdata.getId())>0)
 		return 1;
+		
+		return 0;
 	}
 
 	@Override
@@ -97,7 +109,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<PhoneData> queryByPage_phone(Integer pageNo,Integer pageSize,Long id , Integer phonedata , Integer phonesafe){
+	public List<PhoneData> queryByPage_phone(Integer pageNo,Integer pageSize,Long id , Integer phonedata , Integer phonesafe,Date date1,Date date2){
 		
 	    pageNo = pageNo == null?1:pageNo;
 	    pageSize = pageSize == null?10:pageSize;
@@ -109,6 +121,9 @@ public class ListServiceImpl implements ListService {
 	    if(phonedata!=null) criteria.andPhoneNumberEqualTo(phonedata);
 	    
 	    if(phonesafe!=null) criteria.andSafetyEqualTo(phonesafe);
+	    
+
+	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<PhoneData> list = phonemapper.selectByExample(example);
 	    
@@ -117,7 +132,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<PhoneData> select_phone(Long id , Integer phonedata , Integer phonesafe){
+	public List<PhoneData> select_phone(Long id , Integer phonedata , Integer phonesafe,Date date1,Date date2){
 	    PhoneDataExample example = new PhoneDataExample();
 	    PhoneDataExample.Criteria criteria = example.createCriteria();
 	    
@@ -126,6 +141,8 @@ public class ListServiceImpl implements ListService {
 	    if(phonedata!=null) criteria.andPhoneNumberEqualTo(phonedata);
 	    
 	    if(phonesafe!=null) criteria.andSafetyEqualTo(phonesafe);
+	    
+	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
 	    
         List<PhoneData> list = phonemapper.selectByExample(example);
 	    
@@ -136,22 +153,28 @@ public class ListServiceImpl implements ListService {
 	@Override
 	public int updatePhone(PhoneData phonedata){
 		
-		phonemapper.updateByPrimaryKeySelective(phonedata);
+		if(phonemapper.updateByPrimaryKeySelective(phonedata)>0)
 		return 1;
+		
+		return 0;
 	}
 	
 	@Override
 	public int addPhone(PhoneData phonedata){
 		
-		phonemapper.insertSelective(phonedata);
+		if(phonemapper.insertSelective(phonedata)>0)
 		return 1;
+		
+		return 0;
 	}
 	
 	@Override
 	public int deletePhone(PhoneData phonedata){
 		
-		phonemapper.deleteByPrimaryKey(phonedata.getId());
+		if(phonemapper.deleteByPrimaryKey(phonedata.getId())>0)
 		return 1;
+		
+		return 0;
 	}
 	
 	@Override

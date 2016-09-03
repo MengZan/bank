@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BankData {
     private Long id;
 
@@ -57,6 +59,7 @@ public class BankData {
         this.money = money;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     public Date getDatetime() {
         return datetime;
     }

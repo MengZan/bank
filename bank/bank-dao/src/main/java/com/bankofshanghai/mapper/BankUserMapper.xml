@@ -6,6 +6,7 @@
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="usertype" property="usertype" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, password, usertype
+    id, username, password, usertype, datetime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bankofshanghai.pojo.BankUserExample" >
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.bankofshanghai.pojo.BankUser" >
     insert into bank_user (id, username, password, 
-      usertype)
+      usertype, datetime)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{usertype,jdbcType=INTEGER})
+      #{usertype,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bankofshanghai.pojo.BankUser" >
     insert into bank_user
@@ -119,6 +120,9 @@
       <if test="usertype != null" >
         usertype,
       </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -132,6 +136,9 @@
       </if>
       <if test="usertype != null" >
         #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.usertype != null" >
         usertype = #{record.usertype,jdbcType=INTEGER},
       </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      usertype = #{record.usertype,jdbcType=INTEGER}
+      usertype = #{record.usertype,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="usertype != null" >
         usertype = #{usertype,jdbcType=INTEGER},
       </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -190,7 +204,8 @@
     update bank_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      usertype = #{usertype,jdbcType=INTEGER}
+      usertype = #{usertype,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

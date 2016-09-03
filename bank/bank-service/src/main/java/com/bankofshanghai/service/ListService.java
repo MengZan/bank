@@ -1,5 +1,6 @@
 package com.bankofshanghai.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.bankofshanghai.pojo.BankData;
@@ -10,9 +11,9 @@ public interface ListService {
 	
 	IpAddress getIpById(Long id);
 	
-	List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe);
+	List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2);
 	
-	List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe);
+	List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2);
 	
 	int updateIp(IpAddress ipdata);
 	
@@ -22,9 +23,9 @@ public interface ListService {
 
 	PhoneData getPhoneById(Long id);
 	
-	List<PhoneData> queryByPage_phone(Integer pageNo,Integer pageSize,Long id , Integer phonedata , Integer phonesafe);
+	List<PhoneData> queryByPage_phone(Integer pageNo,Integer pageSize,Long id , Integer phonedata , Integer phonesafe,Date date1,Date date2);
 	
-	List<PhoneData> select_phone(Long id , Integer phonedata , Integer phonesafe);
+	List<PhoneData> select_phone(Long id , Integer phonedata , Integer phonesafe,Date date1,Date date2);
 	
 	int updatePhone(PhoneData phonedata);
 	

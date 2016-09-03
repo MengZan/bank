@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,7 +18,7 @@ table {border-collapse: collapse;}
 <body>
 
 
-<form action="${pageContext.request.contextPath }/datashow_fenye.action" method="post">
+<form action="${pageContext.request.contextPath }/checkdata.action" method="post">
  
 <h2 align="center">交易信息</h2>
 <table align="center">
@@ -41,12 +41,12 @@ table {border-collapse: collapse;}
 </table>
 <br>
 <c:if test="${pageNos>1 }">
-<a href="${pageContext.request.contextPath }/datashow_fenye.action?pageNos=1" >首页</a>
-<a href="${pageContext.request.contextPath }/datashow_fenye.action?pageNos=${pageNos-1 }">上一页</a>
+<a href="${pageContext.request.contextPath }/checkdata.action?pageNos=1" >首页</a>
+<a href="${pageContext.request.contextPath }/checkdata.action?pageNos=${pageNos-1 }">上一页</a>
 </c:if>
 <c:if test="${pageNos <recordCount }">
-<a href="${pageContext.request.contextPath }/datashow_fenye.action?pageNos=${pageNos+1 }">下一页</a>
-<a href="${pageContext.request.contextPath }/datashow_fenye.action?pageNos=${recordCount }">末页</a>
+<a href="${pageContext.request.contextPath }/checkdata.action?pageNos=${pageNos+1 }">下一页</a>
+<a href="${pageContext.request.contextPath }/checkdata.action?pageNos=${recordCount }">末页</a>
 </c:if>
 
 <h4 align="center">共${recordCount }页  
@@ -59,7 +59,7 @@ table {border-collapse: collapse;}
 
 </form>
 
-<form action="${pageContext.request.contextPath }/check_test.action?pageNos=${pageNos}" method="post">
+<form action="${pageContext.request.contextPath }/check_imm.action?pageNos=${pageNos}" method="post">
 
 <input type="submit" value="单页检测">
 
@@ -85,6 +85,9 @@ ${time }
 <td class="hidden-480">${count} </td>
 </tr>
 </table>
+
+
+
 
 <a href="/">返回首页</a>
 </body>

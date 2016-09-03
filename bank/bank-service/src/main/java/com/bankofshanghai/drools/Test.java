@@ -1,5 +1,7 @@
 package com.bankofshanghai.drools;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +17,13 @@ import com.bankofshanghai.service.UsermanService;
 //import com.bankofshanghai.pojo.BankData;
 public class Test {
 
-	@Autowired
-	private static  UsermanService usermanService;
 	
 	 public static final void main(String[] args) {
        try {
+    	   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
     	   
-    	   
-    	   int pageNo=1;
-    	   int rows=10;
-    	   Long userid=(long) 1;
-    	   int usertype_t=2;
-    	   
-    	   List<BankUser> list=usermanService.queryByPage(pageNo, rows, userid, usertype_t);
-    	   if(list!=null)
-    	   System.out.println("1");
-    	   else System.out.println("2");
+    	 Date t=simpleDateFormat.parse("20120822");
+    	 System.out.println(t);
 	        } catch (Throwable t) {
 	            t.printStackTrace();
 	        }
