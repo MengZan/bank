@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,14 +19,13 @@ import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.IpAddress;
 import com.bankofshanghai.service.DataService;
-import com.bankofshanghai.service.StatisticsService;
 import com.bankofshanghai.service.UserService;
 import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class UserController {
 
 	@Autowired
@@ -39,37 +37,33 @@ public class UserController {
 	@Autowired
 	private UsermanService usermanService;
 	
-
-	@Autowired
-	private StatisticsService statisticsService;
-	
-	@RequestMapping("/login")
-	public String login(HttpSession session, Model model, String username, String password)
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@ResponseBody
+	public BankResult login(HttpSession session, String username, String password)
 			throws Exception {
-		// 调用service进行用户身份验证
 		if(userService.login(username, password)==0){
 			// 登陆成功，在session中保存用户身份信息
 			session.setAttribute("username", username);
-			// 重定向到商品列表页面
-			return "redirect:/";
+			return BankResult.ok(username);
 		}
+		String msg = null;
 		// 用户名不存在
 		if(userService.login(username, password)==1){
-			model.addAttribute("message","用户名不存在");
+			msg = "用户名不存在";
 		}
 		// 密码错误
 		if(userService.login(username, password)==2){
-			model.addAttribute("message","密码错误");
+			msg = "密码错误";
 		}
-		model.addAttribute("username",username);
-		return "login";
+		return BankResult.build(1, msg, username);
 	}
 	
 	// 登出
 	@RequestMapping("/logout")
-	public String logout(HttpSession session){
+	@ResponseBody
+	public BankResult logout(HttpSession session){
 		session.invalidate();
-		return "redirect:/";
+		return BankResult.ok();
 	}
 	
 	@RequestMapping("/checkusertype")
@@ -116,8 +110,7 @@ public class UserController {
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
 		list.setList(userlist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 	
@@ -154,8 +147,7 @@ public class UserController {
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
 		list.setList(userlist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 

@@ -2,7 +2,9 @@ package com.bankofshanghai.mypojo;
 
 public class BankResult {
 
-    // 响应业务状态
+    /**
+     * 0：正常；1：错误；2：未登录；3：其他
+     */
     private Integer status;
 
     // 响应消息
@@ -36,7 +38,7 @@ public class BankResult {
     }
 
     public BankResult(Object data) {
-        this.status = 1;
+        this.status = 0;
         this.msg = null;
         this.data = data;
     }

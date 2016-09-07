@@ -8,7 +8,7 @@
 </head>
 <body>
 您还没有登陆，请先登录
-<form action="${pageContext.request.contextPath }/login.action" method="post">
+<form action="${pageContext.request.contextPath }/ajax/login" method="post">
 用户账号：<input type="text" name="username"  value="${username}"/><br/>
 用户密码：<input type="password" name="password" /><br/>
 <input type="submit" value="登陆"/>

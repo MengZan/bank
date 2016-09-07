@@ -63,9 +63,9 @@ public class CheckController {
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
-		
+//		list.setPageCount(pageInfo.getPages());
+//		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());		
 		return BankResult.ok(list);
 	}
 
@@ -148,9 +148,9 @@ public class CheckController {
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
-		
+//		list.setPageCount(pageInfo.getPages());
+//		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 	
@@ -215,8 +215,7 @@ public class CheckController {
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
 	}

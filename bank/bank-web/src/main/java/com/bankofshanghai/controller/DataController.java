@@ -62,8 +62,7 @@ public class DataController {
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -90,8 +89,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -118,8 +116,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -147,8 +144,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -175,8 +171,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -204,8 +199,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -235,8 +229,7 @@ public class DataController {
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -270,8 +263,7 @@ public class DataController {
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}

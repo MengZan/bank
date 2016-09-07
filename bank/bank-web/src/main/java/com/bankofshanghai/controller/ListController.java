@@ -61,8 +61,7 @@ public class ListController {
 		PageInfo<IpAddress> pageInfo = new PageInfo<IpAddress>(iplist);
 		MyPageList<IpAddress> list = new MyPageList<>();
 		list.setList(iplist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
 		request.setAttribute("pageNos", pageNo); //页号
 		
@@ -122,8 +121,7 @@ public class ListController {
 		PageInfo<IpAddress> pageInfo = new PageInfo<IpAddress>(iplist);
 		MyPageList<IpAddress> list = new MyPageList<>();
 		list.setList(iplist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 	
@@ -178,8 +176,7 @@ public class ListController {
 			PageInfo<PhoneData> pageInfo = new PageInfo<PhoneData>(phonelist);
 			MyPageList<PhoneData> list = new MyPageList<>();
 			list.setList(phonelist);
-			list.setPageCount(pageInfo.getPages());
-			list.setPageNos(pageNos);
+			list.setTotal(pageInfo.getTotal());
 			request.setAttribute("recordCount", pageInfo.getPages()); //总页数
 			request.setAttribute("pageNos", pageNo); //页号
 			
@@ -238,8 +235,7 @@ public class ListController {
 			PageInfo<PhoneData> pageInfo = new PageInfo<PhoneData>(phonelist);
 			MyPageList<PhoneData> list = new MyPageList<>();
 			list.setList(phonelist);
-			list.setPageCount(pageInfo.getPages());
-			list.setPageNos(pageNos);
+			list.setTotal(pageInfo.getTotal());
 			return BankResult.ok(list);
 		}
 		
