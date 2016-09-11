@@ -48,6 +48,9 @@ public class ListServiceImpl implements ListService {
 	    if(ipsafe!=null) criteria.andSafetyEqualTo(ipsafe);
 	    
 	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
+	    
+	    example.setOrderByClause("datetime desc");
+	    
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<IpAddress> list = ipmapper.selectByExample(example);
 	    
@@ -68,6 +71,8 @@ public class ListServiceImpl implements ListService {
 	    
 
 	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
+	    
+	    example.setOrderByClause("datetime desc");
 	    
         List<IpAddress> list = ipmapper.selectByExample(example);
 	    
@@ -124,6 +129,9 @@ public class ListServiceImpl implements ListService {
 	    
 
 	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
+	    
+	    example.setOrderByClause("datetime desc");
+	    
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<PhoneData> list = phonemapper.selectByExample(example);
 	    
@@ -143,6 +151,8 @@ public class ListServiceImpl implements ListService {
 	    if(phonesafe!=null) criteria.andSafetyEqualTo(phonesafe);
 	    
 	    if(date1!=null && date2!=null)criteria.andDatetimeBetween(date1, date2);
+	    
+	    example.setOrderByClause("datetime desc");
 	    
         List<PhoneData> list = phonemapper.selectByExample(example);
 	    

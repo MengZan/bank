@@ -1,7 +1,5 @@
 package com.bankofshanghai.mypojo;
 
-import java.math.BigDecimal;
-
 /**
  * 统计量
  * @author DMM

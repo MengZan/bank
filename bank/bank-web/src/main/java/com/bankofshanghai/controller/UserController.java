@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.mypojo.MyPageList;
-import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.IpAddress;
-import com.bankofshanghai.service.DataService;
-import com.bankofshanghai.service.StatisticsService;
 import com.bankofshanghai.service.UserService;
 import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
@@ -34,19 +29,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
 	@Autowired
 	private UsermanService usermanService;
-	
-
-	
-//	@RequestMapping("/user/1000")
-//	@ResponseBody
-//	public BankResult getUserById(@PathVariable Long userId) {
-//		BankUser user = new BankUser();
-//		user=usermanService.getUserByID((long) 1 );
-//		return BankResult.ok(user);
-//	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
@@ -104,7 +88,7 @@ public class UserController {
 	@RequestMapping(value="/usershow", method=RequestMethod.POST)
 	@ResponseBody
 	public BankResult usershow(HttpServletRequest request,HttpSession session,
-			Integer usertype,String date_s,String date_e,
+			@RequestParam(required = false, defaultValue = "7") Integer usertype,String date_s,String date_e,
 			@RequestParam(required = false, defaultValue = "10") int pageSize,
 			@RequestParam(required = false, defaultValue = "1") int page)
 					throws Exception{
@@ -144,15 +128,16 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/usermanage", method=RequestMethod.POST)
+	@RequestMapping(value="/usermanage/{id}", method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult userupdate(BankUser user){
+	public BankResult userupdate(@PathVariable(value="id") Long id,BankUser user,Integer usertype){
 		
-		
+		user.setId(id);
+		user.setUsertype(usertype);
 		if(usermanService.UserUpdate(user)==1)
 	    return BankResult.ok();
 		
-	return BankResult.build(0, "更新失败");
+	return BankResult.build(1, "更新失败");
 	}
 	
 

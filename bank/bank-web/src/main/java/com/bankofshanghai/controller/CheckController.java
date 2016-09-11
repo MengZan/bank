@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyDataList;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
@@ -55,11 +56,11 @@ public class CheckController {
 		Date date_e=null;
 		Integer safe_action=0;
 		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
-		
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
 		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
@@ -75,7 +76,7 @@ public class CheckController {
 		int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 		if (result == -1)  //检测失败
 			//model.addAttribute("message","检测失败");
-			return BankResult.build(0, "检测失败");
+			return BankResult.build(1, "检测失败");
 		else  //成功
 			data.setSafeLevel(result);
 		//结束
@@ -124,7 +125,7 @@ public class CheckController {
 				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						return BankResult.build(0, "检测失败");
+						return BankResult.build(1, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
 						count++;
@@ -140,10 +141,11 @@ public class CheckController {
 		Integer safe_action=0;
 		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,page, pageSize);
 		
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
 		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
@@ -189,7 +191,7 @@ public class CheckController {
 				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						return BankResult.build(0, "检测失败");
+						return BankResult.build(1, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
 					}
@@ -201,12 +203,11 @@ public class CheckController {
 		
 		datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e,safe_action, page, pageSize);
 		
-		
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
-		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
 		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);

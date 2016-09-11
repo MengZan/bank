@@ -1,12 +1,10 @@
 package com.bankofshanghai.controller;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.mypojo.MyPageList;
-import com.bankofshanghai.pojo.BankData;
-import com.bankofshanghai.pojo.BankRule;
 import com.bankofshanghai.pojo.IpAddress;
 import com.bankofshanghai.pojo.PhoneData;
-import com.bankofshanghai.service.DataService;
 import com.bankofshanghai.service.ListService;
-import com.bankofshanghai.service.StatisticsService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -34,9 +28,6 @@ public class ListController {
 	
 	@Autowired
 	private ListService listService;
-	
-	
-	
 	
 	//显示ip
 	@RequestMapping(value="/ipmanage" ,method=RequestMethod.GET)
@@ -86,7 +77,7 @@ public class ListController {
 		ip.setSafety(safety);
 		if(listService.addIp(ip)==1)
 		    return BankResult.ok();
-		return BankResult.build(0, "添加失败");
+		return BankResult.build(1, "添加失败");
 	}
 	
 	//通过safety和日期查看ip
@@ -128,16 +119,17 @@ public class ListController {
 	//修改ip
 	@RequestMapping(value="/ipmanage/{id}", method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult ipedit(HttpServletRequest request,@PathVariable(value="id") Long id,IpAddress ip,Integer ipsafe){
+	public BankResult ipedit(HttpServletRequest request,@PathVariable(value="id") Long id,IpAddress ip,Integer safety){
 		
 		ip.setId(id);
-		ip.setSafety(ipsafe);
+		ip.setSafety(safety);
 		Date date=new Date();
+		
 		ip.setDatetime(date);
 		if(listService.updateIp(ip)==1)
 		    return BankResult.ok();
 		
-		return BankResult.build(0, "更新失败");
+		return BankResult.build(1, "更新失败");
 	}
 	
 	
@@ -191,13 +183,16 @@ public class ListController {
 		//添加phone
 		@RequestMapping(value="/phonemanage" ,method=RequestMethod.POST)
 		@ResponseBody
-		public BankResult phoneadd(PhoneData phone) {
+		public BankResult phoneadd(Integer phonenumber,Integer safety) {
 
+			PhoneData phone = new PhoneData();
 			Date date=new Date();
 			phone.setDatetime(date);
+			phone.setPhoneNumber(phonenumber);
+			phone.setSafety(safety);
 			if(listService.addPhone(phone)==1)
 			    return BankResult.ok();
-			return BankResult.build(0, "添加失败");
+			return BankResult.build(1, "添加失败");
 		}
 		
 		//通过safety和日期查看phone
@@ -239,17 +234,17 @@ public class ListController {
 		//修改phone
 		@RequestMapping(value="/phonemanage/{id}", method=RequestMethod.POST)
 		@ResponseBody
-		public BankResult phoneedit(HttpServletRequest request,@PathVariable(value="id") Long id,PhoneData phone,Integer phonesafe){
+		public BankResult phoneedit(HttpServletRequest request,@PathVariable(value="id") Long id,PhoneData phone,Integer safety){
 			
 			phone.setId(id);
-			phone.setSafety(phonesafe);
+			phone.setSafety(safety);
 
 			Date date=new Date();
 			phone.setDatetime(date);
 			if(listService.updatePhone(phone)==1)
 			    return BankResult.ok();
 			
-			return BankResult.build(0, "更新失败");
+			return BankResult.build(1, "更新失败");
 		}
 		
 		
@@ -261,7 +256,7 @@ public class ListController {
 			if(listService.deletePhone(phone)==1)
 			return BankResult.ok();
 			
-			return BankResult.build(0, "删除失败");
+			return BankResult.build(1, "删除失败");
 		}
 
 }

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyDataList;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
-import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.PhoneData;
 import com.bankofshanghai.service.DataService;
-import com.bankofshanghai.service.UserService;
-import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -260,10 +256,10 @@ public class DataController {
  	    	 date_e=null;
  	    }
 		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
-		
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
 		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		

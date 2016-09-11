@@ -60,6 +60,7 @@ public class UsermanServiceImpl implements UsermanService {
 			criteria.andDatetimeBetween(date_s, date_e);
 		}
 	    
+	    example.setOrderByClause("datetime desc");
 	    
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<BankUser> list=userMapper.selectByExample(example);
