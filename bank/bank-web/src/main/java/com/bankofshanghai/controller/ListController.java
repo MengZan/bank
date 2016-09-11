@@ -29,13 +29,12 @@ import com.bankofshanghai.service.StatisticsService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class ListController {
 	
 	@Autowired
 	private ListService listService;
 	
-	@Autowired
-	private StatisticsService statisticsService;
 	
 	
 	
@@ -43,27 +42,24 @@ public class ListController {
 	@RequestMapping(value="/ipmanage" ,method=RequestMethod.GET)
 	@ResponseBody
 	public BankResult ipshow(HttpServletRequest request,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long id = null;
-		Integer ipdata = null;
+		String ipdata = null;
 		Integer ipsafe = null;
 		Date date1=null;
 		Date date2=null;
-		List<IpAddress> iplist=listService.queryByPage_ip(pageNo, rows, id, ipdata, ipsafe,date1,date2);
+		List<IpAddress> iplist=listService.queryByPage_ip(pageNo, pageSize, id, ipdata, ipsafe,date1,date2);
 
 		
 		
 		
-		request.setAttribute("listss", iplist);
 		PageInfo<IpAddress> pageInfo = new PageInfo<IpAddress>(iplist);
 		MyPageList<IpAddress> list = new MyPageList<>();
 		list.setList(iplist);
 		list.setTotal(pageInfo.getTotal());
-		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
-		request.setAttribute("pageNos", pageNo); //页号
 		
 		
 		return BankResult.ok(list);
@@ -81,10 +77,13 @@ public class ListController {
 	//添加ip
 	@RequestMapping(value="/ipmanage" ,method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult ipadd(IpAddress ip) {
+	public BankResult ipadd(String ipdata, Integer safety) {
 
+		IpAddress ip = new IpAddress();
 		Date date=new Date();
 		ip.setDatetime(date);
+		ip.setIp(ipdata);
+		ip.setSafety(safety);
 		if(listService.addIp(ip)==1)
 		    return BankResult.ok();
 		return BankResult.build(0, "添加失败");
@@ -93,30 +92,30 @@ public class ListController {
 	//通过safety和日期查看ip
 	@RequestMapping(value="/ipshow", method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult ipshow( Integer safety, String date_s1,String date_e1,
-			Model model,@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos) 
+	public BankResult ipshow( Integer safety, String date_s,String date_e,
+			Model model,@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page) 
 					throws Exception{
 		Long id = null;
-		Integer ipdata = null;
+		String ipdata = null;
 		Integer ipsafe = safety;
-		Date date_s=null;
-		Date date_e=null;
+		Date date_s1=null;
+		Date date_e1=null;
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
- 	    if(date_s1!=null) {
- 	    	 date_s=simpleDateFormat.parse(date_s1);
+ 	    if(date_s!=null) {
+ 	    	 date_s1=simpleDateFormat.parse(date_s);
  	    }
  	    else{
- 	    	 date_s=null;
+ 	    	 date_s1=null;
  	    }
- 	    if(date_e1!=null){
- 	    	 date_e=simpleDateFormat.parse(date_e1);
+ 	    if(date_e!=null){
+ 	    	 date_e1=simpleDateFormat.parse(date_e);
  	    }
  	    else{
- 	    	 date_e=null;
+ 	    	 date_e1=null;
  	    }
-		List<IpAddress> iplist=listService.queryByPage_ip(pageNos, rows, id, ipdata, ipsafe,date_s,date_e);
+		List<IpAddress> iplist=listService.queryByPage_ip(page, pageSize, id, ipdata, ipsafe,date_s1,date_e1);
 
 		PageInfo<IpAddress> pageInfo = new PageInfo<IpAddress>(iplist);
 		MyPageList<IpAddress> list = new MyPageList<>();
@@ -159,26 +158,23 @@ public class ListController {
 		@RequestMapping(value="/phonemanage" ,method=RequestMethod.GET)
 		@ResponseBody
 		public BankResult phoneshow(HttpServletRequest request,
-				@RequestParam(required = false, defaultValue = "10") int rows,
-				@RequestParam(required = false, defaultValue = "1") int pageNos)
-		throws Exception{
-			int pageNo=pageNos;
+				@RequestParam(required = false, defaultValue = "10") int pageSize,
+				@RequestParam(required = false, defaultValue = "1") int page)
+						throws Exception{
+			int pageNo=page;
 			Long id = null;
 			Integer PhoneData = null;
 			Integer phonesafe = null;
 			Date date1=null;
 			Date date2=null;
-			List<PhoneData> phonelist=listService.queryByPage_phone(pageNo, rows, id, PhoneData, phonesafe,date1,date2);
+			List<PhoneData> phonelist=listService.queryByPage_phone(pageNo, pageSize, id, PhoneData, phonesafe,date1,date2);
 			
 			
 			
-			request.setAttribute("listss", phonelist);
 			PageInfo<PhoneData> pageInfo = new PageInfo<PhoneData>(phonelist);
 			MyPageList<PhoneData> list = new MyPageList<>();
 			list.setList(phonelist);
 			list.setTotal(pageInfo.getTotal());
-			request.setAttribute("recordCount", pageInfo.getPages()); //总页数
-			request.setAttribute("pageNos", pageNo); //页号
 			
 			
 			return BankResult.ok(list);
@@ -207,30 +203,30 @@ public class ListController {
 		//通过safety和日期查看phone
 		@RequestMapping(value="/phoneshow", method=RequestMethod.POST)
 		@ResponseBody
-		public BankResult phoneshow(Integer safety, String date_s1, String date_e1,
-				Model model,@RequestParam(required = false, defaultValue = "10") int rows,
-				@RequestParam(required = false, defaultValue = "1") int pageNos) 
+		public BankResult phoneshow(Integer safety, String date_s, String date_e,
+				Model model,@RequestParam(required = false, defaultValue = "10") int pageSize,
+				@RequestParam(required = false, defaultValue = "1") int page) 
 						throws Exception{
 			Long id = null;
 			Integer PhoneData = null;
 			Integer phonesafe = safety;
-			Date date_s=null;
-			Date date_e=null;
+			Date date_s1=null;
+			Date date_e1=null;
 
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-	 	    if(date_s1!=null) {
-	 	    	 date_s=simpleDateFormat.parse(date_s1);
+	 	    if(date_s!=null) {
+	 	    	 date_s1=simpleDateFormat.parse(date_s);
 	 	    }
 	 	    else{
-	 	    	 date_s=null;
+	 	    	 date_s1=null;
 	 	    }
-	 	    if(date_e1!=null){
-	 	    	 date_e=simpleDateFormat.parse(date_e1);
+	 	    if(date_e!=null){
+	 	    	 date_e1=simpleDateFormat.parse(date_e);
 	 	    }
 	 	    else{
-	 	    	 date_e=null;
+	 	    	 date_e1=null;
 	 	    }
-			List<PhoneData> phonelist=listService.queryByPage_phone(pageNos, rows, id, PhoneData, phonesafe,date_s,date_e);
+			List<PhoneData> phonelist=listService.queryByPage_phone(page, pageSize, id, PhoneData, phonesafe,date_s1,date_e1);
 
 			PageInfo<PhoneData> pageInfo = new PageInfo<PhoneData>(phonelist);
 			MyPageList<PhoneData> list = new MyPageList<>();

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class IpAddress {
     private Long id;
 
-    private Integer ip;
+    private String ip;
 
     private Integer safety;
 
@@ -21,12 +21,12 @@ public class IpAddress {
         this.id = id;
     }
 
-    public Integer getIp() {
+    public String getIp() {
         return ip;
     }
 
-    public void setIp(Integer ip) {
-        this.ip = ip;
+    public void setIp(String ip) {
+        this.ip = ip == null ? null : ip.trim();
     }
 
     public Integer getSafety() {
@@ -37,7 +37,6 @@ public class IpAddress {
         this.safety = safety;
     }
 
-    
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     public Date getDatetime() {
         return datetime;

@@ -175,52 +175,62 @@ public class IpAddressExample {
             return (Criteria) this;
         }
 
-        public Criteria andIpEqualTo(Integer value) {
+        public Criteria andIpEqualTo(String value) {
             addCriterion("ip =", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpNotEqualTo(Integer value) {
+        public Criteria andIpNotEqualTo(String value) {
             addCriterion("ip <>", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpGreaterThan(Integer value) {
+        public Criteria andIpGreaterThan(String value) {
             addCriterion("ip >", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIpGreaterThanOrEqualTo(String value) {
             addCriterion("ip >=", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpLessThan(Integer value) {
+        public Criteria andIpLessThan(String value) {
             addCriterion("ip <", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpLessThanOrEqualTo(Integer value) {
+        public Criteria andIpLessThanOrEqualTo(String value) {
             addCriterion("ip <=", value, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpIn(List<Integer> values) {
+        public Criteria andIpLike(String value) {
+            addCriterion("ip like", value, "ip");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpNotLike(String value) {
+            addCriterion("ip not like", value, "ip");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIn(List<String> values) {
             addCriterion("ip in", values, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpNotIn(List<Integer> values) {
+        public Criteria andIpNotIn(List<String> values) {
             addCriterion("ip not in", values, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpBetween(Integer value1, Integer value2) {
+        public Criteria andIpBetween(String value1, String value2) {
             addCriterion("ip between", value1, value2, "ip");
             return (Criteria) this;
         }
 
-        public Criteria andIpNotBetween(Integer value1, Integer value2) {
+        public Criteria andIpNotBetween(String value1, String value2) {
             addCriterion("ip not between", value1, value2, "ip");
             return (Criteria) this;
         }

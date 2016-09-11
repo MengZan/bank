@@ -34,7 +34,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2){
+	public List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , String ipdata,Integer ipsafe,Date date1,Date date2){
 		
 	    pageNo = pageNo == null?1:pageNo;
 	    pageSize = pageSize == null?10:pageSize;
@@ -56,7 +56,7 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2){
+	public List<IpAddress> select_ip(Long id , String ipdata,Integer ipsafe,Date date1,Date date2){
 		IpAddressExample example = new IpAddressExample();
 	    Criteria criteria = example.createCriteria();
 		

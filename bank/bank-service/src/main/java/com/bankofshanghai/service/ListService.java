@@ -11,9 +11,9 @@ public interface ListService {
 	
 	IpAddress getIpById(Long id);
 	
-	List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2);
+	List<IpAddress> queryByPage_ip(Integer pageNo,Integer pageSize,Long id , String ipdata,Integer ipsafe,Date date1,Date date2);
 	
-	List<IpAddress> select_ip(Long id , Integer ipdata,Integer ipsafe,Date date1,Date date2);
+	List<IpAddress> select_ip(Long id , String ipdata,Integer ipsafe,Date date1,Date date2);
 	
 	int updateIp(IpAddress ipdata);
 	

@@ -3,7 +3,7 @@
 <mapper namespace="com.bankofshanghai.mapper.IpAddressMapper" >
   <resultMap id="BaseResultMap" type="com.bankofshanghai.pojo.IpAddress" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="ip" property="ip" jdbcType="INTEGER" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
     <result column="safety" property="safety" jdbcType="INTEGER" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.bankofshanghai.pojo.IpAddress" >
     insert into ip_address (id, ip, safety, 
       datetime)
-    values (#{id,jdbcType=BIGINT}, #{ip,jdbcType=INTEGER}, #{safety,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{safety,jdbcType=INTEGER}, 
       #{datetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bankofshanghai.pojo.IpAddress" >
@@ -125,7 +125,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="ip != null" >
-        #{ip,jdbcType=INTEGER},
+        #{ip,jdbcType=VARCHAR},
       </if>
       <if test="safety != null" >
         #{safety,jdbcType=INTEGER},
@@ -148,7 +148,7 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.ip != null" >
-        ip = #{record.ip,jdbcType=INTEGER},
+        ip = #{record.ip,jdbcType=VARCHAR},
       </if>
       <if test="record.safety != null" >
         safety = #{record.safety,jdbcType=INTEGER},
@@ -164,7 +164,7 @@
   <update id="updateByExample" parameterType="map" >
     update ip_address
     set id = #{record.id,jdbcType=BIGINT},
-      ip = #{record.ip,jdbcType=INTEGER},
+      ip = #{record.ip,jdbcType=VARCHAR},
       safety = #{record.safety,jdbcType=INTEGER},
       datetime = #{record.datetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -175,7 +175,7 @@
     update ip_address
     <set >
       <if test="ip != null" >
-        ip = #{ip,jdbcType=INTEGER},
+        ip = #{ip,jdbcType=VARCHAR},
       </if>
       <if test="safety != null" >
         safety = #{safety,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bankofshanghai.pojo.IpAddress" >
     update ip_address
-    set ip = #{ip,jdbcType=INTEGER},
+    set ip = #{ip,jdbcType=VARCHAR},
       safety = #{safety,jdbcType=INTEGER},
       datetime = #{datetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

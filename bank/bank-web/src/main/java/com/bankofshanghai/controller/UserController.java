@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,9 @@ import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
+import com.bankofshanghai.pojo.IpAddress;
 import com.bankofshanghai.service.DataService;
+import com.bankofshanghai.service.StatisticsService;
 import com.bankofshanghai.service.UserService;
 import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
@@ -31,11 +34,19 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private DataService dataService;
 	
 	@Autowired
 	private UsermanService usermanService;
+	
+
+	
+//	@RequestMapping("/user/1000")
+//	@ResponseBody
+//	public BankResult getUserById(@PathVariable Long userId) {
+//		BankUser user = new BankUser();
+//		user=usermanService.getUserByID((long) 1 );
+//		return BankResult.ok(user);
+//	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
@@ -66,46 +77,19 @@ public class UserController {
 		return BankResult.ok();
 	}
 	
-	@RequestMapping("/checkusertype")
-	public String checkusertype(HttpServletRequest request,HttpSession session,Long userid)
-			throws Exception{
-		BankUser user = usermanService.getUserByID(userid);
-		BankData data = dataService.getDataByID(userid);
-		Integer usertype=user.getUsertype();
-		if(usertype==0)//黑名单
-		{
-			data.setSafeLevel(99);
-		}
-		else{
-	    
-		if(usertype==1)//白名单
-		{
-			data.setSafeLevel(0);
-			
-		}
-		
-		else // 灰名单，高风险ip、手机号等
-		{
-			
-		}
-			
-		}
-		dataService.updateDataSafe(data);
-		return "";
-	}
 
 	
 	@RequestMapping(value="/usermanage", method=RequestMethod.GET)
 	@ResponseBody
 	public BankResult usermanage(HttpServletRequest request,HttpSession session,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos){
-		int pageNo=pageNos;
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page){
+		int pageNo=page;
 		int usertype_t=7;
 		Long userid=null;
 		Date date_s=null;
 		Date date_e=null;
-		List<BankUser> userlist=usermanService.queryByPage(pageNo, rows, userid, usertype_t,date_s,date_e);
+		List<BankUser> userlist=usermanService.queryByPage(pageNo, pageSize, userid, usertype_t,date_s,date_e);
 
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
@@ -120,29 +104,29 @@ public class UserController {
 	@RequestMapping(value="/usershow", method=RequestMethod.POST)
 	@ResponseBody
 	public BankResult usershow(HttpServletRequest request,HttpSession session,
-			Integer usertype,String date_s1,String date_e1,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			Integer usertype,String date_s,String date_e,
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 					throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long userid=null;
-		Date date_s=null;
-		Date date_e=null;
+		Date date_s1=null;
+		Date date_e1=null;
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
- 	    if(date_s1!=null) {
- 	    	 date_s=simpleDateFormat.parse(date_s1);
+ 	    if(date_s!=null) {
+ 	    	 date_s1=simpleDateFormat.parse(date_s);
  	    }
  	    else{
- 	    	 date_s=null;
+ 	    	 date_s1=null;
  	    }
- 	    if(date_e1!=null){
- 	    	 date_e=simpleDateFormat.parse(date_e1);
+ 	    if(date_e!=null){
+ 	    	 date_e1=simpleDateFormat.parse(date_e);
  	    }
  	    else{
- 	    	 date_e=null;
+ 	    	 date_e1=null;
  	    }
-		List<BankUser> userlist=usermanService.queryByPage(pageNo, rows, userid, usertype,date_s,date_e);
+		List<BankUser> userlist=usermanService.queryByPage(pageNo, pageSize, userid, usertype,date_s1,date_e1);
 
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
@@ -171,14 +155,5 @@ public class UserController {
 	return BankResult.build(0, "更新失败");
 	}
 	
-//	@RequestMapping("/list/usertypeupdate")
-//	public String usertypeupdate(HttpServletRequest request,HttpSession session,BankUser user){
-//		
-//		Long userid = user.getId();
-//		String usertype_t = request.getParameter("usertype");
-//		int usertype = Integer.parseInt(usertype_t);
-//		usermanService.UsertypeUpdata(userid, usertype);
-//		return "usermanage";
-//	}
-	
+
 }
