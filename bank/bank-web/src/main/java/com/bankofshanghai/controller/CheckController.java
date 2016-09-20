@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyDataList;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
@@ -27,6 +28,7 @@ import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class CheckController {
 
 	@Autowired
@@ -36,16 +38,14 @@ public class CheckController {
 	@Autowired
 	private UsermanService usermanService;
 	
-	@Autowired
-	private StatisticsService statisticsService;
 	
 	//显示data
 	@RequestMapping(value="/checkdata",method=RequestMethod.GET)
 	@ResponseBody
-	public BankResult checkData(HttpServletRequest request,@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos) 
+	public BankResult checkData(HttpServletRequest request,@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page) 
 					throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
@@ -55,16 +55,13 @@ public class CheckController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
-		request.setAttribute("listss", datalist);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
-		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
-		request.setAttribute("pageNos", pageNo); //页号
 		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
+		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
 	}
@@ -79,7 +76,7 @@ public class CheckController {
 		int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 		if (result == -1)  //检测失败
 			//model.addAttribute("message","检测失败");
-			return BankResult.build(0, "检测失败");
+			return BankResult.build(1, "检测失败");
 		else  //成功
 			data.setSafeLevel(result);
 		//结束
@@ -91,8 +88,8 @@ public class CheckController {
 	
 	@RequestMapping(value="/check_all",method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult check_all(HttpServletRequest request, Model model,@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos){
+	public BankResult check_all(HttpServletRequest request, Model model,@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page){
 		long startTime=System.currentTimeMillis();
 		Long fromuser=null;
 		Long touser=null;
@@ -128,7 +125,7 @@ public class CheckController {
 				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						return BankResult.build(0, "检测失败");
+						return BankResult.build(1, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
 						count++;
@@ -142,14 +139,14 @@ public class CheckController {
 		model.addAttribute("time", endTime+"毫秒");
 		model.addAttribute("count",count);
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNos, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,page, pageSize);
 		
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
+		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
 	}
@@ -157,8 +154,8 @@ public class CheckController {
 	@RequestMapping(value="/check_imm",method=RequestMethod.POST)
 	@ResponseBody
 	public BankResult check_test(HttpServletRequest request, Model model,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos) {
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page) {
 		
 		Long fromuser=null;
 		Long touser=null;
@@ -169,7 +166,7 @@ public class CheckController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNos, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,page, pageSize);
 		
 		int n = datalist.size();
 		for(int i=0;i<n;i++){
@@ -194,7 +191,7 @@ public class CheckController {
 				{
 					int result = checkService.check(data, dataService.getStatisticsDataByUser(data));
 					if (result == -1)  //检测失败
-						return BankResult.build(0, "检测失败");
+						return BankResult.build(1, "检测失败");
 					else  {//成功
 						data.setSafeLevel(result);
 					}
@@ -204,19 +201,14 @@ public class CheckController {
 			
 		}
 		
-		datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e,safe_action, pageNos, rows);
+		datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e,safe_action, page, pageSize);
 		
-		
-		request.setAttribute("listss", datalist);
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
-		request.setAttribute("recordCount", pageInfo.getPages()); //总页数
-		request.setAttribute("pageNos", pageNos); //页号
 		
-		
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
+		list.setTotal(pageInfo.getTotal());
 		
 		return BankResult.ok(list);
 	}

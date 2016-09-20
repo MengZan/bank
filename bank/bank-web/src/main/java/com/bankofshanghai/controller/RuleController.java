@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyBankRule;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.mypojo.RuleFactor;
 import com.bankofshanghai.pojo.BankRule;
@@ -19,6 +20,7 @@ import com.bankofshanghai.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class RuleController {
 
 	@Autowired
@@ -26,27 +28,27 @@ public class RuleController {
 
 	/**
 	 * 查看规则列表
-	 * @param rows 每页多少条数据
-	 * @param pageNos 当前页
+	 * @param pageSize 每页多少条数据
+	 * @param page 当前页
 	 * @param type 规则类型
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/rules", method=RequestMethod.GET)
 	@ResponseBody
-	public BankResult getRuleList(@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos,
+	public BankResult getRuleList(@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false) String type) throws Exception {
 		if (type != null && !"".equals(type)) {
 			type=new String(type.getBytes("iso8859-1"),"utf-8");
 		}
-		List<BankRule> rules = ruleService.queryByPage(type, pageNos, rows);
+		List<BankRule> rules = ruleService.queryByPage(type, page, pageSize);
 		PageInfo<BankRule> pageInfo = new PageInfo<BankRule>(rules);
+		
 		//带分页信息的集合
 		MyPageList<BankRule> list = new MyPageList<>();
 		list.setList(rules);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 
@@ -62,7 +64,7 @@ public class RuleController {
 		rule.setRuledesc(JsonUtils.objectToJson(factor));
 		if (ruleService.addRule(rule))
 			return BankResult.ok();
-		return BankResult.build(0, "添加失败");
+		return BankResult.build(1, "添加失败");
 	}
 	
 	/**
@@ -74,7 +76,8 @@ public class RuleController {
 	@ResponseBody
 	public BankResult getRuleById(@PathVariable("id") Long id) {
 		BankRule rule = ruleService.getRuleById(id);
-		return BankResult.ok(rule);
+		MyBankRule myBankRule = new MyBankRule(rule);
+		return BankResult.ok(myBankRule);
 	}
 
 	/**
@@ -91,7 +94,7 @@ public class RuleController {
 		rule.setRuledesc(JsonUtils.objectToJson(factor));
 		if (ruleService.updateRule(rule))
 			return BankResult.ok();
-		return BankResult.build(0, "更新失败");
+		return BankResult.build(1, "更新失败");
 	}
 
 	/**

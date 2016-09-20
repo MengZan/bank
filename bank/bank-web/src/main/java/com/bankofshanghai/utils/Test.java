@@ -1,6 +1,11 @@
 package com.bankofshanghai.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,10 +28,13 @@ public class Test {
 	 public static final void main(String[] args) {
        try {
     	   
-    	   Long userid = (long) 1;
-    	   BankUser user = usermanService.getUserByID(userid);
-    	   BankResult bankresult = BankResult.ok(user);
-    	   System.out.println(bankresult);
+
+    	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+    	    // CST(北京时间)在东8区  
+    	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));  
+    	    System.out.println(sdf.parse(sdf.format(new Date()))); 
+    	    
+    	    
     	   
     	   
     	   

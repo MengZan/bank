@@ -1,16 +1,20 @@
-package com.bankofshanghai.pojo;
+package com.bankofshanghai.mypojo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class BankData {
+public class MyDataList {
     private Long id;
 
     private Long fromuser;
+    
+    private String fromusername;
 
     private Long touser;
+    
+    private String tousername;
 
     private BigDecimal money;
 
@@ -40,6 +44,14 @@ public class BankData {
     public void setFromuser(Long fromuser) {
         this.fromuser = fromuser;
     }
+    
+    public String getFromusername() {
+        return fromusername;
+    }
+
+    public void setFromusername(String fromusername) {
+        this.fromusername = fromusername;
+    }
 
     public Long getTouser() {
         return touser;
@@ -47,6 +59,14 @@ public class BankData {
 
     public void setTouser(Long touser) {
         this.touser = touser;
+    }
+    
+    public String gettousername() {
+        return tousername;
+    }
+
+    public void settousername(String tousername) {
+        this.tousername = tousername;
     }
 
     public BigDecimal getMoney() {

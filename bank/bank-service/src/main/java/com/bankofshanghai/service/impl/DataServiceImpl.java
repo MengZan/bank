@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bankofshanghai.mapper.BankDataMapper;
+import com.bankofshanghai.mapper.BankUserMapper;
 import com.bankofshanghai.mapper.DataTriMapper;
+import com.bankofshanghai.mypojo.MyDataList;
 import com.bankofshanghai.mypojo.StatisticsData;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankDataExample;
 import com.bankofshanghai.pojo.BankUser;
+import com.bankofshanghai.pojo.BankUserExample;
 import com.bankofshanghai.pojo.DataTri;
 import com.bankofshanghai.pojo.DataTriExample;
 import com.bankofshanghai.pojo.BankDataExample.Criteria;
@@ -32,6 +35,9 @@ public class DataServiceImpl implements DataService {
 	
 	@Autowired
 	private DataTriMapper datatriMapper;
+	
+	@Autowired
+	private BankUserMapper userMapper;
 
 	@Override
 	public BankData getDataByID(Long id) {
@@ -105,6 +111,8 @@ public class DataServiceImpl implements DataService {
 			criteria.andDatetimeBetween(date_s, date_e);
 		}
 		
+		example.setOrderByClause("datetime desc");
+		
 		PageHelper.startPage(pageNo, pageSize);
 		List<BankData> list = dataMapper.selectByExample(example);
 
@@ -129,11 +137,49 @@ public class DataServiceImpl implements DataService {
 			criteria.andToolEqualTo(tool);
 		}
 		
-
+		example.setOrderByClause("datetime desc");
+		
 		List<BankData> list = dataMapper.selectByExample(example);
 
 		return list;
 		
+	}
+	
+	@Override
+	public List<MyDataList> showdata(List<BankData> list){
+		List<MyDataList> datalist = new ArrayList<>();
+		int n = list.size();
+		for(int i=0;i<n;i++){
+
+			BankUserExample example1 = new BankUserExample();
+			BankUserExample example2 = new BankUserExample();
+			BankUserExample.Criteria criteria1 = example1.createCriteria();
+			BankUserExample.Criteria criteria2 = example2.createCriteria();
+			MyDataList mydata = new MyDataList();
+			BankData data=list.get(i);
+			mydata.setFromplace(data.getFromplace());
+			mydata.setFromuser(data.getFromuser());
+			mydata.setId(data.getId());
+			mydata.setMoney(data.getMoney());
+			mydata.setSafeLevel(data.getSafeLevel());
+			mydata.setTool(data.getTool());
+			mydata.setToplace(data.getToplace());
+			mydata.setTouser(data.getTouser());
+			mydata.setDatetime(data.getDatetime());
+			
+			Long fromuser = data.getFromuser();
+			criteria1.andIdEqualTo(fromuser);
+			List<BankUser> userlist1=userMapper.selectByExample(example1);
+			mydata.setFromusername(userlist1.get(0).getUsername());
+			
+			Long touser = data.getTouser();
+			criteria2.andIdEqualTo(touser);
+			List<BankUser> userlist2=userMapper.selectByExample(example2);
+			mydata.settousername(userlist2.get(0).getUsername());
+			datalist.add(mydata);
+		}
+		
+		return datalist;
 	}
 	
 	@Override

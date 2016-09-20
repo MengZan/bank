@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,16 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
+import com.bankofshanghai.mypojo.MyDataList;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.pojo.BankData;
-import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.PhoneData;
 import com.bankofshanghai.service.DataService;
-import com.bankofshanghai.service.UserService;
-import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class DataController {
 
 	@Autowired
@@ -43,11 +40,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbyfromuser(HttpServletRequest request,
 			@PathVariable("fromuser") Long fromuser,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long touser=null;
 		String tool=null;
 		Integer moneyint=0;
@@ -56,14 +53,13 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -72,11 +68,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbytouser(HttpServletRequest request,HttpSession session,
 			@PathVariable("touser")Long touser,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		String tool=null;
 		Integer moneyint=0;
@@ -85,13 +81,12 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -100,11 +95,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbytool(HttpServletRequest request,HttpSession session,
 			@PathVariable("tool")String tool,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		Integer moneyint=0;
@@ -113,13 +108,12 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -128,11 +122,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbymoney(HttpServletRequest request,HttpSession session,
 			@PathVariable("money")String moneytype,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
@@ -142,13 +136,12 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -157,11 +150,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbyfromplace(HttpServletRequest request,HttpSession session,
 			@PathVariable("fromplace")String fromplace,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		Integer moneyint=0;
@@ -170,13 +163,12 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -185,11 +177,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbysafety(HttpServletRequest request,HttpSession session,
 			@PathVariable("safety")String safety,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
@@ -199,13 +191,12 @@ public class DataController {
 		Date date_s=null;
 		Date date_e=null;
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety_t,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety_t,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -214,11 +205,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashowbydate(HttpServletRequest request,
 			String date_s1,String date_e1,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long fromuser=null;
 		Long touser=null;
 		String tool=null;
@@ -229,14 +220,13 @@ public class DataController {
  	    Date date_s=simpleDateFormat.parse(date_s1);
  	    Date date_e=simpleDateFormat.parse(date_e1);
 		Integer safe_action=0;
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
 		
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		
 		MyPageList<BankData> list = new MyPageList<>();
 		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}
@@ -245,11 +235,11 @@ public class DataController {
 	@ResponseBody
 	public BankResult datashow(HttpServletRequest request,HttpSession session,
 			Long fromuser,Long touser,String tool,Integer moneyint,String fromplace,Integer safety,String date_s1,String date_e1,Integer safe_action,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 	
 			throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date_s=null;
 		Date date_e=null;
@@ -265,13 +255,12 @@ public class DataController {
  	    else{
  	    	 date_e=null;
  	    }
-		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, rows);
-		
+		List<BankData> datalist=dataService.queryByPage(fromuser, touser, moneyint,fromplace, tool,safety,date_s,date_e, safe_action,pageNo, pageSize);
+		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
-		MyPageList<BankData> list = new MyPageList<>();
-		list.setList(datalist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		MyPageList<MyDataList> list = new MyPageList<>();
+		list.setList(datalist2);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 		
 	}

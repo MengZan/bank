@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,106 +17,68 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
 import com.bankofshanghai.mypojo.MyPageList;
-import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.IpAddress;
-import com.bankofshanghai.service.DataService;
-import com.bankofshanghai.service.StatisticsService;
 import com.bankofshanghai.service.UserService;
 import com.bankofshanghai.service.UsermanService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/ajax")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
-	private DataService dataService;
-	
-	@Autowired
 	private UsermanService usermanService;
 	
-
-	@Autowired
-	private StatisticsService statisticsService;
-	
-	@RequestMapping("/login")
-	public String login(HttpSession session, Model model, String username, String password)
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@ResponseBody
+	public BankResult login(HttpSession session, String username, String password)
 			throws Exception {
-		// 调用service进行用户身份验证
 		if(userService.login(username, password)==0){
 			// 登陆成功，在session中保存用户身份信息
 			session.setAttribute("username", username);
-			// 重定向到商品列表页面
-			return "redirect:/";
+			return BankResult.ok(username);
 		}
+		String msg = null;
 		// 用户名不存在
 		if(userService.login(username, password)==1){
-			model.addAttribute("message","用户名不存在");
+			msg = "用户名不存在";
 		}
 		// 密码错误
 		if(userService.login(username, password)==2){
-			model.addAttribute("message","密码错误");
+			msg = "密码错误";
 		}
-		model.addAttribute("username",username);
-		return "login";
+		return BankResult.build(1, msg, username);
 	}
 	
 	// 登出
 	@RequestMapping("/logout")
-	public String logout(HttpSession session){
+	@ResponseBody
+	public BankResult logout(HttpSession session){
 		session.invalidate();
-		return "redirect:/";
+		return BankResult.ok();
 	}
 	
-	@RequestMapping("/checkusertype")
-	public String checkusertype(HttpServletRequest request,HttpSession session,Long userid)
-			throws Exception{
-		BankUser user = usermanService.getUserByID(userid);
-		BankData data = dataService.getDataByID(userid);
-		Integer usertype=user.getUsertype();
-		if(usertype==0)//黑名单
-		{
-			data.setSafeLevel(99);
-		}
-		else{
-	    
-		if(usertype==1)//白名单
-		{
-			data.setSafeLevel(0);
-			
-		}
-		
-		else // 灰名单，高风险ip、手机号等
-		{
-			
-		}
-			
-		}
-		dataService.updateDataSafe(data);
-		return "";
-	}
 
 	
 	@RequestMapping(value="/usermanage", method=RequestMethod.GET)
 	@ResponseBody
 	public BankResult usermanage(HttpServletRequest request,HttpSession session,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos){
-		int pageNo=pageNos;
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page){
+		int pageNo=page;
 		int usertype_t=7;
 		Long userid=null;
 		Date date_s=null;
 		Date date_e=null;
-		List<BankUser> userlist=usermanService.queryByPage(pageNo, rows, userid, usertype_t,date_s,date_e);
+		List<BankUser> userlist=usermanService.queryByPage(pageNo, pageSize, userid, usertype_t,date_s,date_e);
 
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
 		list.setList(userlist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 	
@@ -127,35 +88,34 @@ public class UserController {
 	@RequestMapping(value="/usershow", method=RequestMethod.POST)
 	@ResponseBody
 	public BankResult usershow(HttpServletRequest request,HttpSession session,
-			Integer usertype,String date_s1,String date_e1,
-			@RequestParam(required = false, defaultValue = "10") int rows,
-			@RequestParam(required = false, defaultValue = "1") int pageNos)
+			@RequestParam(required = false, defaultValue = "7") Integer usertype,String date_s,String date_e,
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false, defaultValue = "1") int page)
 					throws Exception{
-		int pageNo=pageNos;
+		int pageNo=page;
 		Long userid=null;
-		Date date_s=null;
-		Date date_e=null;
+		Date date_s1=null;
+		Date date_e1=null;
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
- 	    if(date_s1!=null) {
- 	    	 date_s=simpleDateFormat.parse(date_s1);
+ 	    if(date_s!=null) {
+ 	    	 date_s1=simpleDateFormat.parse(date_s);
  	    }
  	    else{
- 	    	 date_s=null;
+ 	    	 date_s1=null;
  	    }
- 	    if(date_e1!=null){
- 	    	 date_e=simpleDateFormat.parse(date_e1);
+ 	    if(date_e!=null){
+ 	    	 date_e1=simpleDateFormat.parse(date_e);
  	    }
  	    else{
- 	    	 date_e=null;
+ 	    	 date_e1=null;
  	    }
-		List<BankUser> userlist=usermanService.queryByPage(pageNo, rows, userid, usertype,date_s,date_e);
+		List<BankUser> userlist=usermanService.queryByPage(pageNo, pageSize, userid, usertype,date_s1,date_e1);
 
 		PageInfo<BankUser> pageInfo = new PageInfo<BankUser>(userlist);
 		MyPageList<BankUser> list = new MyPageList<>();
 		list.setList(userlist);
-		list.setPageCount(pageInfo.getPages());
-		list.setPageNos(pageNos);
+		list.setTotal(pageInfo.getTotal());
 		return BankResult.ok(list);
 	}
 
@@ -168,25 +128,17 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/usermanage", method=RequestMethod.POST)
+	@RequestMapping(value="/usermanage/{id}", method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult userupdate(BankUser user){
+	public BankResult userupdate(@PathVariable(value="id") Long id,BankUser user,Integer usertype){
 		
-		
+		user.setId(id);
+		user.setUsertype(usertype);
 		if(usermanService.UserUpdate(user)==1)
 	    return BankResult.ok();
 		
-	return BankResult.build(0, "更新失败");
+	return BankResult.build(1, "更新失败");
 	}
 	
-//	@RequestMapping("/list/usertypeupdate")
-//	public String usertypeupdate(HttpServletRequest request,HttpSession session,BankUser user){
-//		
-//		Long userid = user.getId();
-//		String usertype_t = request.getParameter("usertype");
-//		int usertype = Integer.parseInt(usertype_t);
-//		usermanService.UsertypeUpdata(userid, usertype);
-//		return "usermanage";
-//	}
-	
+
 }
