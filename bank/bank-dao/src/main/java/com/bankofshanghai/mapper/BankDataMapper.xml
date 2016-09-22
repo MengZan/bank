@@ -3,8 +3,8 @@
 <mapper namespace="com.bankofshanghai.mapper.BankDataMapper" >
   <resultMap id="BaseResultMap" type="com.bankofshanghai.pojo.BankData" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="fromuser" property="fromuser" jdbcType="INTEGER" />
-    <result column="touser" property="touser" jdbcType="INTEGER" />
+    <result column="fromuser" property="fromuser" jdbcType="BIGINT" />
+    <result column="touser" property="touser" jdbcType="BIGINT" />
     <result column="money" property="money" jdbcType="DECIMAL" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
     <result column="fromplace" property="fromplace" jdbcType="VARCHAR" />
@@ -108,7 +108,7 @@
       money, datetime, fromplace, 
       toplace, tool, safe_level
       )
-    values (#{id,jdbcType=BIGINT}, #{fromuser,jdbcType=INTEGER}, #{touser,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{fromuser,jdbcType=BIGINT}, #{touser,jdbcType=BIGINT}, 
       #{money,jdbcType=DECIMAL}, #{datetime,jdbcType=TIMESTAMP}, #{fromplace,jdbcType=VARCHAR}, 
       #{toplace,jdbcType=VARCHAR}, #{tool,jdbcType=VARCHAR}, #{safeLevel,jdbcType=INTEGER}
       )
@@ -149,10 +149,10 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="fromuser != null" >
-        #{fromuser,jdbcType=INTEGER},
+        #{fromuser,jdbcType=BIGINT},
       </if>
       <if test="touser != null" >
-        #{touser,jdbcType=INTEGER},
+        #{touser,jdbcType=BIGINT},
       </if>
       <if test="money != null" >
         #{money,jdbcType=DECIMAL},
@@ -187,10 +187,10 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.fromuser != null" >
-        fromuser = #{record.fromuser,jdbcType=INTEGER},
+        fromuser = #{record.fromuser,jdbcType=BIGINT},
       </if>
       <if test="record.touser != null" >
-        touser = #{record.touser,jdbcType=INTEGER},
+        touser = #{record.touser,jdbcType=BIGINT},
       </if>
       <if test="record.money != null" >
         money = #{record.money,jdbcType=DECIMAL},
@@ -218,8 +218,8 @@
   <update id="updateByExample" parameterType="map" >
     update bank_data
     set id = #{record.id,jdbcType=BIGINT},
-      fromuser = #{record.fromuser,jdbcType=INTEGER},
-      touser = #{record.touser,jdbcType=INTEGER},
+      fromuser = #{record.fromuser,jdbcType=BIGINT},
+      touser = #{record.touser,jdbcType=BIGINT},
       money = #{record.money,jdbcType=DECIMAL},
       datetime = #{record.datetime,jdbcType=TIMESTAMP},
       fromplace = #{record.fromplace,jdbcType=VARCHAR},
@@ -234,10 +234,10 @@
     update bank_data
     <set >
       <if test="fromuser != null" >
-        fromuser = #{fromuser,jdbcType=INTEGER},
+        fromuser = #{fromuser,jdbcType=BIGINT},
       </if>
       <if test="touser != null" >
-        touser = #{touser,jdbcType=INTEGER},
+        touser = #{touser,jdbcType=BIGINT},
       </if>
       <if test="money != null" >
         money = #{money,jdbcType=DECIMAL},
@@ -262,8 +262,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bankofshanghai.pojo.BankData" >
     update bank_data
-    set fromuser = #{fromuser,jdbcType=INTEGER},
-      touser = #{touser,jdbcType=INTEGER},
+    set fromuser = #{fromuser,jdbcType=BIGINT},
+      touser = #{touser,jdbcType=BIGINT},
       money = #{money,jdbcType=DECIMAL},
       datetime = #{datetime,jdbcType=TIMESTAMP},
       fromplace = #{fromplace,jdbcType=VARCHAR},

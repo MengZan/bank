@@ -2,8 +2,6 @@ package com.bankofshanghai.pojo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class PhoneData {
     private Long id;
 
@@ -37,7 +35,6 @@ public class PhoneData {
         this.safety = safety;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     public Date getDatetime() {
         return datetime;
     }

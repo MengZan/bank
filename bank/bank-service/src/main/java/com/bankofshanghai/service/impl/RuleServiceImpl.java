@@ -28,7 +28,7 @@ public class RuleServiceImpl implements RuleService {
 	}
 
 	@Override
-	public BankRule getRuleById(Long id) {
+	public BankRule getRuleById(String id) {
 		BankRule rule = ruleMapper.selectByPrimaryKey(id);
 		return rule;
 	}
@@ -50,7 +50,7 @@ public class RuleServiceImpl implements RuleService {
 	}
 
 	@Override
-	public boolean deleteRule(Long id) {
+	public boolean deleteRule(String id) {
 		if(ruleMapper.deleteByPrimaryKey(id)>0)
 			return true;
 		return false;

@@ -1,24 +1,34 @@
 package com.bankofshanghai.pojo;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BankRule {
-    private Long id;
+    private String id;
 
     private String rulename;
 
     private String ruledesc;
 
-    private Long frequency;
-
     private String type;
 
     private Integer safeLevel;
 
-    public Long getId() {
+    private Integer version;
+
+    private Long frequency;
+
+    private Long hit;
+
+    private Date createtime;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getRulename() {
@@ -37,14 +47,6 @@ public class BankRule {
         this.ruledesc = ruledesc == null ? null : ruledesc.trim();
     }
 
-    public Long getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(Long frequency) {
-        this.frequency = frequency;
-    }
-
     public String getType() {
         return type;
     }
@@ -59,5 +61,38 @@ public class BankRule {
 
     public void setSafeLevel(Integer safeLevel) {
         this.safeLevel = safeLevel;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public Long getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Long frequency) {
+        this.frequency = frequency;
+    }
+
+    public Long getHit() {
+        return hit;
+    }
+
+    public void setHit(Long hit) {
+        this.hit = hit;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

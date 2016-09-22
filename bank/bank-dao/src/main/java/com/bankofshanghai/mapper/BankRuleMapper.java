@@ -10,7 +10,7 @@ public interface BankRuleMapper {
 
     int deleteByExample(BankRuleExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
 
     int insert(BankRule record);
 
@@ -18,7 +18,7 @@ public interface BankRuleMapper {
 
     List<BankRule> selectByExample(BankRuleExample example);
 
-    BankRule selectByPrimaryKey(Long id);
+    BankRule selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") BankRule record, @Param("example") BankRuleExample example);
 

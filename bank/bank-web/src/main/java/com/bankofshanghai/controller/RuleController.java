@@ -74,7 +74,7 @@ public class RuleController {
 	 */
 	@RequestMapping(value="/rules/{id}" , method=RequestMethod.GET)
 	@ResponseBody
-	public BankResult getRuleById(@PathVariable("id") Long id) {
+	public BankResult getRuleById(@PathVariable("id") String id) {
 		BankRule rule = ruleService.getRuleById(id);
 		MyBankRule myBankRule = new MyBankRule(rule);
 		return BankResult.ok(myBankRule);
@@ -89,7 +89,7 @@ public class RuleController {
 	 */
 	@RequestMapping(value="/rules/{id}" , method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult editRule(@PathVariable(value="id") Long id, BankRule rule, RuleFactor factor) {
+	public BankResult editRule(@PathVariable(value="id") String id, BankRule rule, RuleFactor factor) {
 		rule.setId(id);
 		rule.setRuledesc(JsonUtils.objectToJson(factor));
 		if (ruleService.updateRule(rule))
@@ -104,7 +104,7 @@ public class RuleController {
 	 */
 	@RequestMapping(value="/rules/{id}" , method=RequestMethod.DELETE)
 	@ResponseBody
-	public BankResult deleteRule(@PathVariable(value="id") Long id) {
+	public BankResult deleteRule(@PathVariable(value="id") String id) {
 		ruleService.deleteRule(id);
 		return BankResult.ok();
 	}
