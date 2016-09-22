@@ -10,11 +10,11 @@ public interface RuleService {
 	
 	List<BankRule> queryByPage(String type, Integer pageNo, Integer pageSize);
 	
-	BankRule getRuleById(Long id);
+	BankRule getRuleById(String id);
 	
 	boolean updateRule(BankRule rule);
 	
 	boolean addRule(BankRule rule);
 	
-	boolean deleteRule(Long id);
+	boolean deleteRule(String id);
 }

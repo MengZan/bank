@@ -1,4 +1,4 @@
-package com.bankofshanghai.pojo.utils;
+package com.bankofshanghai.mypojo.utils;
 
 import java.util.List;
 

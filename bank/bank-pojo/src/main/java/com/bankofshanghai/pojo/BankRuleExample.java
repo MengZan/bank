@@ -1,6 +1,7 @@
 package com.bankofshanghai.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BankRuleExample {
@@ -114,52 +115,62 @@ public class BankRuleExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Long value) {
+        public Criteria andIdEqualTo(String value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Long value) {
+        public Criteria andIdNotEqualTo(String value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Long value) {
+        public Criteria andIdGreaterThan(String value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andIdGreaterThanOrEqualTo(String value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Long value) {
+        public Criteria andIdLessThan(String value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Long value) {
+        public Criteria andIdLessThanOrEqualTo(String value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
+        public Criteria andIdLike(String value) {
+            addCriterion("id like", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotLike(String value) {
+            addCriterion("id not like", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<String> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Long> values) {
+        public Criteria andIdNotIn(List<String> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Long value1, Long value2) {
+        public Criteria andIdBetween(String value1, String value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Long value1, Long value2) {
+        public Criteria andIdNotBetween(String value1, String value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -304,66 +315,6 @@ public class BankRuleExample {
             return (Criteria) this;
         }
 
-        public Criteria andFrequencyIsNull() {
-            addCriterion("frequency is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyIsNotNull() {
-            addCriterion("frequency is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyEqualTo(Long value) {
-            addCriterion("frequency =", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyNotEqualTo(Long value) {
-            addCriterion("frequency <>", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyGreaterThan(Long value) {
-            addCriterion("frequency >", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyGreaterThanOrEqualTo(Long value) {
-            addCriterion("frequency >=", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyLessThan(Long value) {
-            addCriterion("frequency <", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyLessThanOrEqualTo(Long value) {
-            addCriterion("frequency <=", value, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyIn(List<Long> values) {
-            addCriterion("frequency in", values, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyNotIn(List<Long> values) {
-            addCriterion("frequency not in", values, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyBetween(Long value1, Long value2) {
-            addCriterion("frequency between", value1, value2, "frequency");
-            return (Criteria) this;
-        }
-
-        public Criteria andFrequencyNotBetween(Long value1, Long value2) {
-            addCriterion("frequency not between", value1, value2, "frequency");
-            return (Criteria) this;
-        }
-
         public Criteria andTypeIsNull() {
             addCriterion("type is null");
             return (Criteria) this;
@@ -491,6 +442,246 @@ public class BankRuleExample {
 
         public Criteria andSafeLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("safe_level not between", value1, value2, "safeLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNull() {
+            addCriterion("version is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNotNull() {
+            addCriterion("version is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionEqualTo(Integer value) {
+            addCriterion("version =", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotEqualTo(Integer value) {
+            addCriterion("version <>", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThan(Integer value) {
+            addCriterion("version >", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("version >=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThan(Integer value) {
+            addCriterion("version <", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThanOrEqualTo(Integer value) {
+            addCriterion("version <=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIn(List<Integer> values) {
+            addCriterion("version in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotIn(List<Integer> values) {
+            addCriterion("version not in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionBetween(Integer value1, Integer value2) {
+            addCriterion("version between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotBetween(Integer value1, Integer value2) {
+            addCriterion("version not between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyIsNull() {
+            addCriterion("frequency is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyIsNotNull() {
+            addCriterion("frequency is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyEqualTo(Long value) {
+            addCriterion("frequency =", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotEqualTo(Long value) {
+            addCriterion("frequency <>", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyGreaterThan(Long value) {
+            addCriterion("frequency >", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyGreaterThanOrEqualTo(Long value) {
+            addCriterion("frequency >=", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyLessThan(Long value) {
+            addCriterion("frequency <", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyLessThanOrEqualTo(Long value) {
+            addCriterion("frequency <=", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyIn(List<Long> values) {
+            addCriterion("frequency in", values, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotIn(List<Long> values) {
+            addCriterion("frequency not in", values, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyBetween(Long value1, Long value2) {
+            addCriterion("frequency between", value1, value2, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotBetween(Long value1, Long value2) {
+            addCriterion("frequency not between", value1, value2, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitIsNull() {
+            addCriterion("hit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitIsNotNull() {
+            addCriterion("hit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitEqualTo(Long value) {
+            addCriterion("hit =", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitNotEqualTo(Long value) {
+            addCriterion("hit <>", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitGreaterThan(Long value) {
+            addCriterion("hit >", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitGreaterThanOrEqualTo(Long value) {
+            addCriterion("hit >=", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitLessThan(Long value) {
+            addCriterion("hit <", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitLessThanOrEqualTo(Long value) {
+            addCriterion("hit <=", value, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitIn(List<Long> values) {
+            addCriterion("hit in", values, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitNotIn(List<Long> values) {
+            addCriterion("hit not in", values, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitBetween(Long value1, Long value2) {
+            addCriterion("hit between", value1, value2, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andHitNotBetween(Long value1, Long value2) {
+            addCriterion("hit not between", value1, value2, "hit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNull() {
+            addCriterion("createtime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNotNull() {
+            addCriterion("createtime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeEqualTo(Date value) {
+            addCriterion("createtime =", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotEqualTo(Date value) {
+            addCriterion("createtime <>", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThan(Date value) {
+            addCriterion("createtime >", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("createtime >=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThan(Date value) {
+            addCriterion("createtime <", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("createtime <=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIn(List<Date> values) {
+            addCriterion("createtime in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotIn(List<Date> values) {
+            addCriterion("createtime not in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeBetween(Date value1, Date value2) {
+            addCriterion("createtime between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
     }

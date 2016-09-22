@@ -23,7 +23,6 @@ public class BankData {
     private String tool;
 
     private Integer safeLevel;
-    
 
     public Long getId() {
         return id;
@@ -97,5 +96,4 @@ public class BankData {
     public void setSafeLevel(Integer safeLevel) {
         this.safeLevel = safeLevel;
     }
-    
 }
