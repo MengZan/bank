@@ -95,7 +95,7 @@ public class SimulateDadaController {
 			re[i].serviceType = (serviceType==null||serviceType.equals(""))?"empty":(serviceType.equals("0"))?getRandomServiceType():serviceType;
 			re[i].IP = (IP==null|| IP.equals(""))?"empty":getRandomIp();
 			re[i].state = (state==null||state.equals(""))? "empty":state;
-			re[i].authMode = (authMode==null||authMode.equals(""))? "empty":authMode;
+			re[i].authMode = (authMode==null||authMode.equals(""))? "empty":(authMode.equals("0"))?getRandomAuthMode():authMode;
 			re[i].terminalNumber = (terminalNumber==null||terminalNumber.equals(""))? "empty":(terminalNumber.equals("0"))?getRandomTerminalNumber():terminalNumber;
 			re[i].mac = (mac==null || mac.equals(""))?"empty":(mac.equals("0"))?getRandomMac():mac;
 		}
@@ -145,6 +145,10 @@ public class SimulateDadaController {
 			tempdatebegin = randomDateFraud(fraudTimeFrom, fraudTimeTo, tempTimeType, tempTimeRange);
 			tempdateend = addOrMinusYear(tempdatebegin, tempTimeType, tempTimeRange);
 			temptag = (Math.random() < Double.valueOf(percent)) ? 1 : 0;
+			String[] tempMac = new String[temp];
+			for (int c=0;c<temp;c++){
+				tempMac[c] = getRandomMac();
+			}
 			for (int k = 0; k < temp; k++) {
 				re_fraud[j] = new Result();
 				re_fraud[j].id = tempId;
@@ -154,15 +158,15 @@ public class SimulateDadaController {
 				re_fraud[j].city = fraudNumCity;
 				re_fraud[j].time = randomDateFraudFinal(tempdatebegin, tempdateend);
 				re_fraud[j].tag = temptag;
-				re_fraud[j].channel = (fraudChannel==null||"".equals(fraudChannel))? "empty":fraudChannel;
-				re_fraud[j].serviceType = (fraudServiceType==null||fraudServiceType.equals(""))?"empty":fraudServiceType;
+				re_fraud[j].channel = (fraudChannel==null||"".equals(fraudChannel))? "empty":(fraudChannel.equals("0"))?getRandomChannel():fraudChannel;
+				re_fraud[j].serviceType = (fraudServiceType==null||fraudServiceType.equals(""))?"empty":(fraudServiceType.equals("0"))?getRandomServiceType():fraudServiceType;
 				re_fraud[j].IP = (fraudIp==null|| fraudIp.equals(""))?"empty":getRandomIp();
 				re_fraud[j].state = (fraudState==null||fraudState.equals(""))? "empty":fraudState;
-				re_fraud[j].authMode = (fraudAuthMode==null||fraudAuthMode.equals(""))? "empty":fraudAuthMode;
-				re_fraud[j].terminalNumber = (fraudTerminalNumber==null||fraudTerminalNumber.equals(""))? "empty":fraudTerminalNumber;
+				re_fraud[j].authMode = (fraudAuthMode==null||fraudAuthMode.equals(""))? "empty":(fraudAuthMode.equals("0"))?getRandomAuthMode():fraudAuthMode;
+				re_fraud[j].terminalNumber = (fraudTerminalNumber==null||fraudTerminalNumber.equals(""))? "empty":(fraudTerminalNumber.equals("0"))?getRandomTerminalNumber():fraudTerminalNumber;
+				re_fraud[j].mac = (fraudMac==null || fraudMac.equals(""))?"empty":(fraudMac.equals("0"))?tempMac[randomint(temp-1,0)]:fraudMac;
 				j++;
-			}
-
+			}	
 		}
 		try {
 			FileWriter fileWriter = new FileWriter("D:\\ResultFraud.csv", true);
@@ -174,6 +178,7 @@ public class SimulateDadaController {
 				if(re_fraud[k].state!="empty"){fileWriter.write(","+re_fraud[k].state);}
 				if(re_fraud[k].authMode!="empty"){fileWriter.write(","+re_fraud[k].authMode);}
 				if(re_fraud[k].terminalNumber!="empty"){fileWriter.write(","+re_fraud[k].terminalNumber);}
+				if(re_fraud[k].mac!="empty"){fileWriter.write(","+re_fraud[k].mac);}
 				fileWriter.write(","+re_fraud[k].tag);
 				fileWriter.write("\r\n");
 			}
@@ -453,7 +458,10 @@ public class SimulateDadaController {
 		String s = getFixLenthString(6);
 		return s;
 	}
-	
+	public static String getRandomAuthMode(){
+		String s = randomint(3,1)+"";
+		return s;
+	}
 	
 	//    String citylist = "[{\"ProID\":1,\"name\":\"北京市\",\"ProSort\":1,\"ProRemark\":\"直辖市\"},"
 //    		+"{\"ProID\":2,\"name\":\"天津市\",\"ProSort\":2,\"ProRemark\":\"直辖市\"},"
