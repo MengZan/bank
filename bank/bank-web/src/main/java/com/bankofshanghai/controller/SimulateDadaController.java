@@ -99,8 +99,10 @@ public class SimulateDadaController {
 			re[i].terminalNumber = (terminalNumber==null||terminalNumber.equals(""))? "empty":(terminalNumber.equals("0"))?getRandomTerminalNumber():terminalNumber;
 			re[i].mac = (mac==null || mac.equals(""))?"empty":(mac.equals("0"))?getRandomMac():mac;
 		}
+		writeSql(re,amount);
 		try {
-			FileWriter fileWriter = new FileWriter("D:\\Result.csv", true);
+			
+			FileWriter fileWriter = new FileWriter("./Result.csv", true);
 			for (int k = 0; k < amount; k++) {
 				fileWriter.write(re[k].id + ',' + re[k].idFrom + ',' + re[k].idTo + ',' + re[k].money + ',' + re[k].city+ ',' + format.format(re[k].time) );
 				if(re[k].channel!="empty"){fileWriter.write(","+re[k].channel);}
@@ -168,8 +170,9 @@ public class SimulateDadaController {
 				j++;
 			}	
 		}
+		writeSql(re_fraud,j);
 		try {
-			FileWriter fileWriter = new FileWriter("D:\\ResultFraud.csv", true);
+			FileWriter fileWriter = new FileWriter("./ResultFraud.csv", true);
 			for (int k = 0; k < j; k++) {
 				fileWriter.write(re_fraud[k].id + ',' + re_fraud[k].idFrom + ',' + re_fraud[k].idTo + ','+ re_fraud[k].money + ',' + re_fraud[k].city + ',' + format.format(re_fraud[k].time)); 
 				if(re_fraud[k].channel!="empty"){fileWriter.write(","+re_fraud[k].channel);}
@@ -234,7 +237,7 @@ public class SimulateDadaController {
 			rule1k++;
 		}
 		try {
-			FileWriter fileWriter = new FileWriter("D:\\ResultFraud.csv", true);
+			FileWriter fileWriter = new FileWriter("./ResultFraud.csv", true);
 			for (int k = 0; k < rule1k; k++) {
 				fileWriter.write(re_rule1[k].id + ',' + re_rule1[k].idFrom + ',' + re_rule1[k].idTo + ','
 						+ re_rule1[k].money + ',' + re_rule1[k].city + ',' + format.format(re_rule1[k].time) + ','
@@ -462,7 +465,31 @@ public class SimulateDadaController {
 		String s = randomint(3,1)+"";
 		return s;
 	}
-	
+	public static BankResult writeSql(Result[] re, Integer amount){
+		try {
+			FileWriter fileWriterSql = new FileWriter("./ResultSql.csv", true);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			for (int k = 0; k < amount; k++) {
+				fileWriterSql.write(re[k].id + ',' + re[k].idFrom + ',' + re[k].idTo + ',' + re[k].money + ',' + re[k].city+ ',' + format.format(re[k].time) 
+				+','+re[k].channel
+				+','+re[k].serviceType
+				+','+re[k].IP
+				+','+re[k].state
+				+','+re[k].authMode
+				+','+re[k].terminalNumber
+				+','+re[k].mac
+				+','+re[k].tag);
+				fileWriterSql.write("\r\n");
+			}
+			fileWriterSql.flush();
+			fileWriterSql.close();
+			return BankResult.ok();
+		} catch (Exception er) {
+			System.out.println(er.getMessage());
+			return BankResult.build(0, "filewriter error");
+		}		
+		
+	}
 	//    String citylist = "[{\"ProID\":1,\"name\":\"北京市\",\"ProSort\":1,\"ProRemark\":\"直辖市\"},"
 //    		+"{\"ProID\":2,\"name\":\"天津市\",\"ProSort\":2,\"ProRemark\":\"直辖市\"},"
 //    		+"{\"ProID\":3,\"name\":\"河北省\",\"ProSort\":5,\"ProRemark\":\"省份\"},"

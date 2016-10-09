@@ -2974,6 +2974,25 @@ INSERT INTO `bank_user` VALUES ('629982195305195000', '0', '480', '2', '2016-02-
 INSERT INTO `bank_user` VALUES ('629982259922768000', '0', '480', '2', '2016-06-07 06:26:00');
 INSERT INTO `bank_user` VALUES ('629983804951624000', '0', '480', '2', '2016-01-29 00:34:00');
 INSERT INTO `bank_user` VALUES ('629993738101003000', '0', '480', '2', '2016-04-29 23:04:00');
+-- ---------------------------------
+-- Table structure for data_simulate
+-- ---------------------------------
+CREATE TABLE `bank_simulate` (
+  `id` varchar(20) NOT NULL ,
+  `idfrom` varchar(20) NOT NULL,
+  `idto` varchar(20) NOT NULL,
+  `money` decimal(20,2) NOT NULL,
+  `city` varchar(50) NOT NULL, 
+  `datetime` datetime NOT NULL,
+  `channel` varchar(10),
+  `servicetype` varchar(10),
+  `ip` varchar(50),
+  `state` varchar(10),
+  `authmode` varchar(10),
+  `terminalnumber` varchar(10),
+  `mac` varchar(50) ,
+  `tag` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for data_tri
