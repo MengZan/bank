@@ -233,8 +233,7 @@ public class DataController {
 	
 	@RequestMapping(value="/datashow", method=RequestMethod.POST)
 	@ResponseBody
-	public BankResult datashow(HttpServletRequest request,HttpSession session,
-			Long fromuser,Long touser,String tool,Integer moneyint,String fromplace,Integer safety,String date_s1,String date_e1,Integer safe_action,
+	public BankResult datashow(Long fromuser,Long touser,String tool,Integer moneyint,String fromplace,Integer safety,String date_s1,String date_e1,Integer safe_action,
 			@RequestParam(required = false, defaultValue = "10") int pageSize,
 			@RequestParam(required = false, defaultValue = "1") int page)
 	

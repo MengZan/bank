@@ -6,24 +6,17 @@ import com.bankofshanghai.pojo.BankRule;
 
 /**
  * 规则触发统计
+ * 
  * @author DMM
  *
  */
 public class RuleStatistc {
 
-	private  List<BankRule> rules;
-	
-	private Business business;
-	
+	private List<BankRule> rules;
+
+	private BusinessDistribute businessDistribute;
+
 	private Long count;
-
-	public Long getCount() {
-		return count;
-	}
-
-	public void setCount(Long count) {
-		this.count = count;
-	}
 
 	public List<BankRule> getRules() {
 		return rules;
@@ -33,12 +26,20 @@ public class RuleStatistc {
 		this.rules = rules;
 	}
 
-	public Business getBusiness() {
-		return business;
+	public BusinessDistribute getBusinessDistribute() {
+		return businessDistribute;
 	}
 
-	public void setBusiness(Business business) {
-		this.business = business;
+	public void setBusinessDistribute(BusinessDistribute businessDistribute) {
+		this.businessDistribute = businessDistribute;
 	}
-	
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
+	}
+
 }

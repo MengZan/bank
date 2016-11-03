@@ -35,7 +35,6 @@ public class RuleServiceImpl implements RuleService {
 
 	@Override
 	public boolean updateRule(BankRule rule) {
-//		rule.setFrequency((long)0);
 		if(ruleMapper.updateByPrimaryKeySelective(rule)>0)
 			return true;
 		return false;
@@ -43,7 +42,6 @@ public class RuleServiceImpl implements RuleService {
 
 	@Override
 	public boolean addRule(BankRule rule) {
-//		rule.setFrequency((long)0);
 		if(ruleMapper.insertSelective(rule)>0)
 			return true;
 		return false;

@@ -2,9 +2,10 @@ package com.bankofshanghai.mypojo;
 
 /**
  * 业务分布
+ * @author DMM
  *
  */
-public class Business {
+public class BusinessDistribute {
 	/**
 	 * 网上银行
 	 */
@@ -22,7 +23,7 @@ public class Business {
 	 */
 	private double wxyh;
 	
-	public Business(double wsyh, double sjyh, double dhyh, double wxyh){
+	public BusinessDistribute(double wsyh, double sjyh, double dhyh, double wxyh){
 		this.wsyh = wsyh;
 		this.sjyh = sjyh;
 		this.dhyh = dhyh;
