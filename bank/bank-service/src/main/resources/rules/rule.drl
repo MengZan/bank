@@ -16,43 +16,35 @@ rule "1"
 	salience 1
     when
         $data : BankData()
-        $datatri : DataTri()
         $sData : StatisticsData(toUsersOfDay>=10)
     then  
         $data.setSafeLevel(4); 
-        $datatri.setTri1(1);
 end  
    
 rule "2"  
 	salience 2
     when
         $data : BankData()
-        $datatri : DataTri()
         $sData : StatisticsData(commonFromPlace!=$data.fromplace)
     then  
         $data.setSafeLevel(3);  
-        $datatri.setTri2(1);
 end  
 
 rule "3"  
 	salience 3
     when
         $data : BankData()
-        $datatri : DataTri()
         $sData : StatisticsData(dataNumbersWithinTime>=3)
     then  
         $data.setSafeLevel(2);  
-        $datatri.setTri3(1);
 end 
 
 rule "4"  
 	salience 4
     when
         $data : BankData()
-        $datatri : DataTri()
         $sData : StatisticsData(moneyOfDay>=20000.00)
     then  
         $data.setSafeLevel(1);
-        $datatri.setTri4(1); 
 end  
 
