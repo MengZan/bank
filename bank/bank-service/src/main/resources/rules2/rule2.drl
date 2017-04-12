@@ -3,38 +3,41 @@ package com.bankofshanghai.drools;
 import com.bankofshanghai.pojo.BankData;  
 import com.bankofshanghai.mypojo.StatisticsData; 
 
-rule "Cluster1_1"  
+rule "1"  
     when
-        $data : BankData(money>=1000.00)
+        $data : BankData(touserCredit< 0 && money>=1000.00)
     then  
         $data.setSafeLevel($data.getSafeLevel()+45); 
 end  
    
-rule "Cluster2_1"  
+rule "2"  
     when
         $data : BankData(money>=1000.00)
+        $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
     then  
         $data.setSafeLevel($data.getSafeLevel()+30);  
 end  
 
-rule "Cluster3_1"  
+rule "3"  
     when
         $data : BankData(money>=1000.00)
+        $sData : StatisticsData(isNewUser==true)
     then  
         $data.setSafeLevel($data.getSafeLevel()+15);  
 end 
 
-rule "Cluster3_2"  
+rule "4"  
     when
         $data : BankData()
-        $sData : StatisticsData(moneyOfDay>=5000.00)
+        $sData : StatisticsData(isNewUser==true && moneyOfDay>=5000.00)
     then  
         $data.setSafeLevel($data.getSafeLevel()+15);
 end  
 
-rule "Cluster4"  
+rule "5"  
     when
         $data : BankData()
+        $sData : StatisticsData(moneyWithinTime>= 5000.00)
     then  
         $data.setSafeLevel($data.getSafeLevel()+30);
 end 

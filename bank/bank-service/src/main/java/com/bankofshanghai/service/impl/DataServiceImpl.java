@@ -3,24 +3,18 @@ package com.bankofshanghai.service.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bankofshanghai.mapper.BankDataMapper;
 import com.bankofshanghai.mapper.BankUserMapper;
-import com.bankofshanghai.mapper.DataTriMapper;
 import com.bankofshanghai.mypojo.MyDataList;
-import com.bankofshanghai.mypojo.StatisticsData;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.pojo.BankDataExample;
 import com.bankofshanghai.pojo.BankUser;
 import com.bankofshanghai.pojo.BankUserExample;
-import com.bankofshanghai.pojo.DataTri;
-import com.bankofshanghai.pojo.DataTriExample;
 import com.bankofshanghai.pojo.BankDataExample.Criteria;
 import com.bankofshanghai.service.DataService;
 import com.github.pagehelper.PageHelper;
@@ -32,9 +26,6 @@ public class DataServiceImpl implements DataService {
 	private BankDataMapper dataMapper;
 
 	@Autowired
-	private DataTriMapper datatriMapper;
-
-	@Autowired
 	private BankUserMapper userMapper;
 
 	@Override
@@ -44,9 +35,9 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public int updateDataSafe(BankData data) {
+	public boolean updateDataSafe(BankData data) {
 		dataMapper.updateByPrimaryKeySelective(data);
-		return 1;
+		return true;
 	}
 
 	@Override
@@ -109,6 +100,11 @@ public class DataServiceImpl implements DataService {
 		return list;
 	}
 
+	@Override
+	public List<BankData> queryByPage(Integer pageNo, Integer pageSize) {
+		return queryByPage(null, null, null, null, null, null, null, null, null, pageNo, pageSize);
+	}
+	
 	@Override
 	public List<BankData> select_data(Long fromuser, Long touser, String tool) {
 
@@ -174,174 +170,4 @@ public class DataServiceImpl implements DataService {
 
 		return datalist;
 	}
-
-	@Override
-	public List<DataTri> selectDataTri(Long id, Integer tri1, Integer tri2, Integer tri3, Integer tri4, Integer tri5,
-			Integer tri6, Integer tri7, Integer tri8, Integer tri9, Integer tri10, Integer tri11, Integer tri12) {
-		DataTriExample example = new DataTriExample();
-		DataTriExample.Criteria criteria = example.createCriteria();
-
-		if (id != null)
-			criteria.andIdEqualTo(id);
-		if (tri1 != null)
-			criteria.andTri1EqualTo(tri1);
-		if (tri2 != null)
-			criteria.andTri2EqualTo(tri2);
-		if (tri3 != null)
-			criteria.andTri3EqualTo(tri3);
-		if (tri4 != null)
-			criteria.andTri4EqualTo(tri4);
-		if (tri5 != null)
-			criteria.andTri5EqualTo(tri5);
-		if (tri6 != null)
-			criteria.andTri6EqualTo(tri6);
-		if (tri7 != null)
-			criteria.andTri7EqualTo(tri7);
-		if (tri8 != null)
-			criteria.andTri8EqualTo(tri8);
-		if (tri9 != null)
-			criteria.andTri9EqualTo(tri9);
-		if (tri10 != null)
-			criteria.andTri10EqualTo(tri10);
-		if (tri11 != null)
-			criteria.andTri11EqualTo(tri11);
-		if (tri12 != null)
-			criteria.andTri12EqualTo(tri12);
-
-		List<DataTri> list = datatriMapper.selectByExample(example);
-
-		return list;
-	}
-
-	/**
-	 * 获取统计量
-	 */
-	@Override
-	public StatisticsData getStatisticsDataByUser(BankData data) {
-		// 查询数据库
-		StatisticsData sData = new StatisticsData();
-		BankDataExample example = new BankDataExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andFromuserEqualTo(data.getFromuser());
-		List<BankData> list = dataMapper.selectByExample(example);
-
-		// 设置数据总数量
-		sData.setDataNumbers(list.size());
-
-		// 设置dataNumbersWithinTime
-		int count = 0;
-		for (BankData bankData : list) {
-			if (getTimeMinuteDifference(data.getDatetime(), bankData.getDatetime()) <= 30) { // 30应该从规则文件读取
-				count++;
-			}
-		}
-		sData.setDataNumbersWithinTime(count);
-
-		// 设置常用转出地址
-		sData.setCommonFromPlace(getCommonFromPlace(list));
-
-		// 设置日转账金额
-		sData.setMoneyOfDay(getMoneyOfDay(list, data));
-
-		// 设置当日转出用户数量
-		sData.setToUsersOfDay(getToUsersOfDay(list, data));
-
-		return sData;
-	}
-
-	/**
-	 * 计算当日转出用户
-	 * 
-	 * @param list
-	 * @param data
-	 * @return
-	 */
-	private int getToUsersOfDay(List<BankData> list, BankData data) {
-		Set<Long> toUserSet = new HashSet<>();
-		for (BankData bankData : list) {
-			if (data.getDatetime().getYear() == bankData.getDatetime().getYear()
-					&& data.getDatetime().getMonth() == bankData.getDatetime().getMonth()
-					&& data.getDatetime().getDate() == bankData.getDatetime().getDate())
-				toUserSet.add(bankData.getTouser());
-		}
-		toUserSet.add(data.getTouser());
-		return toUserSet.size();
-	}
-
-	/**
-	 * 计算日转账金额
-	 * 
-	 * @param list
-	 * @param data
-	 * @return
-	 */
-	private double getMoneyOfDay(List<BankData> list, BankData data) {
-		double count = 0;
-		for (BankData bankData : list) {
-			// 判断是否同一天
-			if (data.getDatetime().getYear() == bankData.getDatetime().getYear()
-					&& data.getDatetime().getMonth() == bankData.getDatetime().getMonth()
-					&& data.getDatetime().getDate() == bankData.getDatetime().getDate())
-				count += bankData.getMoney().doubleValue();
-		}
-		// 加上当次转账金额
-		// count += data.getMoney().doubleValue();
-		return count;
-	}
-
-	/**
-	 * 计算时间差
-	 * 
-	 * @param date1
-	 * @param date2
-	 * @return 返回分钟数
-	 */
-	private int getTimeMinuteDifference(Date date1, Date date2) {
-		long temp = Math.abs(date2.getTime() - date1.getTime()); // 相差毫秒数
-		int mins = (int) temp / 1000 / 60; // 相差分钟数
-		return mins;
-	}
-
-	/**
-	 * 获取常用转出地址
-	 * 
-	 * @param datas
-	 * @return
-	 */
-	private String getCommonFromPlace(List<BankData> datas) {
-		// String str1;
-		// String regex;
-		// Pattern p;
-		// Matcher m;
-		// List<String> list = new ArrayList();
-		// int n = datas.size();
-		// for(int i = 0;i<n;i++)
-		// {
-		// BankData data=datas.get(i);
-		// list.add(data.getFromplace());
-		// }
-		// String tmp = "";
-		// String tot_str = list.toString();
-		// int max_cnt = 0;
-		// String max_str = "";
-		// for(String str11 : list) {
-		// if (tmp.equals(str11)) continue;
-		// tmp = str11;
-		// regex = str11;
-		// p = Pattern.compile(regex);
-		// m = p.matcher(tot_str);
-		// int cnt = 0;
-		// while(m.find()) {
-		// cnt++;
-		// }
-		// //System.out.println(str + ":" + cnt);
-		// if (cnt > max_cnt) {
-		// max_cnt = cnt;
-		// max_str = str11;
-		// }
-		// }
-		// System.out.println("字符串 " + max_str );
-		return "中国上海上海";
-	}
-
 }

@@ -2,8 +2,6 @@ package com.bankofshanghai.pojo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class BankRule {
     private String id;
 
@@ -87,7 +85,6 @@ public class BankRule {
         this.hit = hit;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     public Date getCreatetime() {
         return createtime;
     }

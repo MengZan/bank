@@ -9,8 +9,11 @@
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
     <result column="fromplace" property="fromplace" jdbcType="VARCHAR" />
     <result column="toplace" property="toplace" jdbcType="VARCHAR" />
+    <result column="fromuser_opendate" property="fromuserOpendate" jdbcType="TIMESTAMP" />
+    <result column="touser_credit" property="touserCredit" jdbcType="INTEGER" />
     <result column="tool" property="tool" jdbcType="VARCHAR" />
     <result column="safe_level" property="safeLevel" jdbcType="INTEGER" />
+    <result column="is_fraud" property="isFraud" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, fromuser, touser, money, datetime, fromplace, toplace, tool, safe_level
+    id, fromuser, touser, money, datetime, fromplace, toplace, fromuser_opendate, touser_credit, 
+    tool, safe_level, is_fraud
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bankofshanghai.pojo.BankDataExample" >
     select
@@ -106,11 +110,13 @@
   <insert id="insert" parameterType="com.bankofshanghai.pojo.BankData" >
     insert into bank_data (id, fromuser, touser, 
       money, datetime, fromplace, 
-      toplace, tool, safe_level
+      toplace, fromuser_opendate, touser_credit, 
+      tool, safe_level, is_fraud
       )
     values (#{id,jdbcType=BIGINT}, #{fromuser,jdbcType=BIGINT}, #{touser,jdbcType=BIGINT}, 
       #{money,jdbcType=DECIMAL}, #{datetime,jdbcType=TIMESTAMP}, #{fromplace,jdbcType=VARCHAR}, 
-      #{toplace,jdbcType=VARCHAR}, #{tool,jdbcType=VARCHAR}, #{safeLevel,jdbcType=INTEGER}
+      #{toplace,jdbcType=VARCHAR}, #{fromuserOpendate,jdbcType=TIMESTAMP}, #{touserCredit,jdbcType=INTEGER}, 
+      #{tool,jdbcType=VARCHAR}, #{safeLevel,jdbcType=INTEGER}, #{isFraud,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.bankofshanghai.pojo.BankData" >
@@ -137,11 +143,20 @@
       <if test="toplace != null" >
         toplace,
       </if>
+      <if test="fromuserOpendate != null" >
+        fromuser_opendate,
+      </if>
+      <if test="touserCredit != null" >
+        touser_credit,
+      </if>
       <if test="tool != null" >
         tool,
       </if>
       <if test="safeLevel != null" >
         safe_level,
+      </if>
+      <if test="isFraud != null" >
+        is_fraud,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -166,11 +181,20 @@
       <if test="toplace != null" >
         #{toplace,jdbcType=VARCHAR},
       </if>
+      <if test="fromuserOpendate != null" >
+        #{fromuserOpendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="touserCredit != null" >
+        #{touserCredit,jdbcType=INTEGER},
+      </if>
       <if test="tool != null" >
         #{tool,jdbcType=VARCHAR},
       </if>
       <if test="safeLevel != null" >
         #{safeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="isFraud != null" >
+        #{isFraud,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -204,11 +228,20 @@
       <if test="record.toplace != null" >
         toplace = #{record.toplace,jdbcType=VARCHAR},
       </if>
+      <if test="record.fromuserOpendate != null" >
+        fromuser_opendate = #{record.fromuserOpendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.touserCredit != null" >
+        touser_credit = #{record.touserCredit,jdbcType=INTEGER},
+      </if>
       <if test="record.tool != null" >
         tool = #{record.tool,jdbcType=VARCHAR},
       </if>
       <if test="record.safeLevel != null" >
         safe_level = #{record.safeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.isFraud != null" >
+        is_fraud = #{record.isFraud,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -224,8 +257,11 @@
       datetime = #{record.datetime,jdbcType=TIMESTAMP},
       fromplace = #{record.fromplace,jdbcType=VARCHAR},
       toplace = #{record.toplace,jdbcType=VARCHAR},
+      fromuser_opendate = #{record.fromuserOpendate,jdbcType=TIMESTAMP},
+      touser_credit = #{record.touserCredit,jdbcType=INTEGER},
       tool = #{record.tool,jdbcType=VARCHAR},
-      safe_level = #{record.safeLevel,jdbcType=INTEGER}
+      safe_level = #{record.safeLevel,jdbcType=INTEGER},
+      is_fraud = #{record.isFraud,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -251,11 +287,20 @@
       <if test="toplace != null" >
         toplace = #{toplace,jdbcType=VARCHAR},
       </if>
+      <if test="fromuserOpendate != null" >
+        fromuser_opendate = #{fromuserOpendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="touserCredit != null" >
+        touser_credit = #{touserCredit,jdbcType=INTEGER},
+      </if>
       <if test="tool != null" >
         tool = #{tool,jdbcType=VARCHAR},
       </if>
       <if test="safeLevel != null" >
         safe_level = #{safeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="isFraud != null" >
+        is_fraud = #{isFraud,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -268,8 +313,11 @@
       datetime = #{datetime,jdbcType=TIMESTAMP},
       fromplace = #{fromplace,jdbcType=VARCHAR},
       toplace = #{toplace,jdbcType=VARCHAR},
+      fromuser_opendate = #{fromuserOpendate,jdbcType=TIMESTAMP},
+      touser_credit = #{touserCredit,jdbcType=INTEGER},
       tool = #{tool,jdbcType=VARCHAR},
-      safe_level = #{safeLevel,jdbcType=INTEGER}
+      safe_level = #{safeLevel,jdbcType=INTEGER},
+      is_fraud = #{isFraud,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -15,7 +15,7 @@
 		<mybatis.paginator.version>1.2.15</mybatis.paginator.version>
 		<mysql.version>5.1.32</mysql.version>
 		<slf4j.version>1.6.4</slf4j.version>
-		<jackson.version>2.4.2</jackson.version>
+		<jackson.version>2.6.6</jackson.version>
 		<druid.version>1.0.9</druid.version>
 		<httpclient.version>4.3.5</httpclient.version>
 		<jstl.version>1.2</jstl.version>
@@ -32,21 +32,32 @@
 		<solrj.version>4.10.3</solrj.version>
 		<freemarker.version>2.3.23</freemarker.version>
 		<quartz.version>2.2.2</quartz.version>
-		<drools-core.version>6.4.0.Final</drools-core.version>
-		<drools-compiler.version>6.4.0.Final</drools-compiler.version>
+		<drool.version>6.4.0.Final</drool.version>
+		<spark.version>2.0.2</spark.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<!-- Spark dependency -->
+			<dependency>
+				<groupId>org.apache.spark</groupId>
+				<artifactId>spark-core_2.10</artifactId>
+				<version>${spark.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.spark</groupId>
+				<artifactId>spark-sql_2.10</artifactId>
+				<version>${spark.version}</version>
+			</dependency>
 			<!-- drools组件 -->
 			<dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-core</artifactId>
-				<version>${drools-core.version}</version>
+				<version>${drool.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-compiler</artifactId>
-				<version>${drools-compiler.version}</version>
+				<version>${drool.version}</version>
 			</dependency>
 			<!-- 时间操作组件 -->
 			<dependency>

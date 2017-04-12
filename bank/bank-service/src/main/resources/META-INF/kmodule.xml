@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-    <kbase name="SimpleRuleKBase" packages="rules">  
-        <ksession name="simpleRuleKSession" default="true"/>  
+    <kbase name="BankRule" packages="rules">  
+        <ksession name="bankRule" default="true"/>  
     </kbase>  
-    <kbase name="dtables" packages="dtables">
-        <ksession name="ksession-dtables"/>
-    </kbase>
+    <kbase name="BankRule2" packages="rules2">  
+        <ksession name="bankRule2" default="false"/>  
+    </kbase> 
 </kmodule>

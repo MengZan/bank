@@ -1,12 +1,13 @@
 package com.bankofshanghai.pojo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class BankData {
-    private Long id;
+public class BankData implements Serializable  {
+	private Long id;
 
     private Long fromuser;
 
@@ -20,9 +21,15 @@ public class BankData {
 
     private String toplace;
 
+    private Date fromuserOpendate;
+
+    private Integer touserCredit;
+
     private String tool;
 
     private Integer safeLevel;
+    
+    private Boolean isFraud;
 
     public Long getId() {
         return id;
@@ -81,6 +88,22 @@ public class BankData {
         this.toplace = toplace == null ? null : toplace.trim();
     }
 
+    public Date getFromuserOpendate() {
+        return fromuserOpendate;
+    }
+
+    public void setFromuserOpendate(Date fromuserOpendate) {
+        this.fromuserOpendate = fromuserOpendate;
+    }
+
+    public Integer getTouserCredit() {
+        return touserCredit;
+    }
+
+    public void setTouserCredit(Integer touserCredit) {
+        this.touserCredit = touserCredit;
+    }
+
     public String getTool() {
         return tool;
     }
@@ -96,4 +119,21 @@ public class BankData {
     public void setSafeLevel(Integer safeLevel) {
         this.safeLevel = safeLevel;
     }
+    
+    public Boolean getIsFraud() {
+        return isFraud;
+    }
+
+    public void setIsFraud(Boolean isFraud) {
+        this.isFraud = isFraud;
+    }
+
+	@Override
+	public String toString() {
+		return "BankData [id=" + id + ", fromuser=" + fromuser + ", touser=" + touser + ", money=" + money
+				+ ", datetime=" + datetime + ", fromplace=" + fromplace + ", toplace=" + toplace + ", fromuserOpendate="
+				+ fromuserOpendate + ", touserCredit=" + touserCredit + ", tool=" + tool + ", safeLevel=" + safeLevel
+				+ ", isFraud=" + isFraud + "]";
+	}
+
 }

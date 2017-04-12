@@ -1,78 +1,96 @@
 package com.bankofshanghai.service.impl;
 
-import java.util.List;
+import java.io.Serializable;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.bankofshanghai.pojo.BankUser;
-import com.bankofshanghai.pojo.DataTri;
-import com.bankofshanghai.pojo.IpAddress;
-import com.bankofshanghai.pojo.PhoneData;
+import com.bankofshanghai.mypojo.StatisticsData;
+import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.service.StatisticsService;
+import com.bankofshanghai.spark.MyJedisPool;
+
+import redis.clients.jedis.Jedis;
 
 @Service
-public class StatisticsServiceImpl implements StatisticsService{
+public class StatisticsServiceImpl implements StatisticsService, Serializable {
+
+	private static Logger log = Logger.getLogger(StatisticsServiceImpl.class.getName());
 
 	@Override
-	public int[] count_user(List<BankUser> list){
-		int n =list.size();
-		int[] result = new int[4];
-		for(int i=0;i<n;i++){
-			BankUser user = list.get(i);
-			if(user.getUsertype()==0) result[0]++;
-			if(user.getUsertype()==1) result[1]++;
-			if(user.getUsertype()==2) result[2]++;
-			if(user.getUsertype()==3) result[3]++;
+	public StatisticsData getStatisticData(BankData data) {
+		StatisticsData sData = new StatisticsData();
+		Jedis jedis = null;
+		try {
+			// 从jedis池中获取一个jedis实例
+			jedis = MyJedisPool.pool.getResource();
+			sData.setMoneyWithinTime(moneyWithinTime(jedis, data));
+			sData.setMoneyOfDay(moneyOfDay(jedis, data));
+			sData.setCommonFromPlace(commonFromPlace(jedis, data));
+			sData.setIsNewUser(isNewUser(jedis, data));
+			return sData;
+		} catch (Exception e) {
+			log.warn(data.getId() + "----------------Redis连接失败----------------", e);
+			sData.setMoneyWithinTime(0);
+			sData.setMoneyOfDay(0);
+			sData.setCommonFromPlace("上海");
+			sData.setIsNewUser(false);
+			return sData;
+		} finally {
+			if(jedis!=null)
+				jedis.close();
 		}
-		return result;
-	}
-	
-	@Override
-	public int[] count_ip(List<IpAddress> list){
-		int[] result = new int[2];
-		int n =list.size();
-		for(int i=0;i<n;i++){
-			IpAddress ipdata = list.get(i);
-			if(ipdata.getSafety()==0) result[0]++;
-			if(ipdata.getSafety()==1) result[1]++;
-		}
-		return result;
-	}
-	
-	@Override
-	public int[] count_phone(List<PhoneData> list){
-        int[] result = new int[2];
-        int n =list.size();
-        for(int i=0;i<n;i++){
-        	PhoneData phonedata = list.get(i);
-			if(phonedata.getSafety()==0) result[0]++;
-			if(phonedata.getSafety()==1) result[1]++;
-		}
-		return result;
-	}
-	
-	@Override
-	public int[] count_datatri(List<DataTri> list){
-        int[] result = new int[13];
-        int n =list.size();
-        for(int i=0;i<n;i++){
-        	DataTri tridata = list.get(i);
-        	if(tridata.getTri1()==1) result[1]++;
-        	if(tridata.getTri2()==1) result[2]++;
-        	if(tridata.getTri3()==1) result[3]++;
-        	if(tridata.getTri4()==1) result[4]++;
-        	if(tridata.getTri5()==1) result[5]++;
-        	if(tridata.getTri6()==1) result[6]++;
-        	if(tridata.getTri7()==1) result[7]++;
-        	if(tridata.getTri8()==1) result[8]++;
-        	if(tridata.getTri9()==1) result[9]++;
-        	if(tridata.getTri10()==1) result[10]++;
-        	if(tridata.getTri11()==1) result[11]++;
-        	if(tridata.getTri12()==1) result[12]++;
-        	
-		}
-		return result;
 	}
 
-	
+	private static double moneyWithinTime(Jedis jedis, BankData data) {
+		// String key = data.getFromuser() + "MWT";
+		// double money = 0;
+		// if (!jedis.exists(key)) {
+		// money = data.getMoney().doubleValue();
+		// jedis.setex(key, 60 * 30, String.valueOf(money));
+		// return 0;
+		// } else {
+		// money = data.getMoney().doubleValue() +
+		// Double.parseDouble(jedis.get(key));
+		// jedis.setex(key, 60 * 30, String.valueOf(money));
+		// return money;
+		// }
+
+		return data.getMoney().doubleValue();
+	}
+
+	private static double moneyOfDay(Jedis jedis, BankData data) {
+		String key = data.getFromuser() + "MOD";
+		String field = String.valueOf(data.getDatetime().getDate());
+		double money = 0;
+		String s = jedis.hget(key, field);
+		if (s == null) {
+			// jedis.del(key);
+			money = data.getMoney().doubleValue();
+			jedis.hset(key, field, String.valueOf(money));
+		} else {
+			money = Double.parseDouble(s) + data.getMoney().doubleValue();
+			jedis.hset(key, field, String.valueOf(money));
+		}
+		return money;
+	}
+
+	private static String commonFromPlace(Jedis jedis, BankData data) {
+		return "上海";
+	}
+
+	private static boolean isNewUser(Jedis jedis, BankData data) {
+		String key = data.getFromuser() + "INU";
+		if (jedis.exists(key) && jedis.get(key) == "false")
+			return false;
+		int diff = (int) (data.getDatetime().getTime() - data.getFromuserOpendate().getTime()) / (1000 * 60 * 60 * 24);
+		if (diff < 7) {
+			jedis.setex(key, 60 * 60 * 24, "true");
+			return true;
+		} else {
+			jedis.set(key, "false");
+			return false;
+		}
+	}
+
 }

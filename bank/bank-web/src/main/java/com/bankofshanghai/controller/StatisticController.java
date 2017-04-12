@@ -60,8 +60,7 @@ public class StatisticController {
 	public BankResult getFraudStatistic(@RequestParam(required = false, defaultValue = "10") int pageSize,
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		int pageNo = page;
-		List<BankData> datalist = dataService.queryByPage(null, null, null, null, null, null, null, null, null, pageNo,
-				pageSize);
+		List<BankData> datalist = dataService.queryByPage(pageNo, pageSize);
 		List<MyDataList> datalist2 = dataService.showdata(datalist);
 		PageInfo<BankData> pageInfo = new PageInfo<BankData>(datalist);
 		FraudStatistic fraud = new FraudStatistic();

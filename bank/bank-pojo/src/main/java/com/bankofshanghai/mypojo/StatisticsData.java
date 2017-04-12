@@ -2,42 +2,25 @@ package com.bankofshanghai.mypojo;
 
 /**
  * 统计量
+ * 
  * @author DMM
  *
  */
 public class StatisticsData {
-	private Integer dataNumbers;
-	
-	private Integer dataNumbersWithinTime;
-	
+	private double moneyWithinTime;
+
 	private String commonFromPlace;
-	
-	private Double moneyOfDay;
-	
-	private Integer toUsersOfDay;
 
-	public Integer getToUsersOfDay() {
-		return toUsersOfDay;
+	private double moneyOfDay;
+
+	private boolean isNewUser;
+
+	public double getMoneyWithinTime() {
+		return moneyWithinTime;
 	}
 
-	public void setToUsersOfDay(Integer toUsersOfDay) {
-		this.toUsersOfDay = toUsersOfDay;
-	}
-
-	public Integer getDataNumbers() {
-		return dataNumbers;
-	}
-
-	public void setDataNumbers(Integer dataNumbers) {
-		this.dataNumbers = dataNumbers;
-	}
-
-	public Integer getDataNumbersWithinTime() {
-		return dataNumbersWithinTime;
-	}
-
-	public void setDataNumbersWithinTime(Integer dataNumbersWithinTime) {
-		this.dataNumbersWithinTime = dataNumbersWithinTime;
+	public void setMoneyWithinTime(double moneyWithinTime) {
+		this.moneyWithinTime = moneyWithinTime;
 	}
 
 	public String getCommonFromPlace() {
@@ -48,12 +31,20 @@ public class StatisticsData {
 		this.commonFromPlace = commonFromPlace;
 	}
 
-	public Double getMoneyOfDay() {
+	public double getMoneyOfDay() {
 		return moneyOfDay;
 	}
 
-	public void setMoneyOfDay(Double moneyOfDay) {
+	public void setMoneyOfDay(double moneyOfDay) {
 		this.moneyOfDay = moneyOfDay;
 	}
-	
+
+	public boolean getIsNewUser() {
+		return isNewUser;
+	}
+
+	public void setIsNewUser(boolean isNewUser) {
+		this.isNewUser = isNewUser;
+	}
+
 }

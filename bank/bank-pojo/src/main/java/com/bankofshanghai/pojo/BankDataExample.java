@@ -546,6 +546,126 @@ public class BankDataExample {
             return (Criteria) this;
         }
 
+        public Criteria andFromuserOpendateIsNull() {
+            addCriterion("fromuser_opendate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateIsNotNull() {
+            addCriterion("fromuser_opendate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateEqualTo(Date value) {
+            addCriterion("fromuser_opendate =", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateNotEqualTo(Date value) {
+            addCriterion("fromuser_opendate <>", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateGreaterThan(Date value) {
+            addCriterion("fromuser_opendate >", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateGreaterThanOrEqualTo(Date value) {
+            addCriterion("fromuser_opendate >=", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateLessThan(Date value) {
+            addCriterion("fromuser_opendate <", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateLessThanOrEqualTo(Date value) {
+            addCriterion("fromuser_opendate <=", value, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateIn(List<Date> values) {
+            addCriterion("fromuser_opendate in", values, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateNotIn(List<Date> values) {
+            addCriterion("fromuser_opendate not in", values, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateBetween(Date value1, Date value2) {
+            addCriterion("fromuser_opendate between", value1, value2, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromuserOpendateNotBetween(Date value1, Date value2) {
+            addCriterion("fromuser_opendate not between", value1, value2, "fromuserOpendate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditIsNull() {
+            addCriterion("touser_credit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditIsNotNull() {
+            addCriterion("touser_credit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditEqualTo(Integer value) {
+            addCriterion("touser_credit =", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditNotEqualTo(Integer value) {
+            addCriterion("touser_credit <>", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditGreaterThan(Integer value) {
+            addCriterion("touser_credit >", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditGreaterThanOrEqualTo(Integer value) {
+            addCriterion("touser_credit >=", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditLessThan(Integer value) {
+            addCriterion("touser_credit <", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditLessThanOrEqualTo(Integer value) {
+            addCriterion("touser_credit <=", value, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditIn(List<Integer> values) {
+            addCriterion("touser_credit in", values, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditNotIn(List<Integer> values) {
+            addCriterion("touser_credit not in", values, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditBetween(Integer value1, Integer value2) {
+            addCriterion("touser_credit between", value1, value2, "touserCredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andTouserCreditNotBetween(Integer value1, Integer value2) {
+            addCriterion("touser_credit not between", value1, value2, "touserCredit");
+            return (Criteria) this;
+        }
+
         public Criteria andToolIsNull() {
             addCriterion("tool is null");
             return (Criteria) this;
@@ -673,6 +793,66 @@ public class BankDataExample {
 
         public Criteria andSafeLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("safe_level not between", value1, value2, "safeLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudIsNull() {
+            addCriterion("is_fraud is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudIsNotNull() {
+            addCriterion("is_fraud is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudEqualTo(Boolean value) {
+            addCriterion("is_fraud =", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudNotEqualTo(Boolean value) {
+            addCriterion("is_fraud <>", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudGreaterThan(Boolean value) {
+            addCriterion("is_fraud >", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_fraud >=", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudLessThan(Boolean value) {
+            addCriterion("is_fraud <", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_fraud <=", value, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudIn(List<Boolean> values) {
+            addCriterion("is_fraud in", values, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudNotIn(List<Boolean> values) {
+            addCriterion("is_fraud not in", values, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_fraud between", value1, value2, "isFraud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsFraudNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_fraud not between", value1, value2, "isFraud");
             return (Criteria) this;
         }
     }

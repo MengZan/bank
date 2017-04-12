@@ -7,20 +7,18 @@ import com.bankofshanghai.drools.CheckDrools;
 import com.bankofshanghai.mypojo.StatisticsData;
 import com.bankofshanghai.pojo.BankData;
 import com.bankofshanghai.service.CheckService;
-import com.bankofshanghai.service.DataService;
+import com.bankofshanghai.service.StatisticsService;
 
 @Service
 public class CheckServiceImpl implements CheckService {
 
 	@Autowired
-	private DataService dataService;
+	private StatisticsService statisticsService;
 	
 	@Override
-	public int check(BankData data, StatisticsData sData) {
-		int n = CheckDrools.check(data, sData);
-		data.setSafeLevel(n);
-		dataService.updateDataSafe(data);
-		return n;
+	public int check(BankData data) {
+		StatisticsData sData = statisticsService.getStatisticData(data);
+		CheckDrools drools = new CheckDrools();
+		return drools.check(data, sData);
 	}
-
 }
