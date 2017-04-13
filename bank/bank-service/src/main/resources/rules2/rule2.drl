@@ -3,22 +3,61 @@ package com.bankofshanghai.drools;
 import com.bankofshanghai.pojo.BankData;  
 import com.bankofshanghai.mypojo.StatisticsData; 
 
-rule "1"  
+rule "1_1"  
     when
         $data : BankData(touserCredit< 0 && money>=1000.00)
     then  
-        $data.setSafeLevel($data.getSafeLevel()+45); 
+        $data.setSafeLevel($data.getSafeLevel()+25); 
+end 
+
+rule "1_2"  
+    when
+        $data : BankData(touserCredit< 0)
+        $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
+    then  
+        $data.setSafeLevel($data.getSafeLevel()+20); 
 end  
+
+rule "1_3"  
+    when
+        $data : BankData(touserCredit< 0 && toplace!="上海")
+    then  
+        $data.setSafeLevel($data.getSafeLevel()+5); 
+end   
    
-rule "2"  
+rule "2_1"  
     when
         $data : BankData(money>=1000.00)
         $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
     then  
-        $data.setSafeLevel($data.getSafeLevel()+30);  
+        $data.setSafeLevel($data.getSafeLevel()+20);  
 end  
 
-rule "3"  
+rule "2_2"  
+    when
+        $data : BankData(fromplace!=toplace)
+        $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
+    then  
+        $data.setSafeLevel($data.getSafeLevel()+10);  
+end  
+
+rule "2_3"  
+    when
+        $data : BankData(tool=="手机")
+        $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
+    then  
+        $data.setSafeLevel($data.getSafeLevel()+5);  
+end  
+
+rule "2_4"  
+    when
+        $data : BankData()
+        $sData : StatisticsData(commonFromPlace!=$data.fromplace && moneyWithinTime>= 5000.00)
+    then  
+        $data.setSafeLevel($data.getSafeLevel()+10);  
+end  
+
+rule "3_1"  
     when
         $data : BankData(money>=1000.00)
         $sData : StatisticsData(isNewUser==true)
@@ -26,7 +65,7 @@ rule "3"
         $data.setSafeLevel($data.getSafeLevel()+15);  
 end 
 
-rule "4"  
+rule "3_2"  
     when
         $data : BankData()
         $sData : StatisticsData(isNewUser==true && moneyOfDay>=5000.00)
@@ -34,11 +73,11 @@ rule "4"
         $data.setSafeLevel($data.getSafeLevel()+15);
 end  
 
-rule "5"  
+rule "4"  
     when
         $data : BankData()
         $sData : StatisticsData(moneyWithinTime>= 5000.00)
     then  
-        $data.setSafeLevel($data.getSafeLevel()+30);
+        $data.setSafeLevel($data.getSafeLevel()+15);
 end 
 

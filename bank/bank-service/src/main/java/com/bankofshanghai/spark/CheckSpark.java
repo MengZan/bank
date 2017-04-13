@@ -35,6 +35,7 @@ public class CheckSpark {
 			data.setToplace(s[5]);
 			data.setDatetime(sdf1.parse(s[6] + " " + s[7]));
 			data.setTouserCredit(Integer.parseInt(s[8]));
+			data.setTool("手机");
 			data.setFromuserOpendate(sdf2.parse(s[9]));
 			data.setSafeLevel(0);
 			data.setIsFraud("1".equals(s[10]) ? true : false);
@@ -45,7 +46,6 @@ public class CheckSpark {
 			StatisticsData sData = ss.getStatisticData(data);
 			CheckDrools drools = new CheckDrools();
 			drools.check(data, sData);
-			// drools.check2(data, sData);
 			return data.getSafeLevel() > 60;
 		});
 

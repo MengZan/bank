@@ -1,4 +1,4 @@
-package com.bankofshanghai.spark;
+package com.bankofshanghai;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;

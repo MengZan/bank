@@ -1,4 +1,4 @@
-package com.bankofshanghai.spark;
+package com.bankofshanghai;
 
 import java.sql.Date;
 import java.util.*;
