@@ -1,9 +1,8 @@
-package com.bankofshanghai;
+package com.bankofshanghai.spark;
 
 import java.sql.Date;
 import java.util.*;
 
-import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
 
 public class JedisTest {

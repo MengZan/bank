@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 配置包扫描器 -->
+	<context:component-scan base-package="com.bankofshanghai.test" />
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:properties/*.properties" />
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close" p:url="${jdbc.url}" p:username="${jdbc.username}"
+		p:password="${jdbc.password}" p:driverClassName="${jdbc.driver}" />
+	<!-- 声明JdbcTemplate Bean -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" />
+
+	<bean id="waiter" class="com.bankofshanghai.test.Waiter" />
+	<bean id="seller" class="com.bankofshanghai.test.Seller" />
+
+	<!-- schema方式AOP -->
+	<bean id="greetSchema" class="com.bankofshanghai.test.GreetSchema" />
+	<aop:config proxy-target-class="true">
+		<aop:aspect ref="greetSchema">
+			<aop:after-returning method="afterReturning"
+				pointcut="target(com.bankofshanghai.test.Waiter)" returning="retVal" />
+		</aop:aspect>
+	</aop:config>
+
+	<!-- aspectj方式AOP -->
+	<aop:aspectj-autoproxy />
+	<bean class="com.bankofshanghai.test.GreetAspect" />
+
+	<!-- AOP -->
+	<!-- <bean id="greetAdvice" class="com.bankofshanghai.test.GreetBeforeAdvice" 
+		/> <bean id="greetAdvice2" class="com.bankofshanghai.test.GreetInterceptor" 
+		/> <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor" 
+		p:patterns=".*greet.*" p:advice-ref="greetAdvice2" /> <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+		/> -->
+</beans>

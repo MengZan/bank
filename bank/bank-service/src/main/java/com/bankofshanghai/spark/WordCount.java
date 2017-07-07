@@ -1,4 +1,4 @@
-package com.bankofshanghai;
+package com.bankofshanghai.spark;
 
 import scala.Tuple2;
 

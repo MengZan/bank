@@ -37,6 +37,17 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<!-- AspectJ dependency -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjtools</artifactId>
+				<version>1.8.9</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>1.7.4</version>
+			</dependency>
 			<!-- Spark dependency -->
 			<dependency>
 				<groupId>org.apache.spark</groupId>
