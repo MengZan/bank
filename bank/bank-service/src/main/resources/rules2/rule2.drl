@@ -76,7 +76,7 @@ end
 rule "4"  
     when
         $data : BankData()
-        $sData : StatisticsData(moneyWithinTime>= 5000.00)
+        $sData : StatisticsData(moneyWithinTime>= 11000.00)
     then  
         $data.setSafeLevel($data.getSafeLevel()+15);
 end 

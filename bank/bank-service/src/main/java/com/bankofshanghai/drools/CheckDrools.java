@@ -1,21 +1,20 @@
 package com.bankofshanghai.drools;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.AgendaFilter;
-import org.kie.api.runtime.rule.Match;
 
 import com.bankofshanghai.mypojo.StatisticsData;
 import com.bankofshanghai.pojo.BankData;
+import com.bankofshanghai.service.StatisticsService;
+import com.bankofshanghai.service.impl.StatisticsServiceImpl;
 
 public class CheckDrools {
 
 	private static Logger log = Logger.getLogger(CheckDrools.class.getName());
-
 	private static KieContainer kc;
 	private KieSession kSession = null;
 
@@ -23,49 +22,14 @@ public class CheckDrools {
 		kc = KnowledgeSessionHelper.createRuleBase();
 	}
 
-	public int check(BankData data, StatisticsData sData) {
-		try {
-			kSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kc, "bankRule");
-			final Set<String> clusters = new HashSet<>();
-			if (data.getTouserCredit() < 0)
-				clusters.add("Cluster1");
-			if (!data.getFromplace().equals(sData.getCommonFromPlace()))
-				clusters.add("Cluster2");
-			if (sData.getIsNewUser() == true)
-				clusters.add("Cluster3");
-			if (sData.getMoneyWithinTime() >= 5000.00)
-				clusters.add("Cluster4");
-			if (clusters.size() == 0)
-				return 0;
-			kSession.insert(data);
-			kSession.insert(sData);
-			// 选择性加载
-			kSession.fireAllRules(new AgendaFilter() {
-				@Override
-				public boolean accept(Match match) {
-					String name = match.getRule().getName();
-					for (String cluster : clusters) {
-						if (name.contains(cluster))
-							return true;
-					}
-					return false;
-				}
-			});
-			int safeLevel = data.getSafeLevel();
-			if (safeLevel > 60)
-				log.info(data.getId() + "---------------检测到疑似欺诈交易！------------------");
-			return safeLevel;
-		} catch (Exception e) {
-			log.warn(data.getId() + "---------------Drools检测失败------------------", e);
-			data.setSafeLevel(-1);
-			return -1;
-		} finally {
-			if (kSession != null)
-				kSession.dispose();
-		}
+	public Boolean preCheck(BankData data, StatisticsData sData) {
+//		if (data.getTouserCredit() < 0 || !sData.getCommonFromPlace().equals(data.getFromplace())
+//				|| sData.getIsNewUser() == true || sData.getMoneyWithinTime() >= 11000)
+//			return true;
+		return false;
 	}
 
-	public int check2(BankData data, StatisticsData sData) {
+	public int check(BankData data, StatisticsData sData) {
 		try {
 			kSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kc, "bankRule2");
 			kSession.insert(data);
@@ -84,5 +48,29 @@ public class CheckDrools {
 			if (kSession != null)
 				kSession.dispose();
 		}
+	}
+	
+	public static void main(String[] args) {
+		BankData data = new BankData();
+		StatisticsService ss = new StatisticsServiceImpl();
+		data.setId((long) 11);
+		data.setFromuser((long) 11);
+		data.setTouser((long) 111);
+		data.setMoney(new BigDecimal("11.11"));
+		data.setFromplace("上海");
+		data.setToplace("上海");
+		data.setDatetime(new Date());
+		data.setTouserCredit(0);
+		data.setTool("手机");
+		data.setFromuserOpendate(new Date());
+		data.setSafeLevel(0);
+		data.setIsFraud(false);
+		StatisticsData sData = ss.getStatisticDataLocal(data);
+		CheckDrools drools = new CheckDrools();
+//		if (drools.preCheck(data, sData)) {
+//			drools.check(data, sData);
+//		}
+		drools.check(data, sData);
+		System.out.println(data.getSafeLevel());
 	}
 }

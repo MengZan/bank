@@ -17,4 +17,6 @@ public interface RuleService {
 	boolean addRule(BankRule rule);
 	
 	boolean deleteRule(String id);
+	
+	String ruleTranslate(BankRule rule);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bankofshanghai.mypojo.BankResult;
-import com.bankofshanghai.mypojo.MyBankRule;
+import com.bankofshanghai.mypojo.RuleDetail;
 import com.bankofshanghai.mypojo.MyPageList;
 import com.bankofshanghai.mypojo.RuleFactor;
 import com.bankofshanghai.pojo.BankRule;
@@ -76,8 +76,8 @@ public class RuleController {
 	@ResponseBody
 	public BankResult getRuleById(@PathVariable("id") String id) {
 		BankRule rule = ruleService.getRuleById(id);
-		MyBankRule myBankRule = new MyBankRule(rule);
-		return BankResult.ok(myBankRule);
+		RuleDetail ruleDetail = new RuleDetail(rule);
+		return BankResult.ok(ruleDetail);
 	}
 
 	/**

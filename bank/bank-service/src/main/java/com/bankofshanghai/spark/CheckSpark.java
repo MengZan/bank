@@ -16,14 +16,14 @@ public class CheckSpark {
 	public static void main(String[] args) {
 		System.setProperty("hadoop.home.dir", "D://CODE");
 
-		SparkSession spark = SparkSession.builder().appName("bank").master("local[3]").getOrCreate();
+		SparkSession spark = SparkSession.builder().appName("bank").master("local[5]").getOrCreate();
 
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 		StatisticsService ss = new StatisticsServiceImpl();
 
 		long startTime = System.currentTimeMillis();
-		JavaRDD<String> lines = spark.read().textFile("C://Users//27538//Desktop//11.txt").javaRDD();
+		JavaRDD<String> lines = spark.read().textFile("C://Users//DMM//Desktop//final.txt").javaRDD();
 		JavaRDD<BankData> dataRDD = lines.map(line -> {
 			String[] s = line.split("\\s+");
 			BankData data = new BankData();
@@ -43,13 +43,16 @@ public class CheckSpark {
 		});
 
 		JavaRDD<BankData> fraudDataRDD = dataRDD.filter(data -> {
-			StatisticsData sData = ss.getStatisticData(data);
+			StatisticsData sData = ss.getStatisticDataLocal(data);
 			CheckDrools drools = new CheckDrools();
+//			if (drools.preCheck(data, sData)) {
+//				drools.check(data, sData);
+//			}
 			drools.check(data, sData);
 			return data.getSafeLevel() > 60;
 		});
 
-		fraudDataRDD.saveAsTextFile("C://Users//27538//Desktop//r.txt");
+		fraudDataRDD.saveAsTextFile("C://Users//DMM//Desktop//r.txt");
 
 		// Dataset<Row> fraudDataDF = spark.createDataFrame(fraudDataRDD,
 		// BankData.class);

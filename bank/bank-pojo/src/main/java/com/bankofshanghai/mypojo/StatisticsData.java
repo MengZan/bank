@@ -13,7 +13,9 @@ public class StatisticsData {
 
 	private double moneyOfDay;
 
-	private boolean isNewUser;
+	private int timesOfDay;
+	
+	private int avgTimes;
 
 	public double getMoneyWithinTime() {
 		return moneyWithinTime;
@@ -39,12 +41,20 @@ public class StatisticsData {
 		this.moneyOfDay = moneyOfDay;
 	}
 
-	public boolean getIsNewUser() {
-		return isNewUser;
+	public int getTimesOfDay() {
+		return timesOfDay;
 	}
 
-	public void setIsNewUser(boolean isNewUser) {
-		this.isNewUser = isNewUser;
+	public void setTimesOfDay(int timesOfDay) {
+		this.timesOfDay = timesOfDay;
 	}
 
+	public int getAvgTimes() {
+		return avgTimes;
+	}
+
+	public void setAvgTimes(int avgTimes) {
+		this.avgTimes = avgTimes;
+	}
+	
 }

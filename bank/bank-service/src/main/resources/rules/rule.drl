@@ -2,77 +2,20 @@ package com.bankofshanghai.drools;
    
 import com.bankofshanghai.pojo.BankData;  
 import com.bankofshanghai.mypojo.StatisticsData; 
+import com.bankofshanghai.mypojo.CheckPass; 
 
-rule "Cluster1_1"  
+rule "1"  
     when
-        $data : BankData(money>=1000.00)
+        $factor : RuleFactor(data.money>=500&data.fromplace!=sData.commonFromPlace)
     then  
-        $data.setSafeLevel($data.getSafeLevel()+25); 
+        $factor.data.setSafeLevel($factor.data.getSafeLevel()+30)
 end  
 
-rule "Cluster1_2"  
+rule "2"  sbuilder.append('\n');
     when
-        $data : BankData()
-        $sdata : StatisticsData(commonFromPlace!=$data.fromplace)
+        $data : BankData(touserCredit< 0)
+        $pass : CheckPass()
     then  
-        $data.setSafeLevel($data.getSafeLevel()+20); 
+        $pass.setPass(true);
 end  
-
-rule "Cluster1_3"  
-    when
-        $data : BankData(toplace!="上海")
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+5); 
-end  
-   
-rule "Cluster2_1"  
-    when
-        $data : BankData(money>=1000.00)
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+20);  
-end  
-
-rule "Cluster2_2"  
-    when
-        $data : BankData(fromplace!=toplace)
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+10);  
-end  
-
-rule "Cluster2_3"  
-    when
-        $data : BankData(tool=="手机")
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+5);  
-end  
-
-rule "Cluster2_4"  
-    when
-        $data : BankData()
-        $sData : StatisticsData(moneyWithinTime>= 5000.00)
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+10);  
-end  
-
-rule "Cluster3_1"  
-    when
-        $data : BankData(money>=1000.00)
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+15);  
-end 
-
-rule "Cluster3_2"  
-    when
-        $data : BankData()
-        $sData : StatisticsData(moneyOfDay>=5000.00)
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+15);
-end  
-
-rule "Cluster4"  
-    when
-        $data : BankData()
-    then  
-        $data.setSafeLevel($data.getSafeLevel()+15);
-end 
 

@@ -6,5 +6,7 @@ import com.bankofshanghai.pojo.BankData;
 public interface StatisticsService {
 
 	StatisticsData getStatisticData(BankData data);
+	
+	StatisticsData getStatisticDataLocal(BankData data);
 
 }
